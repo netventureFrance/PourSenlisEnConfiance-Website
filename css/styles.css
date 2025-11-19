@@ -407,6 +407,7 @@ a:hover {
 
 .btn-primary:hover {
     background: var(--primary-dark);
+    color: var(--white);
     transform: translateY(-2px);
     box-shadow: 0 5px 20px var(--shadow-hover);
 }
