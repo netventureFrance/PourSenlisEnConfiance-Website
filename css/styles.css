@@ -297,22 +297,16 @@ a:hover {
 .hero-logo-display {
     margin-bottom: 2rem;
     animation: fadeInDown 1s ease;
-    overflow: hidden;
     display: flex;
     justify-content: center;
-    width: 100%;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    height: 300px;
 }
 
 .hero-logo-image {
-    width: auto;
-    height: 300px;
+    max-width: 350px;
+    width: 80%;
+    height: auto;
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
     animation: float 4s ease-in-out infinite;
-    margin-left: -50%;
 }
 
 @keyframes fadeInDown {
@@ -1050,14 +1044,9 @@ a:hover {
         margin-top: 70px;
     }
 
-    .hero-logo-display {
-        height: 200px;
-        max-width: 280px;
-    }
-
     .hero-logo-image {
-        height: 200px;
-        margin-left: -40%;
+        max-width: 250px;
+        width: 70%;
     }
 
     .hero-circle-1,
