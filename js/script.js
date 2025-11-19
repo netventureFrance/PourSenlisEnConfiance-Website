@@ -246,6 +246,11 @@ let playerReady = false;
 
 // Load YouTube IFrame API
 function loadYouTubeAPI() {
+    if (window.YT) {
+        initYouTubePlayer();
+        return;
+    }
+
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -254,16 +259,29 @@ function loadYouTubeAPI() {
 
 // Called automatically when YouTube API is ready
 window.onYouTubeIframeAPIReady = function() {
-    const iframe = document.getElementById('campaign-video');
-    if (!iframe) return;
+    initYouTubePlayer();
+};
 
-    youtubePlayer = new YT.Player('campaign-video', {
+function initYouTubePlayer() {
+    const container = document.getElementById('video-container');
+    if (!container) return;
+
+    youtubePlayer = new YT.Player('video-container', {
+        height: '100%',
+        width: '100%',
+        videoId: 'RAOPqD9VnBc',
+        playerVars: {
+            'autoplay': 0,
+            'controls': 1,
+            'rel': 0,
+            'modestbranding': 1
+        },
         events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
         }
     });
-};
+}
 
 function onPlayerReady(event) {
     playerReady = true;
@@ -305,7 +323,11 @@ function initVideoAutoplay() {
 }
 
 // Load the YouTube API when page loads
-loadYouTubeAPI();
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadYouTubeAPI);
+} else {
+    loadYouTubeAPI();
+}
 
 // ===================================
 // QR Code Generation (placeholder)
