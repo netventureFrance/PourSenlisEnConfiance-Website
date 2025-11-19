@@ -239,95 +239,9 @@ function highlightNavigation() {
 window.addEventListener('scroll', highlightNavigation);
 
 // ===================================
-// YouTube IFrame API Integration
+// Video Section - No additional JS needed
 // ===================================
-let youtubePlayer;
-let playerReady = false;
-
-// Load YouTube IFrame API
-function loadYouTubeAPI() {
-    if (window.YT) {
-        initYouTubePlayer();
-        return;
-    }
-
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-}
-
-// Called automatically when YouTube API is ready
-window.onYouTubeIframeAPIReady = function() {
-    initYouTubePlayer();
-};
-
-function initYouTubePlayer() {
-    const container = document.getElementById('video-container');
-    if (!container) return;
-
-    youtubePlayer = new YT.Player('video-container', {
-        height: '100%',
-        width: '100%',
-        videoId: 'RAOPqD9VnBc',
-        playerVars: {
-            'autoplay': 0,
-            'controls': 1,
-            'rel': 0,
-            'modestbranding': 1
-        },
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        }
-    });
-}
-
-function onPlayerReady(event) {
-    playerReady = true;
-    // Set up intersection observer for autoplay when in view
-    initVideoAutoplay();
-}
-
-function onPlayerStateChange(event) {
-    // When video ends (state 0), seek to beginning and pause
-    if (event.data === YT.PlayerState.ENDED) {
-        youtubePlayer.seekTo(0);
-        youtubePlayer.pauseVideo();
-    }
-}
-
-function initVideoAutoplay() {
-    if (!youtubePlayer) return;
-
-    const videoObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (!playerReady) return;
-
-            if (entry.isIntersecting) {
-                // Video is in viewport - play it
-                youtubePlayer.playVideo();
-            } else {
-                // Video is out of viewport - pause it
-                youtubePlayer.pauseVideo();
-            }
-        });
-    }, {
-        threshold: 0.5 // Trigger when 50% of the video is visible
-    });
-
-    const videoItem = document.querySelector('.video-item');
-    if (videoItem) {
-        videoObserver.observe(videoItem);
-    }
-}
-
-// Load the YouTube API when page loads
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadYouTubeAPI);
-} else {
-    loadYouTubeAPI();
-}
+// YouTube iframe handles playback natively
 
 // ===================================
 // QR Code Generation (placeholder)

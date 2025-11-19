@@ -709,18 +709,13 @@ a:hover {
 .video-wrapper {
     position: relative;
     width: 100%;
-    background: #000;
-}
-
-#video-container {
-    position: relative;
     padding-bottom: 56.25%; /* 16:9 aspect ratio */
     height: 0;
     overflow: hidden;
+    background: #000;
 }
 
-#video-container iframe,
-#video-container > div {
+.video-wrapper iframe {
     position: absolute;
     top: 0;
     left: 0;
