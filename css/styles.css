@@ -295,17 +295,17 @@ a:hover {
 }
 
 .hero-logo-display {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     animation: fadeInDown 1s ease;
     display: flex;
     justify-content: center;
 }
 
 .hero-logo-image {
-    max-width: 250px;
-    width: 60%;
+    max-width: 120px;
+    width: 30%;
     height: auto;
-    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
     animation: float 4s ease-in-out infinite;
     transition: all 0.4s ease;
     cursor: pointer;
@@ -1053,12 +1053,12 @@ a:hover {
     }
 
     .hero-logo-image {
-        max-width: 180px;
-        width: 55%;
+        max-width: 100px;
+        width: 25%;
     }
 
     .hero-logo-image:hover {
-        transform: scale(1.08) translateY(-8px);
+        transform: scale(1.15) translateY(-8px);
     }
 
     .hero-circle-1,
