@@ -110,7 +110,7 @@ a:hover {
 .nav-link {
     color: var(--text-dark);
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     padding: 0.5rem 0;
     border-bottom: 2px solid transparent;
     transition: var(--transition);
