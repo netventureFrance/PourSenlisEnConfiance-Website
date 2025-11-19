@@ -239,44 +239,73 @@ function highlightNavigation() {
 window.addEventListener('scroll', highlightNavigation);
 
 // ===================================
-// Video Player Enhancement
+// YouTube IFrame API Integration
 // ===================================
+let youtubePlayer;
+let playerReady = false;
+
+// Load YouTube IFrame API
+function loadYouTubeAPI() {
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
+
+// Called automatically when YouTube API is ready
+window.onYouTubeIframeAPIReady = function() {
+    const iframe = document.getElementById('campaign-video');
+    if (!iframe) return;
+
+    youtubePlayer = new YT.Player('campaign-video', {
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+};
+
+function onPlayerReady(event) {
+    playerReady = true;
+    // Set up intersection observer for autoplay when in view
+    initVideoAutoplay();
+}
+
+function onPlayerStateChange(event) {
+    // When video ends (state 0), seek to beginning and pause
+    if (event.data === YT.PlayerState.ENDED) {
+        youtubePlayer.seekTo(0);
+        youtubePlayer.pauseVideo();
+    }
+}
+
 function initVideoAutoplay() {
-    // Autoplay videos when they come into view
+    if (!youtubePlayer) return;
+
     const videoObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            const iframe = entry.target.querySelector('iframe');
-            if (!iframe) return;
+            if (!playerReady) return;
 
             if (entry.isIntersecting) {
-                // Video is in viewport - ensure it's playing
-                const src = iframe.src;
-                if (!src.includes('autoplay=1')) {
-                    // Add autoplay if not already present
-                    iframe.src = src.includes('?')
-                        ? src + '&autoplay=1'
-                        : src + '?autoplay=1';
-                }
+                // Video is in viewport - play it
+                youtubePlayer.playVideo();
             } else {
-                // Video is out of viewport - pause by removing and re-adding without autoplay
-                const src = iframe.src;
-                if (src.includes('autoplay=1')) {
-                    iframe.src = src.replace(/[&?]autoplay=1/, '');
-                }
+                // Video is out of viewport - pause it
+                youtubePlayer.pauseVideo();
             }
         });
     }, {
         threshold: 0.5 // Trigger when 50% of the video is visible
     });
 
-    // Observe all video items
-    document.querySelectorAll('.video-item').forEach(video => {
-        videoObserver.observe(video);
-    });
+    const videoItem = document.querySelector('.video-item');
+    if (videoItem) {
+        videoObserver.observe(videoItem);
+    }
 }
 
-// Initialize video autoplay on load
-initVideoAutoplay();
+// Load the YouTube API when page loads
+loadYouTubeAPI();
 
 // ===================================
 // QR Code Generation (placeholder)
