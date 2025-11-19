@@ -297,14 +297,20 @@ a:hover {
 .hero-logo-display {
     margin-bottom: 2rem;
     animation: fadeInDown 1s ease;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
 }
 
 .hero-logo-image {
-    max-width: 400px;
-    width: 80%;
+    max-width: 350px;
+    width: 70%;
     height: auto;
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
     animation: float 4s ease-in-out infinite;
+    object-fit: cover;
+    object-position: 70% center;
+    clip-path: inset(0 0 0 45%);
 }
 
 @keyframes fadeInDown {
@@ -1043,7 +1049,8 @@ a:hover {
     }
 
     .hero-logo-image {
-        max-width: 280px;
+        max-width: 250px;
+        width: 60%;
     }
 
     .hero-circle-1,
