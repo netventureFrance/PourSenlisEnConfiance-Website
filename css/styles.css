@@ -453,7 +453,7 @@ a:hover {
 }
 
 .section:nth-child(even) {
-    background: var(--bg-light);
+    background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
 }
 
 .section-title {
@@ -473,6 +473,10 @@ a:hover {
 /* ===================================
    Candidate Section
    =================================== */
+.candidate-section {
+    background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%) !important;
+}
+
 .candidate-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -511,7 +515,7 @@ a:hover {
    Program Section
    =================================== */
 .program-section {
-    background: var(--bg-light);
+    background: linear-gradient(135deg, #f0fdf4 0%, #f8f9fa 50%, #ffffff 100%) !important;
 }
 
 .program-highlights {
@@ -566,6 +570,10 @@ a:hover {
 /* ===================================
    Team Section
    =================================== */
+.team-section {
+    background: linear-gradient(to bottom, #fffef0 0%, #f0fdf4 50%, #ffffff 100%) !important;
+}
+
 .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -624,6 +632,10 @@ a:hover {
 /* ===================================
    Gallery Section
    =================================== */
+.gallery-section {
+    background: linear-gradient(to bottom, #fafcff 0%, #f0f8ff 50%, #ffffff 100%) !important;
+}
+
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -672,7 +684,7 @@ a:hover {
    Videos Section
    =================================== */
 .videos-section {
-    background: var(--bg-light);
+    background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 50%, #f8f9fa 100%) !important;
 }
 
 .videos-grid {
@@ -720,6 +732,10 @@ a:hover {
 /* ===================================
    Documents Section
    =================================== */
+.documents-section {
+    background: linear-gradient(to bottom, #fffbeb 0%, #fef3c7 30%, #ffffff 100%) !important;
+}
+
 .documents-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -759,7 +775,7 @@ a:hover {
    Contact Section
    =================================== */
 .contact-section {
-    background: var(--bg-light);
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f8ff 50%, #ffffff 100%) !important;
 }
 
 .contact-content {
