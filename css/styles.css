@@ -294,6 +294,30 @@ a:hover {
     animation: fadeInUp 1s ease;
 }
 
+.hero-logo-display {
+    margin-bottom: 2rem;
+    animation: fadeInDown 1s ease;
+}
+
+.hero-logo-image {
+    max-width: 400px;
+    width: 80%;
+    height: auto;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .hero-title {
     font-size: clamp(2.5rem, 5vw, 4rem);
     margin-bottom: 1rem;
@@ -1016,6 +1040,19 @@ a:hover {
 
     .hero {
         margin-top: 70px;
+    }
+
+    .hero-logo-image {
+        max-width: 280px;
+    }
+
+    .hero-circle-1,
+    .hero-circle-3 {
+        display: none;
+    }
+
+    .hero-cathedral {
+        display: none;
     }
 
     .hero-buttons {
