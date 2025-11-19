@@ -102,7 +102,7 @@ a:hover {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 1.5rem;
+    gap: 2.5rem;
     align-items: center;
 }
 
