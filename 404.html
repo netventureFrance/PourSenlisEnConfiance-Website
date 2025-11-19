@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Page non trouvée - Pour Senlis en Confiance</title>
+    <link rel="icon" type="image/png" href="images/PSEC.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .error-content {
+            max-width: 600px;
+        }
+
+        .error-code {
+            font-size: 10rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .error-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .error-message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .error-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .error-links a {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent-green);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .error-links a:hover {
+            background: var(--white);
+            color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .error-search {
+            margin-top: 2rem;
+        }
+
+        .error-search input {
+            padding: 1rem;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid var(--white);
+            border-radius: 30px;
+            font-size: 1rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+        }
+
+        .error-search input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+
+            .error-title {
+                font-size: 2rem;
+            }
+
+            .error-message {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <h1 class="error-title">Page non trouvée</h1>
+            <p class="error-message">
+                Désolé, la page que vous recherchez n'existe pas ou a été déplacée.
+            </p>
+
+            <div class="error-links">
+                <a href="/">Retour à l'accueil</a>
+                <a href="/#programme">Notre programme</a>
+                <a href="/#contact">Nous contacter</a>
+            </div>
+
+            <div class="error-search">
+                <form action="/" method="get">
+                    <input type="text"
+                           name="q"
+                           placeholder="Rechercher sur le site..."
+                           aria-label="Recherche">
+                </form>
+            </div>
+
+            <div style="margin-top: 3rem; opacity: 0.7;">
+                <p>Liens utiles :</p>
+                <ul style="list-style: none; padding: 0; margin-top: 1rem;">
+                    <li><a href="/#candidate" style="color: var(--accent-light-green);">La Candidate</a></li>
+                    <li><a href="/#equipe" style="color: var(--accent-light-green);">L'Équipe</a></li>
+                    <li><a href="/#galerie" style="color: var(--accent-light-green);">Galerie</a></li>
+                    <li><a href="/#documents" style="color: var(--accent-light-green);">Documents</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-redirect after 10 seconds
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 10000);
+
+        // Log 404 for analytics (if implemented)
+        if (window.gtag) {
+            gtag('event', 'page_not_found', {
+                'page_path': window.location.pathname
+            });
+        }
+    </script>
+</body>
+</html>
