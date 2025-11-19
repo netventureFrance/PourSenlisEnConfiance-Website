@@ -79,6 +79,14 @@
         <priority>0.3</priority>
     </url>
 
+    <!-- Legal notice -->
+    <url>
+        <loc>https://poursenlisenconfiance.fr/mentions-legales.html</loc>
+        <lastmod>2025-11-19</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
     <!-- Document downloads -->
     <url>
         <loc>https://poursenlisenconfiance.fr/documents/programme.pdf</loc>
