@@ -104,6 +104,7 @@ a:hover {
     list-style: none;
     gap: 2.5rem;
     align-items: center;
+    margin-left: 3rem;
 }
 
 .nav-link {
