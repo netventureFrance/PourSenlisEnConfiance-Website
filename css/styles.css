@@ -30,7 +30,7 @@ html {
 }
 
 body {
-    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Baloo 2', -apple-system, BlinkMacSystemFont, 'Segoe UI', cursive, sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
     background-color: var(--white);
@@ -38,7 +38,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Baloo 2', cursive, sans-serif;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;
@@ -295,17 +295,17 @@ a:hover {
 }
 
 .hero-logo-display {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     animation: fadeInDown 1s ease;
     display: flex;
     justify-content: center;
 }
 
 .hero-logo-image {
-    max-width: 120px;
-    width: 30%;
+    max-width: 200px;
+    width: 50%;
     height: auto;
-    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
     animation: float 4s ease-in-out infinite;
     transition: all 0.4s ease;
     cursor: pointer;
@@ -1053,12 +1053,12 @@ a:hover {
     }
 
     .hero-logo-image {
-        max-width: 100px;
-        width: 25%;
+        max-width: 150px;
+        width: 40%;
     }
 
     .hero-logo-image:hover {
-        transform: scale(1.15) translateY(-8px);
+        transform: scale(1.12) translateY(-8px);
     }
 
     .hero-circle-1,
