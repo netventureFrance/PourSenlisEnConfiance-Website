@@ -241,26 +241,42 @@ window.addEventListener('scroll', highlightNavigation);
 // ===================================
 // Video Player Enhancement
 // ===================================
-function loadVideo(videoElement, videoUrl) {
-    // Lazy load videos when they come into view
+function initVideoAutoplay() {
+    // Autoplay videos when they come into view
     const videoObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            const iframe = entry.target.querySelector('iframe');
+            if (!iframe) return;
+
             if (entry.isIntersecting) {
-                const iframe = entry.target.querySelector('iframe');
-                if (iframe && iframe.dataset.src) {
-                    iframe.src = iframe.dataset.src;
+                // Video is in viewport - ensure it's playing
+                const src = iframe.src;
+                if (!src.includes('autoplay=1')) {
+                    // Add autoplay if not already present
+                    iframe.src = src.includes('?')
+                        ? src + '&autoplay=1'
+                        : src + '?autoplay=1';
                 }
-                videoObserver.unobserve(entry.target);
+            } else {
+                // Video is out of viewport - pause by removing and re-adding without autoplay
+                const src = iframe.src;
+                if (src.includes('autoplay=1')) {
+                    iframe.src = src.replace(/[&?]autoplay=1/, '');
+                }
             }
         });
+    }, {
+        threshold: 0.5 // Trigger when 50% of the video is visible
     });
 
+    // Observe all video items
     document.querySelectorAll('.video-item').forEach(video => {
         videoObserver.observe(video);
     });
 }
 
-loadVideo();
+// Initialize video autoplay on load
+initVideoAutoplay();
 
 // ===================================
 // QR Code Generation (placeholder)

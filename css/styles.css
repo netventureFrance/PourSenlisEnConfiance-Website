@@ -700,6 +700,11 @@ a:hover {
     box-shadow: 0 5px 15px var(--shadow);
 }
 
+.video-item-full {
+    grid-column: 1 / -1;
+    max-width: 100%;
+}
+
 .video-wrapper {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 aspect ratio */
