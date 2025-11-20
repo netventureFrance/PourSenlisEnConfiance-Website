@@ -187,15 +187,8 @@ const revealOnScroll = new IntersectionObserver((entries) => {
 revealElements.forEach(el => revealOnScroll.observe(el));
 
 // ===================================
-// Airtable Form Submission
+// Contact Form Submission via Netlify Function
 // ===================================
-// CONFIGURATION - Add your Airtable credentials here
-const AIRTABLE_CONFIG = {
-    baseId: 'YOUR_BASE_ID',  // Replace with your Airtable Base ID (starts with "app...")
-    tableName: 'YOUR_TABLE_NAME',  // Replace with your table name (e.g., "Contacts")
-    apiKey: 'YOUR_API_KEY'  // Replace with your Airtable Personal Access Token
-};
-
 const contactForm = document.getElementById('contactForm');
 const formMessage = document.getElementById('formMessage');
 
@@ -211,30 +204,29 @@ if (contactForm) {
 
         // Get form data
         const formData = {
-            'Nom': contactForm.querySelector('#name').value.trim(),
-            'Email': contactForm.querySelector('#email').value.trim(),
-            'Téléphone': contactForm.querySelector('#phone').value.trim() || '',
-            'Message': contactForm.querySelector('#message').value.trim(),
-            'Newsletter': contactForm.querySelector('#newsletter').checked ? 'Oui' : 'Non',
-            'GDPR Consent': contactForm.querySelector('#gdpr').checked ? 'Oui' : 'Non',
-            'Date': new Date().toISOString()
+            name: contactForm.querySelector('#name').value.trim(),
+            email: contactForm.querySelector('#email').value.trim(),
+            phone: contactForm.querySelector('#phone').value.trim() || '',
+            message: contactForm.querySelector('#message').value.trim(),
+            newsletter: contactForm.querySelector('#newsletter').checked,
+            gdpr: contactForm.querySelector('#gdpr').checked
         };
 
         // Validate required fields
-        if (!formData.Nom || !formData.Email || !formData.Message) {
+        if (!formData.name || !formData.email || !formData.message) {
             showMessage('Veuillez remplir tous les champs obligatoires.', 'error');
             return false;
         }
 
         // Validate email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.Email)) {
+        if (!emailRegex.test(formData.email)) {
             showMessage('Veuillez entrer une adresse email valide.', 'error');
             return false;
         }
 
         // Check GDPR consent
-        if (!contactForm.querySelector('#gdpr').checked) {
+        if (!formData.gdpr) {
             showMessage('Vous devez accepter la politique de confidentialité.', 'error');
             return false;
         }
@@ -246,19 +238,18 @@ if (contactForm) {
         submitBtn.textContent = 'Envoi en cours...';
 
         try {
-            // Send to Airtable
-            const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tableName}`, {
+            // Send to Netlify Function
+            const response = await fetch('/.netlify/functions/submit-contact', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${AIRTABLE_CONFIG.apiKey}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    fields: formData
-                })
+                body: JSON.stringify(formData)
             });
 
-            if (response.ok) {
+            const result = await response.json();
+
+            if (response.ok && result.success) {
                 showMessage('Merci ! Votre message a été envoyé avec succès.', 'success');
                 contactForm.reset();
 
@@ -267,9 +258,8 @@ if (contactForm) {
                     window.location.href = '/merci.html';
                 }, 2000);
             } else {
-                const errorData = await response.json();
-                console.error('Airtable error:', errorData);
-                showMessage('Une erreur est survenue. Veuillez réessayer.', 'error');
+                console.error('Submission error:', result);
+                showMessage(result.error || 'Une erreur est survenue. Veuillez réessayer.', 'error');
             }
         } catch (error) {
             console.error('Submission error:', error);
