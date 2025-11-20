@@ -159,15 +159,21 @@ a:hover {
 .hero {
     position: relative;
     min-height: 100vh;
+    min-height: calc(100vh - 70px); /* Account for header height */
+    min-height: -webkit-fill-available; /* Chrome mobile fix */
     display: flex;
+    display: -webkit-flex;
     align-items: center;
+    -webkit-align-items: center;
     justify-content: center;
+    -webkit-justify-content: center;
     background: linear-gradient(to bottom, var(--white) 0%, var(--primary-light) 50%, var(--primary-dark) 100%);
     color: var(--white);
     text-align: center;
     margin-top: 70px;
     overflow: visible;
     padding: 2rem 0;
+    box-sizing: border-box;
 }
 
 .hero::before {
