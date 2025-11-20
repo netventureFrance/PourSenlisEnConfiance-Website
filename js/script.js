@@ -187,31 +187,111 @@ const revealOnScroll = new IntersectionObserver((entries) => {
 revealElements.forEach(el => revealOnScroll.observe(el));
 
 // ===================================
-// Form Validation and Enhancement
+// Airtable Form Submission
 // ===================================
-const contactForm = document.querySelector('.contact-form');
+// CONFIGURATION - Add your Airtable credentials here
+const AIRTABLE_CONFIG = {
+    baseId: 'YOUR_BASE_ID',  // Replace with your Airtable Base ID (starts with "app...")
+    tableName: 'YOUR_TABLE_NAME',  // Replace with your table name (e.g., "Contacts")
+    apiKey: 'YOUR_API_KEY'  // Replace with your Airtable Personal Access Token
+};
+
+const contactForm = document.getElementById('contactForm');
+const formMessage = document.getElementById('formMessage');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        // Form is handled by Netlify, but we can add custom validation
-        const email = contactForm.querySelector('#email').value;
-        const name = contactForm.querySelector('#name').value;
-        const message = contactForm.querySelector('#message').value;
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-        if (!email || !name || !message) {
-            e.preventDefault();
-            alert('Veuillez remplir tous les champs obligatoires.');
+        // Check honeypot
+        const honeypot = contactForm.querySelector('[name="bot-field"]').value;
+        if (honeypot) {
+            return false; // Spam detected
+        }
+
+        // Get form data
+        const formData = {
+            'Nom': contactForm.querySelector('#name').value.trim(),
+            'Email': contactForm.querySelector('#email').value.trim(),
+            'Téléphone': contactForm.querySelector('#phone').value.trim() || '',
+            'Message': contactForm.querySelector('#message').value.trim(),
+            'Newsletter': contactForm.querySelector('#newsletter').checked ? 'Oui' : 'Non',
+            'GDPR Consent': contactForm.querySelector('#gdpr').checked ? 'Oui' : 'Non',
+            'Date': new Date().toISOString()
+        };
+
+        // Validate required fields
+        if (!formData.Nom || !formData.Email || !formData.Message) {
+            showMessage('Veuillez remplir tous les champs obligatoires.', 'error');
             return false;
         }
 
-        // Email validation
+        // Validate email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            e.preventDefault();
-            alert('Veuillez entrer une adresse email valide.');
+        if (!emailRegex.test(formData.Email)) {
+            showMessage('Veuillez entrer une adresse email valide.', 'error');
             return false;
+        }
+
+        // Check GDPR consent
+        if (!contactForm.querySelector('#gdpr').checked) {
+            showMessage('Vous devez accepter la politique de confidentialité.', 'error');
+            return false;
+        }
+
+        // Disable submit button
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Envoi en cours...';
+
+        try {
+            // Send to Airtable
+            const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tableName}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${AIRTABLE_CONFIG.apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fields: formData
+                })
+            });
+
+            if (response.ok) {
+                showMessage('Merci ! Votre message a été envoyé avec succès.', 'success');
+                contactForm.reset();
+
+                // Redirect to thank you page after 2 seconds
+                setTimeout(() => {
+                    window.location.href = '/merci.html';
+                }, 2000);
+            } else {
+                const errorData = await response.json();
+                console.error('Airtable error:', errorData);
+                showMessage('Une erreur est survenue. Veuillez réessayer.', 'error');
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            showMessage('Une erreur est survenue. Veuillez réessayer.', 'error');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
         }
     });
+}
+
+function showMessage(message, type) {
+    formMessage.textContent = message;
+    formMessage.className = `form-message ${type}`;
+    formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    // Auto-hide error messages after 5 seconds
+    if (type === 'error') {
+        setTimeout(() => {
+            formMessage.className = 'form-message';
+        }, 5000);
+    }
 }
 
 // ===================================

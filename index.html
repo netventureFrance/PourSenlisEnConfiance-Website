@@ -390,11 +390,10 @@
             <p class="section-subtitle">Vous avez une question ? N'hésitez pas à nous écrire</p>
 
             <div class="contact-content">
-                <form name="contact" method="POST" action="/merci.html" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
-                    <!-- Hidden fields for Netlify -->
-                    <input type="hidden" name="form-name" value="contact">
+                <form id="contactForm" class="contact-form">
+                    <!-- Honeypot for spam protection -->
                     <p class="hidden">
-                        <label>Ne pas remplir : <input name="bot-field"></label>
+                        <label>Ne pas remplir : <input name="bot-field" tabindex="-1"></label>
                     </p>
 
                     <div class="form-group">
@@ -416,6 +415,22 @@
                         <label for="message">Votre message *</label>
                         <textarea id="message" name="message" rows="6" required></textarea>
                     </div>
+
+                    <div class="form-group form-checkbox">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="newsletter" name="newsletter" value="oui">
+                            <span>Je souhaite recevoir la newsletter et les actualités de la campagne</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group form-checkbox">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="gdpr" name="gdpr" required>
+                            <span>J'accepte que mes données personnelles soient collectées et traitées conformément à la <a href="/mentions-legales.html#donnees" target="_blank">politique de confidentialité</a> *</span>
+                        </label>
+                    </div>
+
+                    <div id="formMessage" class="form-message"></div>
 
                     <button type="submit" class="btn btn-primary btn-submit">
                         Envoyer le message
