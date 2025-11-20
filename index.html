@@ -425,7 +425,7 @@
 
                     <div class="form-group form-checkbox">
                         <label class="checkbox-label">
-                            <input type="checkbox" id="gdpr" name="gdpr" required>
+                            <input type="checkbox" id="gdpr" name="gdpr" required oninvalid="this.setCustomValidity('Veuillez cocher cette case pour accepter la politique de confidentialité')" oninput="this.setCustomValidity('')">
                             <span>J'accepte la <a href="/mentions-legales.html#donnees" target="_blank">politique de confidentialité</a> *</span>
                         </label>
                     </div>
