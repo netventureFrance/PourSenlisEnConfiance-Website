@@ -259,7 +259,14 @@ if (contactForm) {
                 }, 2000);
             } else {
                 console.error('Submission error:', result);
-                showMessage(result.error || 'Une erreur est survenue. Veuillez réessayer.', 'error');
+                // Show detailed error message
+                const errorMsg = result.error || 'Une erreur est survenue. Veuillez réessayer.';
+                showMessage(errorMsg, 'error');
+
+                // Log details to console for debugging
+                if (result.details) {
+                    console.error('Airtable error details:', result.details);
+                }
             }
         } catch (error) {
             console.error('Submission error:', error);

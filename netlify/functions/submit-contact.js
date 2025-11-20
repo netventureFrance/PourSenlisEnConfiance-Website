@@ -57,9 +57,21 @@ exports.handler = async (event) => {
         if (!response.ok) {
             const errorData = await response.json();
             console.error('Airtable error:', errorData);
+
+            // Return detailed error for debugging
+            let errorMessage = 'Erreur Airtable: ';
+            if (errorData.error && errorData.error.type === 'INVALID_REQUEST_UNKNOWN') {
+                errorMessage = 'Champs Airtable incorrects. Vérifiez les noms des champs.';
+            } else if (errorData.error && errorData.error.message) {
+                errorMessage = errorData.error.message;
+            }
+
             return {
                 statusCode: response.status,
-                body: JSON.stringify({ error: 'Erreur lors de l\'envoi à Airtable' })
+                body: JSON.stringify({
+                    error: errorMessage,
+                    details: errorData // Include full error for debugging
+                })
             };
         }
 
