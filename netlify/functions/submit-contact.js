@@ -38,8 +38,8 @@ exports.handler = async (event) => {
                 'Email': formData.email,
                 'Téléphone': formData.phone || '',
                 'Message': formData.message,
-                'Newsletter': formData.newsletter ? 'Oui' : 'Non',
-                'GDPR Consent': formData.gdpr ? 'Oui' : 'Non',
+                'Newsletter': formData.newsletter || false,
+                'GDPR Consent': formData.gdpr || false,
                 'Date': new Date().toISOString()
             }
         };
