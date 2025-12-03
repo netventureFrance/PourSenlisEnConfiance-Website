@@ -187,6 +187,42 @@ const revealOnScroll = new IntersectionObserver((entries) => {
 revealElements.forEach(el => revealOnScroll.observe(el));
 
 // ===================================
+// Security Question Generator
+// ===================================
+function generateSecurityQuestion() {
+    const securityQuestionEl = document.getElementById('securityQuestion');
+    const expectedAnswerEl = document.getElementById('expectedAnswer');
+
+    if (securityQuestionEl && expectedAnswerEl) {
+        const num1 = Math.floor(Math.random() * 10) + 1;
+        const num2 = Math.floor(Math.random() * 10) + 1;
+        const operations = [
+            { symbol: '+', calc: (a, b) => a + b, text: 'plus' },
+            { symbol: '-', calc: (a, b) => a - b, text: 'moins' },
+            { symbol: '×', calc: (a, b) => a * b, text: 'fois' }
+        ];
+
+        // Ensure subtraction doesn't result in negative numbers
+        const adjustedNum1 = Math.max(num1, num2);
+        const adjustedNum2 = Math.min(num1, num2);
+
+        const op = operations[Math.floor(Math.random() * operations.length)];
+        const answer = op.symbol === '-'
+            ? op.calc(adjustedNum1, adjustedNum2)
+            : op.calc(num1, num2);
+
+        const displayNum1 = op.symbol === '-' ? adjustedNum1 : num1;
+        const displayNum2 = op.symbol === '-' ? adjustedNum2 : num2;
+
+        securityQuestionEl.textContent = `${displayNum1} ${op.symbol} ${displayNum2} = ?`;
+        expectedAnswerEl.value = answer;
+    }
+}
+
+// Generate security question on page load
+generateSecurityQuestion();
+
+// ===================================
 // Contact Form Submission via Netlify Function
 // ===================================
 const contactForm = document.getElementById('contactForm');
@@ -202,14 +238,16 @@ if (contactForm) {
             return false; // Spam detected
         }
 
-        // Get form data
+        // Get form data including security check
         const formData = {
             name: contactForm.querySelector('#name').value.trim(),
             email: contactForm.querySelector('#email').value.trim(),
             phone: contactForm.querySelector('#phone').value.trim() || '',
             message: contactForm.querySelector('#message').value.trim(),
             newsletter: contactForm.querySelector('#newsletter').checked,
-            gdpr: contactForm.querySelector('#gdpr').checked
+            gdpr: contactForm.querySelector('#gdpr').checked,
+            securityAnswer: contactForm.querySelector('#securityAnswer').value.trim(),
+            expectedAnswer: parseInt(contactForm.querySelector('#expectedAnswer').value)
         };
 
         // Validate required fields
@@ -228,6 +266,14 @@ if (contactForm) {
         // Check GDPR consent
         if (!formData.gdpr) {
             showMessage('Vous devez accepter la politique de confidentialité.', 'error');
+            return false;
+        }
+
+        // Check security answer
+        if (!formData.securityAnswer || parseInt(formData.securityAnswer) !== formData.expectedAnswer) {
+            showMessage('La réponse à la vérification de sécurité est incorrecte.', 'error');
+            generateSecurityQuestion(); // Regenerate question
+            contactForm.querySelector('#securityAnswer').value = '';
             return false;
         }
 
@@ -252,6 +298,7 @@ if (contactForm) {
             if (response.ok && result.success) {
                 showMessage('Merci ! Votre message a été envoyé avec succès.', 'success');
                 contactForm.reset();
+                generateSecurityQuestion(); // Regenerate question for next submission
 
                 // Redirect to thank you page after 2 seconds
                 setTimeout(() => {

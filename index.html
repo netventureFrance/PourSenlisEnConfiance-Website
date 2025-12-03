@@ -413,6 +413,17 @@
                         </label>
                     </div>
 
+                    <div class="form-group security-check">
+                        <label for="securityAnswer">
+                            <span class="security-icon">🔒</span> Vérification anti-robot : <span id="securityQuestion"></span> *
+                        </label>
+                        <input type="number" id="securityAnswer" name="securityAnswer" required
+                               placeholder="Votre réponse"
+                               oninvalid="this.setCustomValidity('Veuillez répondre à la question de sécurité')"
+                               oninput="this.setCustomValidity('')">
+                        <input type="hidden" id="expectedAnswer" name="expectedAnswer">
+                    </div>
+
                     <div id="formMessage" class="form-message"></div>
 
                     <button type="submit" class="btn btn-primary btn-submit">
