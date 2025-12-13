@@ -953,20 +953,50 @@ a:hover {
 
 .quartier-label {
     font-family: 'Baloo 2', sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700;
     fill: #0d3d5c;
     text-anchor: middle;
     pointer-events: none;
     stroke: #ffffff;
-    stroke-width: 3px;
+    stroke-width: 4px;
     paint-order: stroke fill;
 }
 
 .quartier-label.label-small {
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 700;
-    stroke-width: 2.5px;
+    stroke-width: 3px;
+}
+
+/* Tooltip for neighborhood hover */
+.carte-senlis-container {
+    position: relative;
+}
+
+.quartier-tooltip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(13, 61, 92, 0.95);
+    color: #ffffff;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: 'Baloo 2', sans-serif;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 100;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    white-space: nowrap;
+}
+
+.quartier-tooltip.visible {
+    opacity: 1;
 }
 
 .carte-legende {

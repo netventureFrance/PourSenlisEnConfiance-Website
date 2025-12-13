@@ -352,8 +352,12 @@ function initConsultationMap() {
     // Generate security question on load
     generateConsultSecurityQuestion();
 
+    // Tooltip element
+    const tooltip = document.getElementById('quartierTooltip');
+
     if (quartiersMap.length > 0) {
         quartiersMap.forEach(quartier => {
+            // Click handler
             quartier.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -374,6 +378,21 @@ function initConsultationMap() {
                     if (selectedQuartierTitle) selectedQuartierTitle.textContent = quartierName;
                     if (selectedQuartierDesc) selectedQuartierDesc.textContent = quartierInfo;
                     if (consultQuartier) consultQuartier.value = quartierName;
+                }
+            });
+
+            // Hover tooltip handlers
+            quartier.addEventListener('mouseenter', function() {
+                const quartierName = this.getAttribute('data-quartier');
+                if (tooltip) {
+                    tooltip.textContent = quartierName;
+                    tooltip.classList.add('visible');
+                }
+            });
+
+            quartier.addEventListener('mouseleave', function() {
+                if (tooltip) {
+                    tooltip.classList.remove('visible');
                 }
             });
         });
