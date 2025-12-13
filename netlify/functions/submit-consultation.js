@@ -99,8 +99,15 @@ exports.handler = async (event) => {
         });
 
         if (!airtableResponse.ok) {
-            const errorData = await airtableResponse.json();
-            console.error('Airtable error:', errorData);
+            const errorText = await airtableResponse.text();
+            console.error('Airtable error response:', errorText);
+
+            let errorData;
+            try {
+                errorData = JSON.parse(errorText);
+            } catch (e) {
+                errorData = { error: { message: errorText } };
+            }
 
             let errorMessage = 'Erreur Airtable: ';
             if (errorData.error && errorData.error.type === 'INVALID_REQUEST_UNKNOWN') {
@@ -111,6 +118,7 @@ exports.handler = async (event) => {
 
             return {
                 statusCode: airtableResponse.status,
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     error: errorMessage,
                     details: errorData
