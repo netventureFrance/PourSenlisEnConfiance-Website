@@ -925,6 +925,7 @@ a:hover {
     stroke-width: 2;
     cursor: pointer;
     transition: all 0.3s ease;
+    pointer-events: all;
 }
 
 .quartier:hover {
