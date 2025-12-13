@@ -520,41 +520,92 @@ a:hover {
 }
 
 /* ===================================
-   Program Section
+   Axes Section (Programme)
    =================================== */
-.program-section {
+.axes-section {
     background: linear-gradient(135deg, #f0fdf4 0%, #f8f9fa 50%, #ffffff 100%) !important;
 }
 
-.program-highlights {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+.axes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
     margin-bottom: 4rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.program-card {
+.axe-card {
     background: var(--white);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px var(--shadow);
+    border-radius: 12px;
+    box-shadow: 0 5px 20px var(--shadow);
     transition: var(--transition);
-    text-align: center;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
 }
 
-.program-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px var(--shadow-hover);
+.axe-card:hover {
+    transform: translateX(10px);
+    box-shadow: 0 10px 35px var(--shadow-hover);
 }
 
-.program-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+.axe-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    font-family: 'Baloo 2', cursive, sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
 }
 
-.program-card h3 {
+.axe-card:nth-child(1) .axe-number {
+    background: linear-gradient(135deg, #0d3d5c 0%, #1a5a8a 100%);
+}
+
+.axe-card:nth-child(2) .axe-number {
+    background: linear-gradient(135deg, #3d9dd9 0%, #5fb5e8 100%);
+}
+
+.axe-card:nth-child(3) .axe-number {
+    background: linear-gradient(135deg, #6cb13e 0%, #8bc95f 100%);
+}
+
+.axe-card:nth-child(4) .axe-number {
+    background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+}
+
+.axe-card:nth-child(5) .axe-number {
+    background: linear-gradient(135deg, #7b1fa2 0%, #ab47bc 100%);
+}
+
+.axe-content {
+    padding: 1.5rem 2rem;
+    flex: 1;
+}
+
+.axe-content h3 {
     color: var(--primary-dark);
-    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.25rem;
+}
+
+.axe-tagline {
+    color: var(--accent-green);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem !important;
+}
+
+.axe-content p:last-child {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 0;
 }
 
 .program-download {
@@ -563,6 +614,9 @@ a:hover {
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 5px 15px var(--shadow);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .program-download h3 {
@@ -1226,8 +1280,21 @@ a:hover {
         grid-template-columns: 1fr;
     }
 
-    .program-highlights {
-        grid-template-columns: 1fr;
+    .axes-grid {
+        gap: 1rem;
+    }
+
+    .axe-number {
+        min-width: 60px;
+        font-size: 2rem;
+    }
+
+    .axe-content {
+        padding: 1rem 1.25rem;
+    }
+
+    .axe-content h3 {
+        font-size: 1.1rem;
     }
 }
 
