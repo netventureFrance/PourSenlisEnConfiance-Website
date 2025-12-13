@@ -970,7 +970,7 @@ a:hover {
     font-family: 'Baloo 2', sans-serif;
     font-size: 18px;
     font-weight: 700;
-    fill: #ffffff;
+    fill: var(--primary-dark);
     text-anchor: middle;
     pointer-events: none;
 }
@@ -999,7 +999,7 @@ a:hover {
 }
 
 .quartier-tooltip.visible {
-    background: var(--accent-green);
+    background: var(--primary-light);
     font-size: 1.4rem;
     font-weight: 700;
 }
