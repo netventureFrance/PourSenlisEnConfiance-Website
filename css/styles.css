@@ -561,6 +561,14 @@ a:hover {
     background: var(--primary-light);
 }
 
+.section:nth-of-type(odd)::before {
+    background: var(--accent-green);
+}
+
+.section:nth-of-type(even)::before {
+    background: var(--primary-light);
+}
+
 .section:first-of-type::before {
     display: none;
 }
