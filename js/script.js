@@ -392,6 +392,7 @@ function initConsultationMap() {
 
             quartier.addEventListener('mouseleave', function() {
                 if (tooltip) {
+                    tooltip.textContent = 'Survolez un quartier';
                     tooltip.classList.remove('visible');
                 }
             });

@@ -975,28 +975,22 @@ a:hover {
 }
 
 .quartier-tooltip {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(13, 61, 92, 0.95);
-    color: #ffffff;
-    padding: 1rem 2rem;
-    border-radius: 12px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    font-family: 'Baloo 2', sans-serif;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    z-index: 100;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    white-space: nowrap;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-dark);
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    font-family: 'Baloo 2', sans-serif;
+    transition: all 0.2s ease;
 }
 
 .quartier-tooltip.visible {
-    opacity: 1;
+    background: var(--accent-green);
+    font-size: 1.4rem;
+    font-weight: 700;
 }
 
 .carte-legende {
