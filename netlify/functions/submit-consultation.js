@@ -64,19 +64,21 @@ exports.handler = async (event) => {
             minute: '2-digit'
         });
 
-        // Combine Idée and Message complémentaire into one Message field
-        const fullMessage = formData.message
-            ? `[Quartier: ${formData.quartier}]\n\nIdée/Suggestion:\n${formData.idee}\n\nMessage complémentaire:\n${formData.message}`
-            : `[Quartier: ${formData.quartier}]\n\nIdée/Suggestion:\n${formData.idee}`;
+        // Combine all info into Message field (compatible with existing Contacts table)
+        let fullMessage = `[CONSULTATION CITOYENNE]\n\n`;
+        fullMessage += `Quartier: ${formData.quartier}\n`;
+        fullMessage += `Statut: ${formData.statut}\n`;
+        fullMessage += `Tranche d'âge: ${formData.age}\n\n`;
+        fullMessage += `--- Idée/Suggestion ---\n${formData.idee}`;
+        if (formData.message) {
+            fullMessage += `\n\n--- Message complémentaire ---\n${formData.message}`;
+        }
 
-        // Prepare data for Airtable - Using existing Contacts table with new fields
+        // Prepare data for Airtable - Using existing Contacts table
         const airtableData = {
             fields: {
                 'Nom': formData.nom,
                 'Email': formData.email,
-                'Statut': formData.statut,
-                'Tranche d\'âge': formData.age,
-                'Quartier': formData.quartier,
                 'Message': fullMessage,
                 'Newsletter': formData.newsletter || false,
                 'GDPR Consent': formData.gdpr || false,
