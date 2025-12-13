@@ -548,6 +548,24 @@ a:hover {
    =================================== */
 .section {
     padding: 5rem 0;
+    position: relative;
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 800px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-light), var(--accent-green), var(--primary-light), transparent);
+    border-radius: 2px;
+}
+
+.section:first-of-type::before {
+    display: none;
 }
 
 .section:nth-child(even) {
@@ -955,18 +973,14 @@ a:hover {
     font-family: 'Baloo 2', sans-serif;
     font-size: 18px;
     font-weight: 700;
-    fill: #0d3d5c;
+    fill: #ffffff;
     text-anchor: middle;
     pointer-events: none;
-    stroke: #ffffff;
-    stroke-width: 4px;
-    paint-order: stroke fill;
 }
 
 .quartier-label.label-small {
     font-size: 14px;
     font-weight: 700;
-    stroke-width: 3px;
 }
 
 /* Tooltip for neighborhood hover */
