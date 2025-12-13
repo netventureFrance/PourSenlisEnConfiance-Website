@@ -461,6 +461,35 @@ document.body.insertBefore(skipLink, document.body.firstChild);
 // ===================================
 // Consultation Citoyenne - Interactive Map
 // ===================================
+function generateConsultSecurityQuestion() {
+    const questionEl = document.getElementById('consultSecurityQuestion');
+    const expectedEl = document.getElementById('consultExpectedAnswer');
+
+    if (questionEl && expectedEl) {
+        const num1 = Math.floor(Math.random() * 10) + 1;
+        const num2 = Math.floor(Math.random() * 10) + 1;
+        const operations = [
+            { symbol: '+', calc: (a, b) => a + b },
+            { symbol: '-', calc: (a, b) => a - b },
+            { symbol: '×', calc: (a, b) => a * b }
+        ];
+
+        const adjustedNum1 = Math.max(num1, num2);
+        const adjustedNum2 = Math.min(num1, num2);
+
+        const op = operations[Math.floor(Math.random() * operations.length)];
+        const answer = op.symbol === '-'
+            ? op.calc(adjustedNum1, adjustedNum2)
+            : op.calc(num1, num2);
+
+        const displayNum1 = op.symbol === '-' ? adjustedNum1 : num1;
+        const displayNum2 = op.symbol === '-' ? adjustedNum2 : num2;
+
+        questionEl.textContent = `${displayNum1} ${op.symbol} ${displayNum2} = ?`;
+        expectedEl.value = answer;
+    }
+}
+
 function initConsultationMap() {
     const quartiersMap = document.querySelectorAll('.quartier');
     const quartierDetail = document.getElementById('quartierDetail');
@@ -470,6 +499,9 @@ function initConsultationMap() {
     const consultQuartier = document.getElementById('consultQuartier');
     const consultationForm = document.getElementById('consultationForm');
     const consultationMessage = document.getElementById('consultationMessage');
+
+    // Generate security question on load
+    generateConsultSecurityQuestion();
 
     if (quartiersMap.length > 0) {
         quartiersMap.forEach(quartier => {
@@ -503,14 +535,47 @@ function initConsultationMap() {
         consultationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            // Check honeypot
+            const honeypot = consultationForm.querySelector('[name="bot-field-consult"]');
+            if (honeypot && honeypot.value) {
+                return false;
+            }
+
             const formData = {
                 quartier: consultQuartier ? consultQuartier.value : '',
-                nom: document.getElementById('consultNom').value.trim() || 'Anonyme',
-                idee: document.getElementById('consultIdee').value.trim()
+                name: document.getElementById('consultNom').value.trim(),
+                email: document.getElementById('consultEmail').value.trim(),
+                idee: document.getElementById('consultIdee').value.trim(),
+                newsletter: document.getElementById('consultNewsletter').checked,
+                gdpr: document.getElementById('consultGdpr').checked,
+                securityAnswer: document.getElementById('consultSecurityAnswer').value.trim(),
+                expectedAnswer: parseInt(document.getElementById('consultExpectedAnswer').value)
             };
 
-            if (!formData.idee) {
-                showConsultationMessage('Veuillez entrer votre idée ou suggestion.', 'error');
+            // Validate required fields
+            if (!formData.name || !formData.email || !formData.idee) {
+                showConsultationMessage('Veuillez remplir tous les champs obligatoires.', 'error');
+                return;
+            }
+
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                showConsultationMessage('Veuillez entrer une adresse email valide.', 'error');
+                return;
+            }
+
+            // Check GDPR
+            if (!formData.gdpr) {
+                showConsultationMessage('Vous devez accepter la politique de confidentialité.', 'error');
+                return;
+            }
+
+            // Check security answer
+            if (!formData.securityAnswer || parseInt(formData.securityAnswer) !== formData.expectedAnswer) {
+                showConsultationMessage('La réponse à la vérification est incorrecte.', 'error');
+                generateConsultSecurityQuestion();
+                document.getElementById('consultSecurityAnswer').value = '';
                 return;
             }
 
@@ -532,11 +597,7 @@ function initConsultationMap() {
                 if (response.ok && result.success) {
                     showConsultationMessage('Merci ! Votre idée a été enregistrée.', 'success');
                     consultationForm.reset();
-                    // Update stats (visual only)
-                    const statNumber = document.querySelector('.stat-number');
-                    if (statNumber) {
-                        statNumber.textContent = parseInt(statNumber.textContent) + 1;
-                    }
+                    generateConsultSecurityQuestion();
                 } else {
                     showConsultationMessage('Une erreur est survenue. Veuillez réessayer.', 'error');
                 }
@@ -545,6 +606,7 @@ function initConsultationMap() {
                 // Show success anyway for demo
                 showConsultationMessage('Merci pour votre contribution !', 'success');
                 consultationForm.reset();
+                generateConsultSecurityQuestion();
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;

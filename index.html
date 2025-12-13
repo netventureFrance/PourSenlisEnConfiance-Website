@@ -53,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="css/styles.css?v=20251213k" as="style">
+    <link rel="preload" href="css/styles.css?v=20251213l" as="style">
     <link rel="preload" href="images/PSEC.png" as="image">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" as="style">
 
@@ -61,7 +61,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/styles.css?v=20251213k">
+    <link rel="stylesheet" href="css/styles.css?v=20251213l">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -558,15 +558,48 @@
                         <p class="quartier-description" id="selectedQuartierDesc"></p>
 
                         <form id="consultationForm" class="consultation-form">
+                            <!-- Honeypot for spam protection -->
+                            <p class="hidden">
+                                <label>Ne pas remplir : <input name="bot-field-consult" tabindex="-1"></label>
+                            </p>
+
                             <div class="form-group">
-                                <label for="consultNom">Votre nom (optionnel)</label>
-                                <input type="text" id="consultNom" name="nom" placeholder="Anonyme si vide">
+                                <label for="consultNom">Nom et Prénom *</label>
+                                <input type="text" id="consultNom" name="nom" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="consultEmail">Email *</label>
+                                <input type="email" id="consultEmail" name="email" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="consultIdee">Votre idée ou suggestion *</label>
                                 <textarea id="consultIdee" name="idee" rows="4" required
                                           placeholder="Qu'aimeriez-vous voir améliorer dans ce quartier ?"></textarea>
+                            </div>
+
+                            <div class="form-group form-checkbox">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="consultNewsletter" name="newsletter" value="oui">
+                                    <span>Je souhaite recevoir la newsletter de campagne</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group form-checkbox">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="consultGdpr" name="gdpr" required>
+                                    <span>J'accepte la <a href="/mentions-legales.html#donnees" target="_blank">politique de confidentialité</a> *</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group security-check">
+                                <label for="consultSecurityAnswer">
+                                    <span class="security-icon">🔒</span> Vérification : <span id="consultSecurityQuestion"></span> *
+                                </label>
+                                <input type="number" id="consultSecurityAnswer" name="securityAnswer" required
+                                       placeholder="Votre réponse">
+                                <input type="hidden" id="consultExpectedAnswer" name="expectedAnswer">
                             </div>
 
                             <input type="hidden" id="consultQuartier" name="quartier">
@@ -577,17 +610,6 @@
                         </form>
 
                         <div id="consultationMessage" class="form-message"></div>
-                    </div>
-
-                    <div class="consultation-stats">
-                        <div class="stat-item">
-                            <span class="stat-number">124</span>
-                            <span class="stat-label">propositions reçues</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">7</span>
-                            <span class="stat-label">quartiers consultés</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -736,6 +758,6 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="js/script.js?v=20251213c"></script>
+    <script src="js/script.js?v=20251213d"></script>
 </body>
 </html>
