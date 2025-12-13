@@ -414,6 +414,7 @@ function initConsultationMap() {
                 quartier: consultQuartier ? consultQuartier.value : '',
                 nom: document.getElementById('consultNom').value.trim(),
                 email: document.getElementById('consultEmail').value.trim(),
+                phone: document.getElementById('consultPhone') ? document.getElementById('consultPhone').value.trim() : '',
                 statut: document.getElementById('consultStatut').value,
                 age: document.getElementById('consultAge').value,
                 idee: document.getElementById('consultIdee').value.trim(),

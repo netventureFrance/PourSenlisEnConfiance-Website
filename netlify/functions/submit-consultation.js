@@ -75,6 +75,7 @@ exports.handler = async (event) => {
             fields: {
                 'Nom': formData.nom,
                 'Email': formData.email,
+                'Téléphone': formData.phone || '',
                 'Message': fullMessage,
                 'Newsletter': formData.newsletter || false,
                 'GDPR Consent': formData.gdpr || false,
