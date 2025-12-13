@@ -720,6 +720,132 @@ a:hover {
 }
 
 /* ===================================
+   Programme Section (7 Points)
+   =================================== */
+.programme-section {
+    background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 50%, #e8f4fd 100%) !important;
+}
+
+.programme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.programme-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(13, 61, 92, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.programme-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-dark), var(--primary-light));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.programme-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(13, 61, 92, 0.15);
+}
+
+.programme-card:hover::before {
+    opacity: 1;
+}
+
+.programme-card:nth-child(1)::before { background: linear-gradient(90deg, #0d3d5c, #3d9dd9); }
+.programme-card:nth-child(2)::before { background: linear-gradient(90deg, #6cb13e, #8bc95f); }
+.programme-card:nth-child(3)::before { background: linear-gradient(90deg, #3d9dd9, #5fb5e8); }
+.programme-card:nth-child(4)::before { background: linear-gradient(90deg, #dc3545, #e57373); }
+.programme-card:nth-child(5)::before { background: linear-gradient(90deg, #ff9800, #ffb74d); }
+.programme-card:nth-child(6)::before { background: linear-gradient(90deg, #4caf50, #81c784); }
+.programme-card:nth-child(7)::before { background: linear-gradient(90deg, #9c27b0, #ba68c8); }
+
+.programme-card-full {
+    grid-column: span 3;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.programme-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+}
+
+.programme-card:nth-child(1) .programme-icon { background: linear-gradient(135deg, #0d3d5c, #1a5a8a); }
+.programme-card:nth-child(2) .programme-icon { background: linear-gradient(135deg, #6cb13e, #4a8c2a); }
+.programme-card:nth-child(3) .programme-icon { background: linear-gradient(135deg, #3d9dd9, #2980b9); }
+.programme-card:nth-child(4) .programme-icon { background: linear-gradient(135deg, #dc3545, #c62828); }
+.programme-card:nth-child(5) .programme-icon { background: linear-gradient(135deg, #ff9800, #f57c00); }
+.programme-card:nth-child(6) .programme-icon { background: linear-gradient(135deg, #4caf50, #388e3c); }
+.programme-card:nth-child(7) .programme-icon { background: linear-gradient(135deg, #9c27b0, #7b1fa2); }
+
+.programme-card-full .programme-icon {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.programme-icon svg {
+    width: 30px;
+    height: 30px;
+    stroke: white;
+}
+
+.programme-card h3 {
+    color: var(--primary-dark);
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+}
+
+.programme-card p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+@media (max-width: 992px) {
+    .programme-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .programme-card-full {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .programme-grid {
+        grid-template-columns: 1fr;
+    }
+    .programme-card-full {
+        grid-column: span 1;
+    }
+    .programme-card {
+        padding: 1.5rem;
+    }
+}
+
+/* ===================================
    Team Section
    =================================== */
 .team-section {

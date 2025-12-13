@@ -53,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="css/styles.css?v=20251213g" as="style">
+    <link rel="preload" href="css/styles.css?v=20251213h" as="style">
     <link rel="preload" href="images/PSEC.png" as="image">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" as="style">
 
@@ -61,7 +61,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/styles.css?v=20251213g">
+    <link rel="stylesheet" href="css/styles.css?v=20251213h">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -291,18 +291,93 @@
                 </div>
             </div>
 
-            <!-- Programme complet - À venir
-            <div class="program-download">
-                <h3>Programme complet</h3>
-                <p>Téléchargez notre programme détaillé</p>
-                <a href="documents/programme.pdf" class="btn btn-primary" download>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 12l-5-5h3V3h4v4h3l-5 5zM3 15h14v2H3v-2z"/>
-                    </svg>
-                    Télécharger le programme (PDF)
-                </a>
+        </div>
+    </section>
+
+    <!-- Programme Section - 7 Points -->
+    <section class="section programme-section" id="programme-details">
+        <div class="container">
+            <h2 class="section-title">Notre Programme</h2>
+            <p class="section-subtitle">7 domaines d'action pour Senlis 2026-2032</p>
+
+            <div class="programme-grid">
+                <div class="programme-card">
+                    <div class="programme-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>Culture et Patrimoine</h3>
+                    <p>Senlis en Lumière, ouverture du Château Royal, Grand Festival du Patrimoine, Pass Senlis, médiathèque aux horaires élargis.</p>
+                </div>
+
+                <div class="programme-card">
+                    <div class="programme-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
+                    <h3>Urbanisme et Cadre de vie</h3>
+                    <p>Priorité à la réhabilitation, transition énergétique, mobilité douce, pistes cyclables, espaces verts et aire de jeux en centre-ville.</p>
+                </div>
+
+                <div class="programme-card">
+                    <div class="programme-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                    </div>
+                    <h3>Économie et Emploi</h3>
+                    <p>Cellule économique à la mairie, établissement d'enseignement supérieur, marchés revitalisés, tourisme et attractivité renforcés.</p>
+                </div>
+
+                <div class="programme-card">
+                    <div class="programme-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3>Sécurité et Santé</h3>
+                    <p>Police montée, zéro tolérance aux incivilités, vidéo-protection, pôle de santé dans l'Écoquartier, mutuelle municipale.</p>
+                </div>
+
+                <div class="programme-card">
+                    <div class="programme-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3>Jeunesse et Sports</h3>
+                    <p>École supérieure à Senlis, nouveau pôle sportif, centre aquatique, colonies de vacances, plateforme emplois et stages.</p>
+                </div>
+
+                <div class="programme-card">
+                    <div class="programme-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2a10 10 0 1 0 10 10"/>
+                            <path d="M12 2v10l4 4"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>Parc Écologique</h3>
+                    <p>Un parc réinventé : verger, nouveaux accès, espaces de convivialité, parcours pédagogiques, garden party annuelle.</p>
+                </div>
+
+                <div class="programme-card programme-card-full">
+                    <div class="programme-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Communication et Gouvernance</h3>
+                    <p>Site internet modernisé, consultations citoyennes régulières, QR codes pour mini-consultations, transparence assumée et dialogue permanent avec les Senlisiens.</p>
+                </div>
             </div>
-            -->
         </div>
     </section>
 
