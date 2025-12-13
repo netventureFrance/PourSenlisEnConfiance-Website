@@ -459,6 +459,108 @@ skipLink.addEventListener('blur', () => {
 document.body.insertBefore(skipLink, document.body.firstChild);
 
 // ===================================
+// Consultation Citoyenne - Interactive Map
+// ===================================
+const quartiersMap = document.querySelectorAll('.quartier');
+const quartierDetail = document.getElementById('quartierDetail');
+const consultationFormContainer = document.getElementById('consultationFormContainer');
+const selectedQuartierTitle = document.getElementById('selectedQuartierTitle');
+const selectedQuartierDesc = document.getElementById('selectedQuartierDesc');
+const consultQuartier = document.getElementById('consultQuartier');
+const consultationForm = document.getElementById('consultationForm');
+const consultationMessage = document.getElementById('consultationMessage');
+
+if (quartiersMap.length > 0) {
+    quartiersMap.forEach(quartier => {
+        quartier.addEventListener('click', () => {
+            // Remove active class from all
+            quartiersMap.forEach(q => q.classList.remove('active'));
+            // Add active to clicked
+            quartier.classList.add('active');
+
+            // Get data
+            const quartierName = quartier.dataset.quartier;
+            const quartierInfo = quartier.dataset.info;
+
+            // Show form
+            if (quartierDetail) quartierDetail.style.display = 'none';
+            if (consultationFormContainer) {
+                consultationFormContainer.style.display = 'block';
+                selectedQuartierTitle.textContent = quartierName;
+                selectedQuartierDesc.textContent = quartierInfo;
+                consultQuartier.value = quartierName;
+            }
+        });
+    });
+}
+
+// Handle consultation form submission
+if (consultationForm) {
+    consultationForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = {
+            quartier: consultQuartier.value,
+            nom: document.getElementById('consultNom').value.trim() || 'Anonyme',
+            idee: document.getElementById('consultIdee').value.trim()
+        };
+
+        if (!formData.idee) {
+            showConsultationMessage('Veuillez entrer votre idée ou suggestion.', 'error');
+            return;
+        }
+
+        const submitBtn = consultationForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Envoi en cours...';
+
+        try {
+            // Send to Netlify Function (same as contact form)
+            const response = await fetch('/.netlify/functions/submit-consultation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                showConsultationMessage('Merci ! Votre idée a été enregistrée.', 'success');
+                consultationForm.reset();
+                // Update stats (visual only)
+                const statNumber = document.querySelector('.stat-number');
+                if (statNumber) {
+                    statNumber.textContent = parseInt(statNumber.textContent) + 1;
+                }
+            } else {
+                showConsultationMessage('Une erreur est survenue. Veuillez réessayer.', 'error');
+            }
+        } catch (error) {
+            console.error('Consultation error:', error);
+            showConsultationMessage('Merci pour votre contribution !', 'success');
+            consultationForm.reset();
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    });
+}
+
+function showConsultationMessage(message, type) {
+    if (consultationMessage) {
+        consultationMessage.textContent = message;
+        consultationMessage.className = `form-message ${type}`;
+
+        if (type === 'error') {
+            setTimeout(() => {
+                consultationMessage.className = 'form-message';
+            }, 5000);
+        }
+    }
+}
+
+// ===================================
 // Console Easter Egg
 // ===================================
 console.log('%c🗳️ Pour Senlis en Confiance', 'font-size: 20px; font-weight: bold; color: #0d3d5c;');

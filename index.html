@@ -53,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="css/styles.css?v=20251213i" as="style">
+    <link rel="preload" href="css/styles.css?v=20251213j" as="style">
     <link rel="preload" href="images/PSEC.png" as="image">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" as="style">
 
@@ -61,7 +61,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/styles.css?v=20251213i">
+    <link rel="stylesheet" href="css/styles.css?v=20251213j">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -145,6 +145,7 @@
                     <li><a href="#programme-details" class="nav-link">Programme</a></li>
                     <li><a href="#videos" class="nav-link">Vidéos</a></li>
                     <li><a href="#documents" class="nav-link">Documents</a></li>
+                    <li><a href="#consultation" class="nav-link">Votre Avis</a></li>
                     <li><a href="#contact" class="nav-link nav-link-cta">Contact</a></li>
                 </ul>
             </div>
@@ -464,6 +465,134 @@
                     <a href="documents/tract.pdf" class="btn btn-outline" download aria-label="Télécharger le tract de campagne en PDF">Télécharger</a>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Consultation Citoyenne Section -->
+    <section class="section consultation-section" id="consultation">
+        <div class="container">
+            <h2 class="section-title">Votre Avis Compte</h2>
+            <p class="section-subtitle">Cliquez sur votre quartier et partagez vos idées pour Senlis</p>
+
+            <div class="consultation-content">
+                <div class="carte-senlis-container">
+                    <svg class="carte-senlis" viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Fond de carte -->
+                        <defs>
+                            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+                            </filter>
+                        </defs>
+
+                        <!-- Centre Historique -->
+                        <path class="quartier" id="q-centre"
+                              d="M250,180 L350,180 L370,220 L360,280 L300,300 L240,280 L230,220 Z"
+                              data-quartier="Centre Historique"
+                              data-info="Cathédrale, Château Royal, commerces"/>
+
+                        <!-- Villevert / Nord -->
+                        <path class="quartier" id="q-villevert"
+                              d="M200,80 L400,80 L420,120 L380,180 L250,180 L180,150 L180,100 Z"
+                              data-quartier="Villevert"
+                              data-info="Quartier résidentiel nord"/>
+
+                        <!-- Ordener / Ouest -->
+                        <path class="quartier" id="q-ordener"
+                              d="M80,150 L180,150 L230,220 L220,300 L180,350 L100,320 L60,250 Z"
+                              data-quartier="Quartier Ordener"
+                              data-info="Caserne Ordener, équipements sportifs"/>
+
+                        <!-- Val d'Aunette / Est -->
+                        <path class="quartier" id="q-valdaunette"
+                              d="M370,220 L450,200 L520,250 L500,350 L420,380 L360,340 L360,280 Z"
+                              data-quartier="Val d'Aunette"
+                              data-info="Quartier résidentiel est"/>
+
+                        <!-- Brichebay / Sud-Ouest -->
+                        <path class="quartier" id="q-brichebay"
+                              d="M100,320 L180,350 L200,420 L140,450 L60,400 Z"
+                              data-quartier="Brichebay"
+                              data-info="Écoquartier, développement durable"/>
+
+                        <!-- Saint-Vincent / Sud -->
+                        <path class="quartier" id="q-saintvincent"
+                              d="M180,350 L300,300 L360,340 L340,420 L260,450 L200,420 Z"
+                              data-quartier="Saint-Vincent"
+                              data-info="Parc écologique, voie verte"/>
+
+                        <!-- Montauban / Sud-Est -->
+                        <path class="quartier" id="q-montauban"
+                              d="M360,340 L420,380 L450,450 L380,470 L340,420 Z"
+                              data-quartier="Montauban"
+                              data-info="Forêt, zone naturelle"/>
+
+                        <!-- Labels des quartiers -->
+                        <text x="300" y="245" class="quartier-label">Centre</text>
+                        <text x="300" y="130" class="quartier-label">Villevert</text>
+                        <text x="140" y="250" class="quartier-label">Ordener</text>
+                        <text x="440" y="290" class="quartier-label">Val d'Aunette</text>
+                        <text x="130" y="390" class="quartier-label">Brichebay</text>
+                        <text x="270" y="380" class="quartier-label">St-Vincent</text>
+                        <text x="400" y="420" class="quartier-label">Montauban</text>
+                    </svg>
+
+                    <div class="carte-legende">
+                        <p>Cliquez sur un quartier pour partager vos idées</p>
+                    </div>
+                </div>
+
+                <div class="consultation-info">
+                    <div class="quartier-detail" id="quartierDetail">
+                        <div class="quartier-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            <h3>Sélectionnez un quartier</h3>
+                            <p>Cliquez sur la carte pour voir les détails et partager vos idées pour ce quartier</p>
+                        </div>
+                    </div>
+
+                    <div class="consultation-form-container" id="consultationFormContainer" style="display: none;">
+                        <h3 id="selectedQuartierTitle">Votre quartier</h3>
+                        <p class="quartier-description" id="selectedQuartierDesc"></p>
+
+                        <form id="consultationForm" class="consultation-form">
+                            <div class="form-group">
+                                <label for="consultNom">Votre nom (optionnel)</label>
+                                <input type="text" id="consultNom" name="nom" placeholder="Anonyme si vide">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="consultIdee">Votre idée ou suggestion *</label>
+                                <textarea id="consultIdee" name="idee" rows="4" required
+                                          placeholder="Qu'aimeriez-vous voir améliorer dans ce quartier ?"></textarea>
+                            </div>
+
+                            <input type="hidden" id="consultQuartier" name="quartier">
+
+                            <button type="submit" class="btn btn-primary">
+                                Envoyer mon idée
+                            </button>
+                        </form>
+
+                        <div id="consultationMessage" class="form-message"></div>
+                    </div>
+
+                    <div class="consultation-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">124</span>
+                            <span class="stat-label">propositions reçues</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">7</span>
+                            <span class="stat-label">quartiers consultés</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="consultation-note">Chaque proposition compte : ensemble, construisons l'avenir de Senlis</p>
         </div>
     </section>
 
