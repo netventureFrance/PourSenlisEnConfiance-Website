@@ -606,22 +606,26 @@ a:hover {
 }
 
 .candidate-image {
-    display: flex;
-    align-items: stretch;
+    position: relative;
+    min-height: 300px;
 }
 
 .candidate-image img {
-    border-radius: 10px;
-    box-shadow: 0 10px 30px var(--shadow);
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: top center;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px var(--shadow);
 }
 
 .candidate-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .candidate-info h3 {
@@ -1858,8 +1862,14 @@ a:hover {
         grid-template-columns: 1fr;
     }
 
+    .candidate-image {
+        min-height: 350px;
+        max-height: 450px;
+    }
+
     .candidate-image img {
-        max-height: 400px;
+        position: absolute;
+        height: 100%;
         object-fit: cover;
     }
 
