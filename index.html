@@ -53,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="css/styles.css?v=20251213" as="style">
+    <link rel="preload" href="css/styles.css?v=20251213b" as="style">
     <link rel="preload" href="images/PSEC.png" as="image">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" as="style">
 
@@ -61,7 +61,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/styles.css?v=20251213">
+    <link rel="stylesheet" href="css/styles.css?v=20251213b">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -142,7 +142,6 @@
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="#candidate" class="nav-link">La Candidate</a></li>
                     <li><a href="#programme" class="nav-link">Nos Axes</a></li>
-                    <li><a href="#galerie" class="nav-link">Galerie</a></li>
                     <li><a href="#videos" class="nav-link">Vidéos</a></li>
                     <li><a href="#documents" class="nav-link">Documents</a></li>
                     <li><a href="#contact" class="nav-link nav-link-cta">Contact</a></li>
@@ -162,18 +161,46 @@
             <div class="hero-circle hero-circle-3"></div>
             <div class="hero-circle hero-circle-4"></div>
         </div>
-        <div class="hero-cathedral" aria-hidden="true"></div>
 
         <div class="container hero-content">
-            <div class="hero-logo-display">
-                <img src="images/PSEC_logo_no_text.png" alt="Pour Senlis en Confiance - Logo" class="hero-logo-image">
-            </div>
-            <h1 class="hero-title">Pascale Loiseleur</h1>
-            <p class="hero-subtitle">Pour Senlis en Confiance</p>
-            <p class="hero-description">Élections Municipales 2026</p>
-            <div class="hero-buttons">
-                <a href="#programme" class="btn btn-primary">Découvrir le programme</a>
-                <a href="#contact" class="btn btn-secondary">Nous contacter</a>
+            <div class="hero-split">
+                <!-- Left: Logo and Text -->
+                <div class="hero-left">
+                    <div class="hero-logo-display">
+                        <img src="images/PSEC_logo_no_text.png" alt="Pour Senlis en Confiance - Logo" class="hero-logo-image">
+                    </div>
+                    <h1 class="hero-title">Pascale Loiseleur</h1>
+                    <p class="hero-subtitle">Pour Senlis en Confiance</p>
+                    <p class="hero-description">Élections Municipales 2026</p>
+                    <div class="hero-buttons">
+                        <a href="#programme" class="btn btn-primary">Découvrir nos axes</a>
+                        <a href="#contact" class="btn btn-secondary">Nous contacter</a>
+                    </div>
+                </div>
+
+                <!-- Right: Photo Carousel -->
+                <div class="hero-right">
+                    <div class="hero-carousel" id="heroCarousel">
+                        <div class="carousel-slide active">
+                            <img src="images/photo_campagne_1.jpg" alt="Photo de campagne 1">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="images/photo_campagne_2.jpg" alt="Photo de campagne 2">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="images/photo_campagne_3.jpg" alt="Photo de campagne 3">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="images/photo_campagne_4.jpg" alt="Photo de campagne 4">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="images/photo_campagne_5.jpg" alt="Photo de campagne 5">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="images/photo_campagne_6.jpg" alt="Photo de campagne 6">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -274,47 +301,6 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section class="section gallery-section" id="galerie">
-        <div class="container">
-            <h2 class="section-title">Galerie Photos</h2>
-            <p class="section-subtitle">Les moments forts de la campagne</p>
-
-            <div class="gallery-grid" id="galleryGrid">
-                <!-- Campaign photos -->
-                <div class="gallery-item">
-                    <img src="images/photo_campagne_1.jpg"
-                         alt="Photo de campagne 1 - Pour Senlis en Confiance"
-                         loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/photo_campagne_2.jpg"
-                         alt="Photo de campagne 2 - Pour Senlis en Confiance"
-                         loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/photo_campagne_3.jpg"
-                         alt="Photo de campagne 3 - Pour Senlis en Confiance"
-                         loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/photo_campagne_4.jpg"
-                         alt="Photo de campagne 4 - Pour Senlis en Confiance"
-                         loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/photo_campagne_5.jpg"
-                         alt="Photo de campagne 5 - Pour Senlis en Confiance"
-                         loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/photo_campagne_6.jpg"
-                         alt="Photo de campagne 6 - Pour Senlis en Confiance"
-                         loading="lazy">
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Videos Section -->
     <section class="section videos-section" id="videos">
@@ -499,6 +485,6 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="js/script.js?v=20251203"></script>
+    <script src="js/script.js?v=20251213"></script>
 </body>
 </html>

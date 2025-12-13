@@ -1,4 +1,23 @@
 // ===================================
+// Hero Carousel - Auto-slide
+// ===================================
+const heroCarousel = document.getElementById('heroCarousel');
+if (heroCarousel) {
+    const slides = heroCarousel.querySelectorAll('.carousel-slide');
+    let currentSlide = 0;
+    const slideInterval = 4000; // 4 seconds
+
+    function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+
+    // Start auto-slide
+    setInterval(nextSlide, slideInterval);
+}
+
+// ===================================
 // Mobile Navigation Toggle
 // ===================================
 const navToggle = document.getElementById('navToggle');

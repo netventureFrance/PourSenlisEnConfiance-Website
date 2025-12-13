@@ -304,16 +304,36 @@ a:hover {
     width: 100%;
 }
 
+/* Hero Split Layout */
+.hero-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-left {
+    text-align: left;
+}
+
+.hero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .hero-logo-display {
     margin-bottom: 1.2rem;
     animation: fadeInDown 1s ease;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .hero-logo-image {
-    max-width: 500px;
-    width: 90%;
+    max-width: 280px;
+    width: 100%;
     height: auto;
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
     animation: float 4s ease-in-out infinite;
@@ -322,9 +342,40 @@ a:hover {
 }
 
 .hero-logo-image:hover {
-    transform: scale(1.1) translateY(-10px);
+    transform: scale(1.05) translateY(-5px);
     filter: drop-shadow(0 15px 40px rgba(108, 177, 62, 0.6));
     animation: none;
+}
+
+/* Hero Carousel */
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    aspect-ratio: 4/3;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 @keyframes fadeInDown {
@@ -1276,6 +1327,28 @@ a:hover {
 
     .nav-toggle {
         display: flex;
+    }
+
+    .hero-split {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .hero-left {
+        text-align: center;
+    }
+
+    .hero-logo-display {
+        justify-content: center;
+    }
+
+    .hero-logo-image {
+        max-width: 200px;
+    }
+
+    .hero-carousel {
+        max-width: 350px;
     }
 
     .candidate-grid {
