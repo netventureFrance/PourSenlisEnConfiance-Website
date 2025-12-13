@@ -1,20 +1,37 @@
 // ===================================
-// Hero Carousel - Auto-slide
+// Hero Carousel - Auto-slide with indicators
 // ===================================
 const heroCarousel = document.getElementById('heroCarousel');
 if (heroCarousel) {
     const slides = heroCarousel.querySelectorAll('.carousel-slide');
+    const dots = heroCarousel.querySelectorAll('.carousel-dot');
     let currentSlide = 0;
     const slideInterval = 4000; // 4 seconds
+    let autoSlideTimer;
 
-    function nextSlide() {
+    function goToSlide(index) {
         slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
+        dots[currentSlide].classList.remove('active');
+        currentSlide = index;
         slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
     }
 
+    function nextSlide() {
+        goToSlide((currentSlide + 1) % slides.length);
+    }
+
+    // Click on dots to navigate
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            clearInterval(autoSlideTimer);
+            goToSlide(index);
+            autoSlideTimer = setInterval(nextSlide, slideInterval);
+        });
+    });
+
     // Start auto-slide
-    setInterval(nextSlide, slideInterval);
+    autoSlideTimer = setInterval(nextSlide, slideInterval);
 }
 
 // ===================================
