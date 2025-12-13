@@ -824,6 +824,12 @@ a:hover {
     gap: 2rem;
 }
 
+.documents-grid-single {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
 .document-card {
     background: var(--white);
     padding: 2rem;
