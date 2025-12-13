@@ -602,12 +602,26 @@ a:hover {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
-    align-items: center;
+    align-items: stretch;
+}
+
+.candidate-image {
+    display: flex;
+    align-items: stretch;
 }
 
 .candidate-image img {
     border-radius: 10px;
     box-shadow: 0 10px 30px var(--shadow);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.candidate-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .candidate-info h3 {
@@ -630,6 +644,33 @@ a:hover {
 
 .candidate-bio p {
     margin-bottom: 1rem;
+}
+
+/* Bilan Section - Full Width Frame */
+.candidate-bilan {
+    margin-top: 3rem;
+    padding: 2rem 2.5rem;
+    background: linear-gradient(135deg, #f8fbff 0%, #ffffff 100%);
+    border: 2px solid var(--primary);
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 86, 179, 0.1);
+}
+
+.candidate-bilan h3 {
+    font-size: 1.5rem;
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.candidate-bilan p {
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.candidate-bilan p:last-child {
+    margin-bottom: 0;
 }
 
 /* ===================================
@@ -1810,6 +1851,24 @@ a:hover {
 
     .candidate-grid {
         grid-template-columns: 1fr;
+    }
+
+    .candidate-image img {
+        max-height: 400px;
+        object-fit: cover;
+    }
+
+    .candidate-bilan {
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .candidate-bilan h3 {
+        font-size: 1.3rem;
+    }
+
+    .candidate-bilan p {
+        text-align: left;
     }
 
     .contact-content {
