@@ -64,17 +64,13 @@ exports.handler = async (event) => {
             minute: '2-digit'
         });
 
-        // Combine all info into Message field (compatible with existing Contacts table)
-        let fullMessage = `[CONSULTATION CITOYENNE]\n\n`;
-        fullMessage += `Quartier: ${formData.quartier}\n`;
-        fullMessage += `Statut: ${formData.statut}\n`;
-        fullMessage += `Tranche d'âge: ${formData.age}\n\n`;
-        fullMessage += `--- Idée/Suggestion ---\n${formData.idee}`;
+        // Combine idée and message into Message field
+        let fullMessage = formData.idee;
         if (formData.message) {
             fullMessage += `\n\n--- Message complémentaire ---\n${formData.message}`;
         }
 
-        // Prepare data for Airtable - Using existing Contacts table
+        // Prepare data for Airtable - Using existing Contacts table with all columns
         const airtableData = {
             fields: {
                 'Nom': formData.nom,
@@ -84,7 +80,10 @@ exports.handler = async (event) => {
                 'GDPR Consent': formData.gdpr || false,
                 'Date': submissionDate.toISOString(),
                 'Adresse IP': clientIP,
-                'Localisation': geoLocation
+                'Localisation': geoLocation,
+                'Status': formData.statut,
+                'Tranche d\'âge': formData.age,
+                'Quartier': formData.quartier
             }
         };
 
