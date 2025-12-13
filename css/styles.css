@@ -814,10 +814,53 @@ a:hover {
 .programme-card h3 {
     color: var(--primary-dark);
     font-size: 1.15rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
-.programme-card p {
+.programme-intro {
+    color: var(--accent-green);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem !important;
+    font-style: italic;
+}
+
+.projets-phares {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.projets-phares li {
+    color: var(--text-light);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.projets-phares li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.projets-phares li strong {
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.projets-phares-inline {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem 2rem;
+}
+
+.projets-phares-inline li {
+    border-bottom: none;
+    padding: 0.3rem 0;
+}
+
+.programme-card p:not(.programme-intro) {
     color: var(--text-light);
     font-size: 0.9rem;
     line-height: 1.6;
@@ -842,6 +885,9 @@ a:hover {
     }
     .programme-card {
         padding: 1.5rem;
+    }
+    .projets-phares-inline {
+        grid-template-columns: 1fr;
     }
 }
 
