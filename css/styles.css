@@ -315,9 +315,12 @@ a:hover {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: 20px;
-    padding: 1rem;
+    padding: 0.75rem;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .hero-bottom {
@@ -330,14 +333,14 @@ a:hover {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    padding: 1rem 1.5rem;
+    padding: 0.5rem;
 }
 
 .hero-logo-image {
     height: auto;
-    max-height: 400px;
+    max-height: 200px;
     width: auto;
-    max-width: 280px;
+    max-width: 150px;
     filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
     transition: all 0.4s ease;
 }
@@ -346,11 +349,12 @@ a:hover {
 .hero-carousel {
     position: relative;
     width: 100%;
-    max-width: 750px;
+    max-width: 900px;
     aspect-ratio: 16/9;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    flex-grow: 1;
 }
 
 .carousel-slide {
@@ -1367,16 +1371,16 @@ a:hover {
 
     .hero-frame {
         flex-direction: column;
-        padding: 0.75rem;
+        padding: 0.5rem;
     }
 
     .hero-logo-display {
-        padding: 0.75rem;
+        padding: 0.5rem;
     }
 
     .hero-logo-image {
-        max-height: 180px;
-        max-width: 200px;
+        max-height: 120px;
+        max-width: 120px;
     }
 
     .hero-carousel {
