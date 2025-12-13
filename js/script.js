@@ -222,157 +222,6 @@ const revealOnScroll = new IntersectionObserver((entries) => {
 
 revealElements.forEach(el => revealOnScroll.observe(el));
 
-// ===================================
-// Security Question Generator
-// ===================================
-function generateSecurityQuestion() {
-    const securityQuestionEl = document.getElementById('securityQuestion');
-    const expectedAnswerEl = document.getElementById('expectedAnswer');
-
-    if (securityQuestionEl && expectedAnswerEl) {
-        const num1 = Math.floor(Math.random() * 10) + 1;
-        const num2 = Math.floor(Math.random() * 10) + 1;
-        const operations = [
-            { symbol: '+', calc: (a, b) => a + b, text: 'plus' },
-            { symbol: '-', calc: (a, b) => a - b, text: 'moins' },
-            { symbol: '×', calc: (a, b) => a * b, text: 'fois' }
-        ];
-
-        // Ensure subtraction doesn't result in negative numbers
-        const adjustedNum1 = Math.max(num1, num2);
-        const adjustedNum2 = Math.min(num1, num2);
-
-        const op = operations[Math.floor(Math.random() * operations.length)];
-        const answer = op.symbol === '-'
-            ? op.calc(adjustedNum1, adjustedNum2)
-            : op.calc(num1, num2);
-
-        const displayNum1 = op.symbol === '-' ? adjustedNum1 : num1;
-        const displayNum2 = op.symbol === '-' ? adjustedNum2 : num2;
-
-        securityQuestionEl.textContent = `${displayNum1} ${op.symbol} ${displayNum2} = ?`;
-        expectedAnswerEl.value = answer;
-    }
-}
-
-// Generate security question on page load
-generateSecurityQuestion();
-
-// ===================================
-// Contact Form Submission via Netlify Function
-// ===================================
-const contactForm = document.getElementById('contactForm');
-const formMessage = document.getElementById('formMessage');
-
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        // Check honeypot
-        const honeypot = contactForm.querySelector('[name="bot-field"]').value;
-        if (honeypot) {
-            return false; // Spam detected
-        }
-
-        // Get form data including security check
-        const formData = {
-            name: contactForm.querySelector('#name').value.trim(),
-            email: contactForm.querySelector('#email').value.trim(),
-            phone: contactForm.querySelector('#phone').value.trim() || '',
-            message: contactForm.querySelector('#message').value.trim(),
-            newsletter: contactForm.querySelector('#newsletter').checked,
-            gdpr: contactForm.querySelector('#gdpr').checked,
-            securityAnswer: contactForm.querySelector('#securityAnswer').value.trim(),
-            expectedAnswer: parseInt(contactForm.querySelector('#expectedAnswer').value)
-        };
-
-        // Validate required fields
-        if (!formData.name || !formData.email || !formData.message) {
-            showMessage('Veuillez remplir tous les champs obligatoires.', 'error');
-            return false;
-        }
-
-        // Validate email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-            showMessage('Veuillez entrer une adresse email valide.', 'error');
-            return false;
-        }
-
-        // Check GDPR consent
-        if (!formData.gdpr) {
-            showMessage('Vous devez accepter la politique de confidentialité.', 'error');
-            return false;
-        }
-
-        // Check security answer
-        if (!formData.securityAnswer || parseInt(formData.securityAnswer) !== formData.expectedAnswer) {
-            showMessage('La réponse à la vérification de sécurité est incorrecte.', 'error');
-            generateSecurityQuestion(); // Regenerate question
-            contactForm.querySelector('#securityAnswer').value = '';
-            return false;
-        }
-
-        // Disable submit button
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Envoi en cours...';
-
-        try {
-            // Send to Netlify Function
-            const response = await fetch('/.netlify/functions/submit-contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-
-            const result = await response.json();
-
-            if (response.ok && result.success) {
-                showMessage('Merci ! Votre message a été envoyé avec succès.', 'success');
-                contactForm.reset();
-                generateSecurityQuestion(); // Regenerate question for next submission
-
-                // Redirect to thank you page after 2 seconds
-                setTimeout(() => {
-                    window.location.href = '/merci.html';
-                }, 2000);
-            } else {
-                console.error('Submission error:', result);
-                // Show detailed error message
-                const errorMsg = result.error || 'Une erreur est survenue. Veuillez réessayer.';
-                showMessage(errorMsg, 'error');
-
-                // Log details to console for debugging
-                if (result.details) {
-                    console.error('Airtable error details:', result.details);
-                }
-            }
-        } catch (error) {
-            console.error('Submission error:', error);
-            showMessage('Une erreur est survenue. Veuillez réessayer.', 'error');
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
-        }
-    });
-}
-
-function showMessage(message, type) {
-    formMessage.textContent = message;
-    formMessage.className = `form-message ${type}`;
-    formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-    // Auto-hide error messages after 5 seconds
-    if (type === 'error') {
-        setTimeout(() => {
-            formMessage.className = 'form-message';
-        }, 5000);
-    }
-}
 
 // ===================================
 // Active Navigation Link on Scroll
@@ -543,9 +392,12 @@ function initConsultationMap() {
 
             const formData = {
                 quartier: consultQuartier ? consultQuartier.value : '',
-                name: document.getElementById('consultNom').value.trim(),
+                nom: document.getElementById('consultNom').value.trim(),
                 email: document.getElementById('consultEmail').value.trim(),
+                statut: document.getElementById('consultStatut').value,
+                age: document.getElementById('consultAge').value,
                 idee: document.getElementById('consultIdee').value.trim(),
+                message: document.getElementById('consultMessage') ? document.getElementById('consultMessage').value.trim() : '',
                 newsletter: document.getElementById('consultNewsletter').checked,
                 gdpr: document.getElementById('consultGdpr').checked,
                 securityAnswer: document.getElementById('consultSecurityAnswer').value.trim(),
@@ -553,7 +405,7 @@ function initConsultationMap() {
             };
 
             // Validate required fields
-            if (!formData.name || !formData.email || !formData.idee) {
+            if (!formData.nom || !formData.email || !formData.statut || !formData.age || !formData.idee) {
                 showConsultationMessage('Veuillez remplir tous les champs obligatoires.', 'error');
                 return;
             }

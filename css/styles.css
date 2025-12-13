@@ -920,40 +920,49 @@ a:hover {
 }
 
 .quartier {
-    fill: #e8f4fd;
-    stroke: var(--primary-dark);
+    stroke: #ffffff;
     stroke-width: 2;
     cursor: pointer;
     transition: all 0.3s ease;
     pointer-events: all;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
 }
 
 .quartier:hover {
-    fill: var(--primary-light);
-    filter: brightness(1.1);
+    filter: brightness(1.15) drop-shadow(3px 3px 5px rgba(0,0,0,0.4));
+    stroke-width: 3;
+    transform: scale(1.02);
 }
 
 .quartier.active {
-    fill: var(--accent-green);
-    stroke: #4a8c2a;
-    stroke-width: 3;
+    stroke: #ffffff;
+    stroke-width: 4;
+    filter: brightness(1.2) drop-shadow(4px 4px 6px rgba(0,0,0,0.5));
 }
 
-#q-centre { fill: #dbeafe; }
-#q-villevert { fill: #e0f2fe; }
-#q-ordener { fill: #fef3c7; }
-#q-valdaunette { fill: #d1fae5; }
-#q-brichebay { fill: #fce7f3; }
-#q-saintvincent { fill: #e0e7ff; }
-#q-montauban { fill: #dcfce7; }
+/* Couleurs des quartiers basées sur la carte officielle */
+#q-villevert, .q-villevert { fill: #4CAF50; } /* Vert */
+#q-bonsecours, .q-bonsecours { fill: #E91E63; } /* Rose/Magenta */
+#q-valdaunette, .q-valdaunette { fill: #03A9F4; } /* Bleu clair */
+#q-centresud, .q-centresud { fill: #FFEB3B; } /* Jaune */
+#q-saintvincent, .q-saintvincent { fill: #9E9D24; } /* Kaki/Olive */
+#q-zoneactivite, .q-zoneactivite { fill: #BDBDBD; } /* Gris */
+#q-brichebay, .q-brichebay { fill: #F44336; } /* Rouge */
+#q-foursachaux, .q-foursachaux { fill: #FF9800; } /* Orange */
 
 .quartier-label {
     font-family: 'Baloo 2', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    fill: var(--primary-dark);
+    font-size: 13px;
+    font-weight: 700;
+    fill: #ffffff;
     text-anchor: middle;
     pointer-events: none;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.quartier-label.label-small {
+    font-size: 10px;
+    font-weight: 600;
 }
 
 .carte-legende {

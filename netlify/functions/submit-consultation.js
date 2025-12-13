@@ -1,4 +1,4 @@
-// Netlify Function to handle contact form submission to Airtable with Resend email notifications
+// Netlify Function to handle consultation form submission to Airtable with Resend email notifications
 exports.handler = async (event) => {
     // Only allow POST requests
     if (event.httpMethod !== 'POST') {
@@ -12,7 +12,7 @@ exports.handler = async (event) => {
         const formData = JSON.parse(event.body);
 
         // Validate required fields
-        if (!formData.name || !formData.email || !formData.message || !formData.gdpr) {
+        if (!formData.nom || !formData.email || !formData.statut || !formData.age || !formData.quartier || !formData.idee || !formData.gdpr) {
             return {
                 statusCode: 400,
                 body: JSON.stringify({ error: 'Champs requis manquants' })
@@ -27,10 +27,10 @@ exports.handler = async (event) => {
             };
         }
 
-        // Environment variables
+        // Environment variables - Use existing Contacts table
         const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
         const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
-        const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME;
+        const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME; // Existing Contacts table
         const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
         if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID || !AIRTABLE_TABLE_NAME) {
@@ -64,13 +64,20 @@ exports.handler = async (event) => {
             minute: '2-digit'
         });
 
-        // Prepare data for Airtable
+        // Combine Idée and Message complémentaire into one Message field
+        const fullMessage = formData.message
+            ? `[Quartier: ${formData.quartier}]\n\nIdée/Suggestion:\n${formData.idee}\n\nMessage complémentaire:\n${formData.message}`
+            : `[Quartier: ${formData.quartier}]\n\nIdée/Suggestion:\n${formData.idee}`;
+
+        // Prepare data for Airtable - Using existing Contacts table with new fields
         const airtableData = {
             fields: {
-                'Nom': formData.name,
+                'Nom': formData.nom,
                 'Email': formData.email,
-                'Téléphone': formData.phone || '',
-                'Message': formData.message,
+                'Statut': formData.statut,
+                'Tranche d\'âge': formData.age,
+                'Quartier': formData.quartier,
+                'Message': fullMessage,
                 'Newsletter': formData.newsletter || false,
                 'GDPR Consent': formData.gdpr || false,
                 'Date': submissionDate.toISOString(),
@@ -79,8 +86,8 @@ exports.handler = async (event) => {
             }
         };
 
-        // Send to Airtable
-        const airtableResponse = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`, {
+        // Send to Airtable - Using existing Contacts table
+        const airtableResponse = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
@@ -131,6 +138,7 @@ exports.handler = async (event) => {
                     .footer a { color: #a8d98f; text-decoration: none; }
                     .btn { display: inline-block; background-color: #6cb13e; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; margin-top: 15px; }
                     .green-accent { color: #6cb13e; }
+                    .quartier-badge { display: inline-block; background-color: #3d9dd9; color: white; padding: 5px 15px; border-radius: 15px; font-size: 14px; margin-bottom: 10px; }
                 `;
 
                 // 1. Acknowledgment email to the sender
@@ -140,7 +148,7 @@ exports.handler = async (event) => {
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Confirmation de réception</title>
+                    <title>Merci pour votre contribution</title>
                     <style>${emailStyles}</style>
                 </head>
                 <body>
@@ -149,22 +157,24 @@ exports.handler = async (event) => {
                             <h1>Pour Senlis en Confiance</h1>
                         </div>
                         <div class="content">
-                            <h2>Bonjour ${formData.name.split(' ')[0]},</h2>
+                            <h2>Bonjour ${formData.nom.split(' ')[0]},</h2>
 
-                            <p>Nous avons bien reçu votre message et nous vous en remercions !</p>
+                            <p>Merci pour votre contribution à notre consultation citoyenne !</p>
 
                             <div class="highlight-box">
-                                <strong>📬 Votre message a été enregistré le ${formattedDate}</strong>
+                                <strong>Votre idée a été enregistrée le ${formattedDate}</strong>
                             </div>
 
-                            <p>Notre équipe prendra connaissance de votre demande dans les meilleurs délais et vous répondra rapidement.</p>
+                            <p>Votre avis compte pour construire ensemble l'avenir de Senlis. Notre équipe prendra connaissance de votre suggestion avec attention.</p>
 
                             <div class="message-box">
-                                <p class="info-label">Récapitulatif de votre message :</p>
-                                <p><em>"${formData.message.substring(0, 200)}${formData.message.length > 200 ? '...' : ''}"</em></p>
+                                <span class="quartier-badge">${formData.quartier}</span>
+                                <p class="info-label">Votre idée :</p>
+                                <p><em>"${formData.idee.substring(0, 300)}${formData.idee.length > 300 ? '...' : ''}"</em></p>
+                                ${formData.message ? `<p class="info-label" style="margin-top: 15px;">Message complémentaire :</p><p><em>"${formData.message.substring(0, 200)}${formData.message.length > 200 ? '...' : ''}"</em></p>` : ''}
                             </div>
 
-                            ${formData.newsletter ? '<p class="green-accent">✓ Vous êtes inscrit(e) à notre newsletter de campagne.</p>' : ''}
+                            ${formData.newsletter ? '<p class="green-accent">Vous êtes inscrit(e) à notre newsletter de campagne.</p>' : ''}
 
                             <p>À très bientôt,</p>
                             <p><strong>L'équipe Pour Senlis en Confiance</strong><br>
@@ -188,40 +198,51 @@ exports.handler = async (event) => {
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Nouveau message - Formulaire de contact</title>
+                    <title>Nouvelle idée - Consultation Citoyenne</title>
                     <style>${emailStyles}</style>
                 </head>
                 <body>
                     <div class="container">
                         <div class="header">
-                            <h1>📩 Nouveau message reçu</h1>
+                            <h1>Nouvelle idée citoyenne</h1>
                         </div>
                         <div class="content">
-                            <h2>Un nouveau message a été envoyé via le site</h2>
+                            <h2>Une nouvelle contribution a été soumise</h2>
 
                             <div class="highlight-box">
-                                <strong>📅 Reçu le ${formattedDate}</strong>
+                                <strong>Reçue le ${formattedDate}</strong>
                             </div>
 
                             <div class="message-box">
+                                <span class="quartier-badge">${formData.quartier}</span>
                                 <div class="info-row">
-                                    <span class="info-label">Nom :</span> ${formData.name}
+                                    <span class="info-label">Nom :</span> ${formData.nom}
                                 </div>
                                 <div class="info-row">
                                     <span class="info-label">Email :</span> <a href="mailto:${formData.email}">${formData.email}</a>
                                 </div>
                                 <div class="info-row">
-                                    <span class="info-label">Téléphone :</span> ${formData.phone || 'Non renseigné'}
+                                    <span class="info-label">Statut :</span> ${formData.statut}
                                 </div>
                                 <div class="info-row">
-                                    <span class="info-label">Newsletter :</span> ${formData.newsletter ? '✓ Inscrit' : '✗ Non inscrit'}
+                                    <span class="info-label">Tranche d'âge :</span> ${formData.age}
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Newsletter :</span> ${formData.newsletter ? 'Inscrit' : 'Non inscrit'}
                                 </div>
                             </div>
 
-                            <h3 style="color: #0d3d5c;">Message :</h3>
+                            <h3 style="color: #0d3d5c;">Idée / Suggestion :</h3>
                             <div class="message-box" style="background-color: #fff; border-left: 4px solid #6cb13e;">
+                                <p style="white-space: pre-wrap;">${formData.idee}</p>
+                            </div>
+
+                            ${formData.message ? `
+                            <h3 style="color: #0d3d5c;">Message complémentaire :</h3>
+                            <div class="message-box">
                                 <p style="white-space: pre-wrap;">${formData.message}</p>
                             </div>
+                            ` : ''}
 
                             <h3 style="color: #0d3d5c;">Informations techniques :</h3>
                             <div class="message-box" style="font-size: 13px; color: #6c757d;">
@@ -235,11 +256,11 @@ exports.handler = async (event) => {
                                     <span class="info-label">ID Airtable :</span> ${airtableResult.id}
                                 </div>
                                 <div class="info-row">
-                                    <span class="info-label">Consentement RGPD :</span> ${formData.gdpr ? '✓ Accepté' : '✗ Non accepté'}
+                                    <span class="info-label">Consentement RGPD :</span> ${formData.gdpr ? 'Accepté' : 'Non accepté'}
                                 </div>
                             </div>
 
-                            <a href="mailto:${formData.email}?subject=Re: Votre message sur Pour Senlis en Confiance" class="btn">Répondre à ${formData.name.split(' ')[0]}</a>
+                            <a href="mailto:${formData.email}?subject=Re: Votre idée pour ${formData.quartier}" class="btn">Répondre à ${formData.nom.split(' ')[0]}</a>
                         </div>
                         <div class="footer">
                             <p>Notification automatique - Pour Senlis en Confiance</p>
@@ -260,7 +281,7 @@ exports.handler = async (event) => {
                     body: JSON.stringify({
                         from: 'Pour Senlis en Confiance <contact@poursenlisenconfiance.fr>',
                         to: [formData.email],
-                        subject: 'Confirmation de réception de votre message - Pour Senlis en Confiance',
+                        subject: 'Merci pour votre contribution - Consultation Citoyenne',
                         html: acknowledgmentHtml
                     })
                 });
@@ -276,7 +297,7 @@ exports.handler = async (event) => {
                         from: 'Site Web PSEC <contact@poursenlisenconfiance.fr>',
                         to: ['contact@poursenlisenconfiance.fr'],
                         replyTo: formData.email,
-                        subject: `Nouveau message de ${formData.name}`,
+                        subject: `Nouvelle idée de ${formData.nom} - ${formData.quartier}`,
                         html: notificationHtml
                     })
                 });
@@ -292,7 +313,7 @@ exports.handler = async (event) => {
             statusCode: 200,
             body: JSON.stringify({
                 success: true,
-                message: 'Message envoyé avec succès',
+                message: 'Votre idée a été enregistrée avec succès',
                 id: airtableResult.id
             })
         };
