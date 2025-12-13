@@ -334,12 +334,12 @@ a:hover {
     justify-content: center;
     flex-shrink: 0;
     padding: 0.5rem;
-    width: 180px;
-    min-width: 180px;
+    width: 220px;
+    min-width: 220px;
 }
 
 .hero-logo-image {
-    width: 150px;
+    width: 200px;
     height: auto;
     filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
 }
