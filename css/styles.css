@@ -854,7 +854,7 @@ a:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(13, 61, 92, 0.85) 0%, rgba(26, 90, 138, 0.8) 50%, rgba(61, 157, 217, 0.85) 100%);
+    background: linear-gradient(135deg, rgba(13, 61, 92, 0.55) 0%, rgba(26, 90, 138, 0.45) 50%, rgba(61, 157, 217, 0.5) 100%);
     z-index: 2;
 }
 
