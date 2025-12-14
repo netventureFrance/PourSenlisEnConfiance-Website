@@ -811,8 +811,8 @@ a:hover {
 
 /* Axe card with image */
 .axe-image {
-    width: 200px;
-    min-width: 200px;
+    width: 280px;
+    min-width: 280px;
     overflow: hidden;
     position: relative;
     align-self: stretch;
@@ -2189,8 +2189,8 @@ a:hover {
     }
 
     .axe-image {
-        width: 140px;
-        min-width: 140px;
+        width: 180px;
+        min-width: 180px;
     }
 }
 
