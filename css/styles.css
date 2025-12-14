@@ -310,7 +310,8 @@ a:hover {
     color: var(--primary-dark);
     text-shadow: none;
     margin-bottom: 0.5rem;
-    margin-top: 0;
+    margin-top: 1rem;
+    padding-top: 0;
     letter-spacing: 1px;
 }
 
