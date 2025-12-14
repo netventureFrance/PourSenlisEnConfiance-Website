@@ -811,11 +811,12 @@ a:hover {
 
 /* Axe card with image */
 .axe-image {
-    width: 140px;
-    min-width: 140px;
+    width: 220px;
+    min-width: 220px;
     overflow: hidden;
     display: flex;
     align-items: center;
+    aspect-ratio: 16/9;
 }
 
 .axe-image img {
@@ -2181,8 +2182,8 @@ a:hover {
     }
 
     .axe-image {
-        width: 100px;
-        min-width: 100px;
+        width: 160px;
+        min-width: 160px;
     }
 }
 
