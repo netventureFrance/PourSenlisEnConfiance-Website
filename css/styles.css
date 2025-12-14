@@ -920,12 +920,62 @@ a:hover {
     }
 }
 
+/* Programme intro text */
+.programme-intro-text {
+    max-width: 900px;
+    margin: 0 auto 3rem auto;
+    text-align: center;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+}
+
+.programme-intro-text p {
+    margin-bottom: 1rem;
+}
+
+.programme-intro-text p:last-child {
+    margin-bottom: 0;
+}
+
 .programme-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     max-width: 1100px;
     margin: 0 auto;
+}
+
+/* 5-card grid layout */
+.programme-grid-5 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.programme-grid-5 .programme-card:nth-child(4),
+.programme-grid-5 .programme-card:nth-child(5) {
+    grid-column: span 1;
+}
+
+/* Center the last row with 2 cards */
+.programme-grid-5 {
+    justify-items: center;
+}
+
+.programme-grid-5 .programme-card:nth-child(4) {
+    justify-self: end;
+    margin-right: 1rem;
+}
+
+.programme-grid-5 .programme-card:nth-child(5) {
+    justify-self: start;
+    margin-left: 1rem;
+}
+
+/* Programme description text */
+.programme-description {
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 0.95rem;
 }
 
 .programme-card {
@@ -1068,6 +1118,12 @@ a:hover {
     .programme-card-full {
         grid-column: span 2;
     }
+    /* Reset 5-card grid centering for tablet */
+    .programme-grid-5 .programme-card:nth-child(4),
+    .programme-grid-5 .programme-card:nth-child(5) {
+        justify-self: center;
+        margin: 0;
+    }
 }
 
 @media (max-width: 600px) {
@@ -1082,6 +1138,15 @@ a:hover {
     }
     .projets-phares-inline {
         grid-template-columns: 1fr;
+    }
+    /* Reset 5-card grid for mobile */
+    .programme-grid-5 .programme-card:nth-child(4),
+    .programme-grid-5 .programme-card:nth-child(5) {
+        justify-self: stretch;
+        margin: 0;
+    }
+    .programme-intro-text {
+        font-size: 1rem;
     }
 }
 
