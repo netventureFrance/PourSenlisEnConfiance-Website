@@ -801,6 +801,82 @@ a:hover {
    =================================== */
 .programme-section {
     background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 50%, #e8f4fd 100%) !important;
+    position: relative;
+}
+
+/* Christmas Overlay - Hide programme until after Christmas */
+.programme-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #1a5a8a 50%, var(--primary-light) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    padding: 2rem;
+}
+
+.programme-overlay-content {
+    text-align: center;
+    color: var(--white);
+    max-width: 600px;
+}
+
+.programme-overlay .christmas-icon {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.programme-overlay h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--white);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.programme-overlay .overlay-message {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    opacity: 0.95;
+}
+
+.programme-overlay .overlay-submessage {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+}
+
+.programme-overlay .christmas-icons {
+    font-size: 2rem;
+    letter-spacing: 0.5rem;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Responsive for overlay */
+@media (max-width: 768px) {
+    .programme-overlay h2 {
+        font-size: 2rem;
+    }
+    .programme-overlay .overlay-message {
+        font-size: 1.1rem;
+    }
+    .programme-overlay .christmas-icon {
+        font-size: 4rem;
+    }
 }
 
 .programme-grid {
