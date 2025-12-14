@@ -704,30 +704,14 @@ a:hover {
     border-radius: 12px;
     box-shadow: 0 5px 20px var(--shadow);
     margin-bottom: 1.5rem;
-    display: flex;
-    align-items: stretch;
-    overflow: hidden;
-}
-
-.axes-intro-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 80px;
-    font-size: 2rem;
-    color: var(--white);
-    background: linear-gradient(135deg, var(--accent-green) 0%, #8bc95f 100%);
-}
-
-.axes-intro-content {
+    margin-left: 80px;
     padding: 1.5rem 2rem;
-    flex: 1;
     font-size: 1rem;
     line-height: 1.7;
     color: var(--text-dark);
 }
 
-.axes-intro-content p {
+.axes-intro p {
     margin-bottom: 0.8rem;
 }
 
