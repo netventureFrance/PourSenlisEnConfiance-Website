@@ -693,6 +693,11 @@ a:hover {
     background: linear-gradient(135deg, #f0fdf4 0%, #f8f9fa 50%, #ffffff 100%) !important;
 }
 
+.axes-section .section-subtitle {
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
 .axes-intro {
     max-width: 900px;
     margin: 0 auto 2.5rem auto;
