@@ -815,6 +815,7 @@ a:hover {
     min-width: 200px;
     overflow: hidden;
     position: relative;
+    align-self: stretch;
 }
 
 .axe-image img {
@@ -825,6 +826,10 @@ a:hover {
     height: 100%;
     object-fit: cover;
     object-position: center;
+}
+
+.axe-card-with-image {
+    min-height: 120px;
 }
 
 .axe-card-with-image .axe-content {
