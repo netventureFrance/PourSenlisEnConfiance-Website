@@ -693,6 +693,15 @@ a:hover {
     background: linear-gradient(135deg, #f0fdf4 0%, #f8f9fa 50%, #ffffff 100%) !important;
 }
 
+.axes-intro {
+    max-width: 900px;
+    margin: 0 auto 2.5rem auto;
+    text-align: center;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+}
+
 .axes-grid {
     display: flex;
     flex-direction: column;
