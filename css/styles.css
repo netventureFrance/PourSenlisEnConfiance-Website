@@ -702,17 +702,32 @@ a:hover {
 .axes-intro {
     background: var(--white);
     border-radius: 12px;
-    padding: 1.5rem 2rem;
     box-shadow: 0 5px 20px var(--shadow);
     margin-bottom: 1.5rem;
-    border-left: 4px solid var(--accent-green);
-    text-align: left;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+.axes-intro-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    font-size: 2rem;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--accent-green) 0%, #8bc95f 100%);
+}
+
+.axes-intro-content {
+    padding: 1.5rem 2rem;
+    flex: 1;
     font-size: 1rem;
     line-height: 1.7;
     color: var(--text-dark);
 }
 
-.axes-intro p {
+.axes-intro-content p {
     margin-bottom: 0.8rem;
 }
 
