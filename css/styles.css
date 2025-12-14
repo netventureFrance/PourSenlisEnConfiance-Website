@@ -701,15 +701,27 @@ a:hover {
 
 .axes-intro {
     background: var(--white);
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 1.5rem 2rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-    border-left: 4px solid var(--accent-green);
+    box-shadow: 0 5px 20px var(--shadow);
     margin-bottom: 1.5rem;
+    margin-left: 80px;
     text-align: left;
     font-size: 1rem;
     line-height: 1.7;
     color: var(--text-dark);
+    position: relative;
+}
+
+.axes-intro::before {
+    content: '';
+    position: absolute;
+    left: -80px;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    background: linear-gradient(135deg, var(--accent-green) 0%, #8bc95f 100%);
+    border-radius: 12px 0 0 12px;
 }
 
 .axes-intro p {
