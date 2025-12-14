@@ -700,11 +700,15 @@ a:hover {
 }
 
 .axes-intro {
-    max-width: 700px;
-    margin: 0 auto 2rem auto;
-    text-align: center;
-    font-size: 1.05rem;
-    line-height: 1.8;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    border-left: 4px solid var(--accent-green);
+    margin-bottom: 1.5rem;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.7;
     color: var(--text-dark);
 }
 
@@ -712,8 +716,29 @@ a:hover {
     margin-bottom: 0.8rem;
 }
 
-.axes-intro p:last-child {
-    margin-bottom: 0;
+.axes-intro-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.8rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+}
+
+.axes-intro-list li {
+    color: var(--primary-dark);
+}
+
+.axes-intro-list li::before {
+    content: "•";
+    color: var(--accent-green);
+    margin-right: 0.5rem;
+    font-weight: bold;
+}
+
+.axes-intro-conclusion {
+    margin-top: 1rem;
+    margin-bottom: 0 !important;
     font-weight: 600;
     color: var(--accent-green);
 }
