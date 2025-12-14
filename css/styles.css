@@ -706,22 +706,11 @@ a:hover {
     box-shadow: 0 5px 20px var(--shadow);
     margin-bottom: 1.5rem;
     margin-left: 80px;
+    border-left: 4px solid var(--accent-green);
     text-align: left;
     font-size: 1rem;
     line-height: 1.7;
     color: var(--text-dark);
-    position: relative;
-}
-
-.axes-intro::before {
-    content: '';
-    position: absolute;
-    left: -80px;
-    top: 0;
-    bottom: 0;
-    width: 80px;
-    background: linear-gradient(135deg, var(--accent-green) 0%, #8bc95f 100%);
-    border-radius: 12px 0 0 12px;
 }
 
 .axes-intro p {
@@ -731,14 +720,12 @@ a:hover {
 .axes-intro-list {
     list-style: none;
     padding: 0;
-    margin: 0.8rem 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
+    margin: 0.8rem 0 0.8rem 1rem;
 }
 
 .axes-intro-list li {
     color: var(--primary-dark);
+    margin-bottom: 0.3rem;
 }
 
 .axes-intro-list li::before {
