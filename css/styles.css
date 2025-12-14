@@ -704,7 +704,9 @@ a:hover {
     border-radius: 12px;
     box-shadow: 0 5px 20px var(--shadow);
     margin-bottom: 1.5rem;
-    margin-left: 80px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 1.5rem 2rem;
     font-size: 1rem;
     line-height: 1.7;
