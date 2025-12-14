@@ -815,7 +815,8 @@ a:hover {
     min-width: 280px;
     overflow: hidden;
     position: relative;
-    align-self: stretch;
+    aspect-ratio: 16/9;
+    align-self: center;
 }
 
 .axe-image img {
