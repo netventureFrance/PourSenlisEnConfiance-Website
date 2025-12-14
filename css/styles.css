@@ -2172,6 +2172,12 @@ a:hover {
         grid-template-columns: 1fr;
     }
 
+    /* Axes responsive - tablet */
+    .axes-intro {
+        margin-right: auto;
+        max-width: 100%;
+    }
+
     .axes-grid {
         gap: 1rem;
     }
@@ -2190,8 +2196,8 @@ a:hover {
     }
 
     .axe-image {
-        width: 180px;
-        min-width: 180px;
+        width: 150px;
+        min-width: 150px;
     }
 }
 
@@ -2246,6 +2252,69 @@ a:hover {
         width: 100%;
     }
 
+    /* Axes section - Mobile optimization */
+    .axes-intro {
+        padding: 1.2rem 1.5rem;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .axes-intro-list {
+        margin-left: 0.5rem;
+    }
+
+    .axe-card {
+        flex-direction: column;
+    }
+
+    .axe-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .axe-number {
+        min-width: 100%;
+        min-height: 50px;
+        font-size: 1.8rem;
+        padding: 0.5rem;
+    }
+
+    .axe-card-with-image {
+        min-height: auto;
+    }
+
+    .axe-image {
+        width: 100%;
+        min-width: 100%;
+        aspect-ratio: 16/9;
+        max-height: 180px;
+    }
+
+    .axe-image img {
+        position: relative;
+    }
+
+    .axe-content {
+        padding: 1.2rem 1rem;
+    }
+
+    .axe-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .axe-tagline {
+        font-size: 0.9rem;
+    }
+
+    .axe-content p:last-child {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .axe-card-with-image .axe-content {
+        padding-left: 1rem;
+    }
+
     .gallery-grid,
     .videos-grid,
     .documents-grid {
@@ -2278,6 +2347,48 @@ a:hover {
 
     .section-title {
         font-size: 1.8rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Axes section - Small mobile optimization */
+    .axes-intro {
+        padding: 1rem;
+        font-size: 0.9rem;
+        border-left-width: 3px;
+    }
+
+    .axes-intro p {
+        margin-bottom: 0.6rem;
+    }
+
+    .axes-intro-list li {
+        margin-bottom: 0.2rem;
+    }
+
+    .axe-number {
+        font-size: 1.5rem;
+        min-height: 45px;
+    }
+
+    .axe-image {
+        max-height: 150px;
+    }
+
+    .axe-content {
+        padding: 1rem 0.8rem;
+    }
+
+    .axe-content h3 {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+
+    .axe-content p:last-child {
+        font-size: 0.85rem;
     }
 
     .gallery-grid {
