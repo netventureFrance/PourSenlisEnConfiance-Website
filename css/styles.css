@@ -699,27 +699,22 @@ a:hover {
 }
 
 .axes-intro {
-    max-width: 800px;
-    margin: 0 auto 3rem auto;
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
     text-align: center;
-    font-size: 1.1rem;
-    line-height: 1.9;
+    font-size: 1.05rem;
+    line-height: 1.8;
     color: var(--text-dark);
-    background: var(--white);
-    padding: 2rem 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-    border-left: 4px solid var(--accent-green);
 }
 
 .axes-intro p {
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
 .axes-intro p:last-child {
     margin-bottom: 0;
     font-weight: 600;
-    color: var(--primary-dark);
+    color: var(--accent-green);
 }
 
 .axes-grid {
