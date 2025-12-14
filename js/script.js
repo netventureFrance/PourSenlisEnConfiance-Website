@@ -512,7 +512,7 @@ function initChristmasCarousel() {
     if (slides.length === 0) return;
 
     let currentSlide = 0;
-    const slideInterval = 5000; // 5 seconds
+    const slideInterval = 4000; // 4 seconds
 
     function nextSlide() {
         slides[currentSlide].classList.remove('active');
@@ -520,11 +520,16 @@ function initChristmasCarousel() {
         slides[currentSlide].classList.add('active');
     }
 
+    // Start the carousel
     setInterval(nextSlide, slideInterval);
 }
 
-// Initialize Christmas carousel
-initChristmasCarousel();
+// Initialize Christmas carousel when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initChristmasCarousel);
+} else {
+    initChristmasCarousel();
+}
 
 // ===================================
 // Console Easter Egg
