@@ -304,6 +304,15 @@ a:hover {
     width: 100%;
 }
 
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
 /* Hero Frame - Logo + Carousel */
 .hero-frame {
     display: flex;
@@ -2072,6 +2081,11 @@ a:hover {
         display: flex;
     }
 
+    .hero-title {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+    }
+
     .hero-frame {
         flex-direction: column;
         padding: 0.5rem;
@@ -2151,6 +2165,10 @@ a:hover {
 
     .hero {
         margin-top: 70px;
+    }
+
+    .hero-title {
+        font-size: 1.8rem;
     }
 
     .hero-logo-image {
