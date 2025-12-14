@@ -505,6 +505,28 @@ function initConsultationMap() {
 initConsultationMap();
 
 // ===================================
+// Christmas Carousel for Programme Overlay
+// ===================================
+function initChristmasCarousel() {
+    const slides = document.querySelectorAll('.christmas-slide');
+    if (slides.length === 0) return;
+
+    let currentSlide = 0;
+    const slideInterval = 5000; // 5 seconds
+
+    function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+
+    setInterval(nextSlide, slideInterval);
+}
+
+// Initialize Christmas carousel
+initChristmasCarousel();
+
+// ===================================
 // Console Easter Egg
 // ===================================
 console.log('%c🗳️ Pour Senlis en Confiance', 'font-size: 20px; font-weight: bold; color: #0d3d5c;');
