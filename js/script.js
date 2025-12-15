@@ -476,10 +476,7 @@ function initConsultationMap() {
                 }
             } catch (error) {
                 console.error('Consultation error:', error);
-                // Show success anyway for demo
-                showConsultationMessage('Merci pour votre contribution !', 'success');
-                consultationForm.reset();
-                generateConsultSecurityQuestion();
+                showConsultationMessage('Erreur de connexion. Veuillez réessayer.', 'error');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
