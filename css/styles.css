@@ -1010,9 +1010,12 @@ a:hover {
 /* Responsive for overlay */
 @media (max-width: 768px) {
     .christmas-slide {
-        background-size: contain;
+        background-size: cover;
         background-position: center center;
-        background-color: var(--primary-dark);
+    }
+    .programme-overlay {
+        align-items: center;
+        padding-bottom: 2rem;
     }
     .programme-overlay h2 {
         font-size: 2.2rem;
@@ -1030,13 +1033,9 @@ a:hover {
 }
 
 @media (max-width: 480px) {
-    .christmas-slide {
-        background-size: contain;
-        background-position: center top;
-    }
     .programme-overlay {
         padding: 1rem;
-        padding-bottom: 2rem;
+        align-items: center;
     }
     .programme-overlay h2 {
         font-size: 1.8rem;
