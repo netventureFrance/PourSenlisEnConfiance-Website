@@ -1799,6 +1799,10 @@ a:hover {
     margin-bottom: 1rem;
 }
 
+.document-card {
+    position: relative;
+}
+
 .document-card h3 {
     color: var(--primary-dark);
     margin-bottom: 1rem;
@@ -1807,6 +1811,27 @@ a:hover {
 .document-card p {
     color: var(--text-light);
     margin-bottom: 1.5rem;
+}
+
+.document-type {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+}
+
+.document-type-pdf {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.document-type-image {
+    background: #dbeafe;
+    color: #2563eb;
 }
 
 /* ===================================

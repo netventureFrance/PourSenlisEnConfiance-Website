@@ -53,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="css/styles.css?v=20251215n" as="style">
+    <link rel="preload" href="css/styles.css?v=20251215o" as="style">
     <link rel="preload" href="images/new-logo-transparent.png" as="image">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" as="style">
 
@@ -61,7 +61,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/styles.css?v=20251215n">
+    <link rel="stylesheet" href="css/styles.css?v=20251215o">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -572,15 +572,26 @@
             <h2 class="section-title">Documents</h2>
             <p class="section-subtitle">Tracts et documents de campagne</p>
 
-            <div class="documents-grid documents-grid-single">
+            <div class="documents-grid">
                 <div class="document-card">
                     <div class="document-icon" aria-hidden="true">
                         <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Icône document">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
                         </svg>
                     </div>
+                    <span class="document-type document-type-pdf">PDF</span>
                     <h3>Tract de lancement de campagne</h3>
                     <a href="documents/tract.pdf" class="btn btn-outline" download aria-label="Télécharger le tract de campagne en PDF">Télécharger</a>
+                </div>
+                <div class="document-card">
+                    <div class="document-icon" aria-hidden="true">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Icône image">
+                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                        </svg>
+                    </div>
+                    <span class="document-type document-type-image">Image</span>
+                    <h3>QR Code du site</h3>
+                    <a href="images/qrcode_senlis_logo.png" class="btn btn-outline" download aria-label="Télécharger le QR code en PNG">Télécharger</a>
                 </div>
             </div>
         </div>
