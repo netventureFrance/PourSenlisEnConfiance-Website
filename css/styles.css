@@ -940,7 +940,8 @@ a:hover {
     right: 0;
     bottom: 0;
     background-size: cover;
-    background-position: center;
+    background-position: center top;
+    background-repeat: no-repeat;
     opacity: 0;
     transition: opacity 1.5s ease-in-out;
 }
@@ -1008,6 +1009,11 @@ a:hover {
 
 /* Responsive for overlay */
 @media (max-width: 768px) {
+    .christmas-slide {
+        background-size: contain;
+        background-position: center center;
+        background-color: var(--primary-dark);
+    }
     .programme-overlay h2 {
         font-size: 2.2rem;
     }
@@ -1020,6 +1026,26 @@ a:hover {
     .programme-overlay-content {
         padding: 1.5rem;
         margin: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .christmas-slide {
+        background-size: contain;
+        background-position: center top;
+    }
+    .programme-overlay {
+        padding: 1rem;
+        padding-bottom: 2rem;
+    }
+    .programme-overlay h2 {
+        font-size: 1.8rem;
+    }
+    .programme-overlay .overlay-message {
+        font-size: 1rem;
+    }
+    .programme-overlay .overlay-submessage {
+        font-size: 0.9rem;
     }
 }
 
