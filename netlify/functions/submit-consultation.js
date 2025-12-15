@@ -1,9 +1,27 @@
 // Netlify Function to handle consultation form submission to Airtable with Resend email notifications
+
+// CORS headers for Edge and other browsers
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS'
+};
+
 exports.handler = async (event) => {
+    // Handle preflight OPTIONS request (required for CORS in Edge)
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 204,
+            headers: corsHeaders,
+            body: ''
+        };
+    }
+
     // Only allow POST requests
     if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
+            headers: corsHeaders,
             body: JSON.stringify({ error: 'Method Not Allowed' })
         };
     }
@@ -15,6 +33,7 @@ exports.handler = async (event) => {
         if (!formData.nom || !formData.email || !formData.statut || !formData.age || !formData.quartier || !formData.idee || !formData.gdpr) {
             return {
                 statusCode: 400,
+                headers: corsHeaders,
                 body: JSON.stringify({ error: 'Champs requis manquants' })
             };
         }
@@ -23,6 +42,7 @@ exports.handler = async (event) => {
         if (!formData.securityAnswer || parseInt(formData.securityAnswer) !== formData.expectedAnswer) {
             return {
                 statusCode: 400,
+                headers: corsHeaders,
                 body: JSON.stringify({ error: 'Vérification de sécurité incorrecte' })
             };
         }
@@ -36,6 +56,7 @@ exports.handler = async (event) => {
         if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID || !AIRTABLE_TABLE_NAME) {
             return {
                 statusCode: 500,
+                headers: corsHeaders,
                 body: JSON.stringify({ error: 'Configuration serveur manquante' })
             };
         }
@@ -118,7 +139,7 @@ exports.handler = async (event) => {
 
             return {
                 statusCode: airtableResponse.status,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     error: errorMessage,
                     details: errorData
@@ -321,6 +342,7 @@ exports.handler = async (event) => {
 
         return {
             statusCode: 200,
+            headers: corsHeaders,
             body: JSON.stringify({
                 success: true,
                 message: 'Votre idée a été enregistrée avec succès',
@@ -332,6 +354,7 @@ exports.handler = async (event) => {
         console.error('Function error:', error);
         return {
             statusCode: 500,
+            headers: corsHeaders,
             body: JSON.stringify({ error: 'Erreur serveur interne' })
         };
     }
