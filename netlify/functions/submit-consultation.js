@@ -67,12 +67,43 @@ exports.handler = async (event) => {
                          event.headers['client-ip'] ||
                          'Non disponible';
 
-        // Get geo-location from Netlify's geo headers (if available)
-        const geoCountry = event.headers['x-country'] || event.headers['x-nf-country'] || '';
-        const geoCity = event.headers['x-city'] || event.headers['x-nf-city'] || '';
-        const geoRegion = event.headers['x-region'] || event.headers['x-nf-region'] || '';
+        // IP Lookup using ip-api.com (free, no API key needed)
+        let ipInfo = {
+            city: '',
+            region: '',
+            country: '',
+            isp: '',
+            org: '',
+            timezone: '',
+            lat: '',
+            lon: ''
+        };
 
-        const geoLocation = [geoCity, geoRegion, geoCountry].filter(Boolean).join(', ') || 'Non disponible';
+        try {
+            if (clientIP && clientIP !== 'Non disponible') {
+                const ipLookup = await fetch(`http://ip-api.com/json/${clientIP}?fields=status,country,regionName,city,isp,org,timezone,lat,lon`);
+                const ipData = await ipLookup.json();
+                if (ipData.status === 'success') {
+                    ipInfo = {
+                        city: ipData.city || '',
+                        region: ipData.regionName || '',
+                        country: ipData.country || '',
+                        isp: ipData.isp || '',
+                        org: ipData.org || '',
+                        timezone: ipData.timezone || '',
+                        lat: ipData.lat || '',
+                        lon: ipData.lon || ''
+                    };
+                }
+            }
+        } catch (ipError) {
+            console.error('IP lookup error:', ipError);
+        }
+
+        // Build detailed location string
+        const geoLocation = [ipInfo.city, ipInfo.region, ipInfo.country].filter(Boolean).join(', ') || 'Non disponible';
+        const ispInfo = [ipInfo.isp, ipInfo.org].filter(Boolean).join(' / ') || 'Non disponible';
+        const coordinates = (ipInfo.lat && ipInfo.lon) ? `${ipInfo.lat}, ${ipInfo.lon}` : 'Non disponible';
 
         // Current date/time
         const submissionDate = new Date();
@@ -102,7 +133,7 @@ exports.handler = async (event) => {
                 'GDPR Consent': formData.gdpr || false,
                 'Date': submissionDate.toISOString(),
                 'Adresse IP': clientIP,
-                'Localisation': geoLocation,
+                'Localisation': `${geoLocation} | FAI: ${ispInfo} | GPS: ${coordinates} | TZ: ${ipInfo.timezone || 'N/A'}`,
                 'Status': formData.statut,
                 'Tranche d\'âge': formData.age,
                 'Quartier': formData.quartier
@@ -282,6 +313,15 @@ exports.handler = async (event) => {
                                 </div>
                                 <div class="info-row">
                                     <span class="info-label">Localisation :</span> ${geoLocation}
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">FAI / Organisation :</span> ${ispInfo}
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Coordonnées GPS :</span> ${coordinates}
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Fuseau horaire :</span> ${ipInfo.timezone || 'Non disponible'}
                                 </div>
                                 <div class="info-row">
                                     <span class="info-label">ID Airtable :</span> ${airtableResult.id}
