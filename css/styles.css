@@ -700,8 +700,54 @@ a:hover {
    =================================== */
 .axes-section {
     background: linear-gradient(135deg, #f0fdf4 0%, #f8f9fa 50%, #ffffff 100%) !important;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Decorative circles for axes section */
+.axes-section .section-decorative {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.axes-section .section-circle-1 {
+    width: 250px;
+    height: 250px;
+    background: var(--accent-green);
+    top: -80px;
+    right: -80px;
+    animation: float 10s ease-in-out infinite;
+}
+
+.axes-section .section-circle-2 {
+    width: 180px;
+    height: 180px;
+    background: var(--primary-light);
+    bottom: 10%;
+    left: -60px;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+.axes-section .section-circle-3 {
+    width: 100px;
+    height: 100px;
+    border: 3px solid var(--accent-light-green);
+    background: transparent;
+    top: 50%;
+    left: 15%;
+    animation: float 12s ease-in-out infinite;
+}
+
+.axes-section .section-circle-4 {
+    width: 60px;
+    height: 60px;
+    background: var(--accent-light-green);
+    bottom: 20%;
+    right: 5%;
+    animation: float 9s ease-in-out infinite;
+}
 
 .axes-intro {
     display: flex;
@@ -1766,6 +1812,44 @@ a:hover {
    =================================== */
 .documents-section {
     background: linear-gradient(to bottom, #fffbeb 0%, #fef3c7 30%, #ffffff 100%) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative circles for documents section */
+.documents-section .section-decorative {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.12;
+    pointer-events: none;
+}
+
+.documents-section .section-circle-1 {
+    width: 200px;
+    height: 200px;
+    background: var(--accent-green);
+    top: -50px;
+    left: -50px;
+    animation: float 9s ease-in-out infinite;
+}
+
+.documents-section .section-circle-2 {
+    width: 150px;
+    height: 150px;
+    background: var(--primary-light);
+    bottom: -30px;
+    right: -30px;
+    animation: float 7s ease-in-out infinite reverse;
+}
+
+.documents-section .section-circle-3 {
+    width: 80px;
+    height: 80px;
+    border: 3px solid var(--accent-green);
+    background: transparent;
+    top: 40%;
+    right: 10%;
+    animation: float 11s ease-in-out infinite;
 }
 
 .documents-grid {
@@ -1781,12 +1865,15 @@ a:hover {
 }
 
 .document-card {
-    background: var(--white);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 5px 15px var(--shadow);
     text-align: center;
     transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .document-card:hover {
