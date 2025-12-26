@@ -62,30 +62,32 @@ const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 const navLinks = document.querySelectorAll('.nav-link');
 
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
+if (navToggle) {
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
 
-    // Animate hamburger
-    const spans = navToggle.querySelectorAll('span');
-    spans[0].style.transform = navMenu.classList.contains('active')
-        ? 'rotate(-45deg) translate(-5px, 6px)'
-        : 'none';
-    spans[1].style.opacity = navMenu.classList.contains('active') ? '0' : '1';
-    spans[2].style.transform = navMenu.classList.contains('active')
-        ? 'rotate(45deg) translate(-5px, -6px)'
-        : 'none';
-});
-
-// Close mobile menu when clicking on a link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
+        // Animate hamburger
         const spans = navToggle.querySelectorAll('span');
-        spans[0].style.transform = 'none';
-        spans[1].style.opacity = '1';
-        spans[2].style.transform = 'none';
+        spans[0].style.transform = navMenu.classList.contains('active')
+            ? 'rotate(-45deg) translate(-5px, 6px)'
+            : 'none';
+        spans[1].style.opacity = navMenu.classList.contains('active') ? '0' : '1';
+        spans[2].style.transform = navMenu.classList.contains('active')
+            ? 'rotate(45deg) translate(-5px, -6px)'
+            : 'none';
     });
-});
+
+    // Close mobile menu when clicking on a link
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            const spans = navToggle.querySelectorAll('span');
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+        });
+    });
+}
 
 // ===================================
 // Sticky Header on Scroll
