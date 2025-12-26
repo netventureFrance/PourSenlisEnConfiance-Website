@@ -1807,6 +1807,132 @@ a:hover {
     }
 }
 
+/* YouTube Consent Overlay (RGPD Compliant) */
+.video-consent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.video-consent::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    transition: var(--transition);
+}
+
+.video-consent:hover::before {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.video-consent-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 1.5rem;
+    max-width: 90%;
+}
+
+.video-consent-play {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.video-consent:hover .video-consent-play {
+    transform: scale(1.1);
+    background: var(--white);
+}
+
+.video-consent-play svg {
+    width: 30px;
+    height: 30px;
+    fill: #ff0000;
+    margin-left: 5px;
+}
+
+.video-consent-text {
+    color: var(--white);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.video-consent-text strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.video-consent-text small {
+    display: block;
+    margin-top: 0.5rem;
+    opacity: 0.8;
+    font-size: 0.75rem;
+}
+
+/* Shorts specific consent styling */
+.video-short-wrapper .video-consent-play {
+    width: 50px;
+    height: 50px;
+}
+
+.video-short-wrapper .video-consent-play svg {
+    width: 22px;
+    height: 22px;
+    margin-left: 3px;
+}
+
+.video-short-wrapper .video-consent-text {
+    font-size: 0.75rem;
+}
+
+.video-short-wrapper .video-consent-text strong {
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    .video-consent-play {
+        width: 55px;
+        height: 55px;
+    }
+
+    .video-consent-play svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .video-consent-text {
+        font-size: 0.8rem;
+    }
+
+    .video-consent-text strong {
+        font-size: 0.9rem;
+    }
+}
+
 /* ===================================
    Documents Section
    =================================== */

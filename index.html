@@ -53,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="css/styles.css?v=20251215p" as="style">
+    <link rel="preload" href="css/styles.css?v=20251226a" as="style">
     <link rel="preload" href="images/new-logo-transparent.png" as="image">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" as="style">
 
@@ -61,7 +61,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/styles.css?v=20251215p">
+    <link rel="stylesheet" href="css/styles.css?v=20251226a">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -442,13 +442,22 @@
                 <!-- Campaign Video -->
                 <div class="video-item video-item-full">
                     <div class="video-wrapper">
-                        <iframe
-                            src="https://www.youtube.com/embed/RAOPqD9VnBc?rel=0&modestbranding=1"
-                            title="Vidéo de campagne - Pour Senlis en Confiance"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+                        <div class="video-consent"
+                             data-video-id="RAOPqD9VnBc"
+                             data-video-title="Vidéo de campagne - Pour Senlis en Confiance"
+                             style="background-image: url('https://img.youtube.com/vi/RAOPqD9VnBc/maxresdefault.jpg');"
+                             onclick="loadYouTubeVideo(this)">
+                            <div class="video-consent-content">
+                                <div class="video-consent-play">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="video-consent-text">
+                                    <strong>Cliquez pour voir la vidéo</strong>
+                                    En cliquant, vous acceptez les cookies de YouTube.
+                                    <small>Vidéo hébergée par YouTube (Google)</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -458,13 +467,21 @@
             <div class="videos-shorts-grid">
                 <div class="video-short-item">
                     <div class="video-short-wrapper">
-                        <iframe
-                            src="https://www.youtube.com/embed/zLKVFfWcOqg?rel=0&modestbranding=1"
-                            title="Rencontre des Senlisiens sur le marché"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+                        <div class="video-consent"
+                             data-video-id="zLKVFfWcOqg"
+                             data-video-title="Rencontre des Senlisiens sur le marché"
+                             style="background-image: url('https://img.youtube.com/vi/zLKVFfWcOqg/maxresdefault.jpg');"
+                             onclick="loadYouTubeVideo(this)">
+                            <div class="video-consent-content">
+                                <div class="video-consent-play">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="video-consent-text">
+                                    <strong>Voir la vidéo</strong>
+                                    <small>Cookies YouTube</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="video-short-info">
                         <h4>Rencontre sur le marché</h4>
@@ -472,13 +489,21 @@
                 </div>
                 <div class="video-short-item">
                     <div class="video-short-wrapper">
-                        <iframe
-                            src="https://www.youtube.com/embed/7ezrJaQE5S8?rel=0&modestbranding=1"
-                            title="Inauguration de la permanence de campagne"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+                        <div class="video-consent"
+                             data-video-id="7ezrJaQE5S8"
+                             data-video-title="Inauguration de la permanence de campagne"
+                             style="background-image: url('https://img.youtube.com/vi/7ezrJaQE5S8/maxresdefault.jpg');"
+                             onclick="loadYouTubeVideo(this)">
+                            <div class="video-consent-content">
+                                <div class="video-consent-play">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="video-consent-text">
+                                    <strong>Voir la vidéo</strong>
+                                    <small>Cookies YouTube</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="video-short-info">
                         <h4>Inauguration de la permanence</h4>
@@ -486,13 +511,21 @@
                 </div>
                 <div class="video-short-item">
                     <div class="video-short-wrapper">
-                        <iframe
-                            src="https://www.youtube.com/embed/xPtzLiOVl2M?rel=0&modestbranding=1"
-                            title="PLU de Senlis : mettons fin aux idées reçues !"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+                        <div class="video-consent"
+                             data-video-id="xPtzLiOVl2M"
+                             data-video-title="PLU de Senlis : mettons fin aux idées reçues !"
+                             style="background-image: url('https://img.youtube.com/vi/xPtzLiOVl2M/maxresdefault.jpg');"
+                             onclick="loadYouTubeVideo(this)">
+                            <div class="video-consent-content">
+                                <div class="video-consent-play">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="video-consent-text">
+                                    <strong>Voir la vidéo</strong>
+                                    <small>Cookies YouTube</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="video-short-info">
                         <h4>PLU de Senlis : fin aux idées reçues !</h4>
@@ -500,13 +533,21 @@
                 </div>
                 <div class="video-short-item">
                     <div class="video-short-wrapper">
-                        <iframe
-                            src="https://www.youtube.com/embed/0nxgqMjGqOc?rel=0&modestbranding=1"
-                            title="Sécurité à Senlis : une priorité"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+                        <div class="video-consent"
+                             data-video-id="0nxgqMjGqOc"
+                             data-video-title="Sécurité à Senlis : une priorité"
+                             style="background-image: url('https://img.youtube.com/vi/0nxgqMjGqOc/maxresdefault.jpg');"
+                             onclick="loadYouTubeVideo(this)">
+                            <div class="video-consent-content">
+                                <div class="video-consent-play">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="video-consent-text">
+                                    <strong>Voir la vidéo</strong>
+                                    <small>Cookies YouTube</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="video-short-info">
                         <h4>Sécurité à Senlis : une priorité</h4>
@@ -514,13 +555,21 @@
                 </div>
                 <div class="video-short-item">
                     <div class="video-short-wrapper">
-                        <iframe
-                            src="https://www.youtube.com/embed/nnzrBA6zCtw?rel=0&modestbranding=1"
-                            title="Rencontre des habitants de Bon Secours"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+                        <div class="video-consent"
+                             data-video-id="nnzrBA6zCtw"
+                             data-video-title="Rencontre des habitants de Bon Secours"
+                             style="background-image: url('https://img.youtube.com/vi/nnzrBA6zCtw/maxresdefault.jpg');"
+                             onclick="loadYouTubeVideo(this)">
+                            <div class="video-consent-content">
+                                <div class="video-consent-play">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="video-consent-text">
+                                    <strong>Voir la vidéo</strong>
+                                    <small>Cookies YouTube</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="video-short-info">
                         <h4>Rencontre des habitants de Bon Secours</h4>
@@ -528,13 +577,21 @@
                 </div>
                 <div class="video-short-item">
                     <div class="video-short-wrapper">
-                        <iframe
-                            src="https://www.youtube.com/embed/95Ukp72CH9U?rel=0&modestbranding=1"
-                            title="Une question, une réponse #1 : Qualité de l'eau à Senlis"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+                        <div class="video-consent"
+                             data-video-id="95Ukp72CH9U"
+                             data-video-title="Une question, une réponse #1 : Qualité de l'eau à Senlis"
+                             style="background-image: url('https://img.youtube.com/vi/95Ukp72CH9U/maxresdefault.jpg');"
+                             onclick="loadYouTubeVideo(this)">
+                            <div class="video-consent-content">
+                                <div class="video-consent-play">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="video-consent-text">
+                                    <strong>Voir la vidéo</strong>
+                                    <small>Cookies YouTube</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="video-short-info">
                         <h4>Question/Réponse #1 : Qualité de l'eau</h4>
@@ -542,13 +599,21 @@
                 </div>
                 <div class="video-short-item">
                     <div class="video-short-wrapper">
-                        <iframe
-                            src="https://www.youtube.com/embed/dfdacQR1hdY?rel=0&modestbranding=1"
-                            title="Marché de Noël avec l'équipe Pour Senlis en confiance"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+                        <div class="video-consent"
+                             data-video-id="dfdacQR1hdY"
+                             data-video-title="Marché de Noël avec l'équipe Pour Senlis en confiance"
+                             style="background-image: url('https://img.youtube.com/vi/dfdacQR1hdY/maxresdefault.jpg');"
+                             onclick="loadYouTubeVideo(this)">
+                            <div class="video-consent-content">
+                                <div class="video-consent-play">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="video-consent-text">
+                                    <strong>Voir la vidéo</strong>
+                                    <small>Cookies YouTube</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="video-short-info">
                         <h4>Marché de Noël avec l'équipe</h4>
@@ -556,13 +621,21 @@
                 </div>
                 <div class="video-short-item">
                     <div class="video-short-wrapper">
-                        <iframe
-                            src="https://www.youtube.com/embed/urQe0Sv35-M?rel=0&modestbranding=1"
-                            title="Porte à porte à l'EcoQuartier avec Pour Senlis en confiance"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+                        <div class="video-consent"
+                             data-video-id="urQe0Sv35-M"
+                             data-video-title="Porte à porte à l'EcoQuartier avec Pour Senlis en confiance"
+                             style="background-image: url('https://img.youtube.com/vi/urQe0Sv35-M/maxresdefault.jpg');"
+                             onclick="loadYouTubeVideo(this)">
+                            <div class="video-consent-content">
+                                <div class="video-consent-play">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="video-consent-text">
+                                    <strong>Voir la vidéo</strong>
+                                    <small>Cookies YouTube</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="video-short-info">
                         <h4>Porte à porte à l'EcoQuartier</h4>
@@ -864,6 +937,6 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="js/script.js?v=20251214d"></script>
+    <script src="js/script.js?v=20251226a"></script>
 </body>
 </html>

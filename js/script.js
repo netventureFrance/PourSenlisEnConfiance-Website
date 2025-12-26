@@ -1,4 +1,25 @@
 // ===================================
+// YouTube Consent - RGPD Compliant
+// ===================================
+function loadYouTubeVideo(element) {
+    const videoId = element.dataset.videoId;
+    const videoTitle = element.dataset.videoTitle || 'Vidéo YouTube';
+    const wrapper = element.parentElement;
+
+    // Create and insert the iframe
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1`;
+    iframe.title = videoTitle;
+    iframe.frameBorder = '0';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+
+    // Replace the consent overlay with the iframe
+    wrapper.innerHTML = '';
+    wrapper.appendChild(iframe);
+}
+
+// ===================================
 // Hero Carousel - Auto-slide with indicators
 // ===================================
 const heroCarousel = document.getElementById('heroCarousel');
