@@ -555,6 +555,187 @@ if (document.readyState === 'loading') {
 }
 
 // ===================================
+// Chatbot Functionality
+// ===================================
+function initChatbot() {
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+    const chatMessages = document.getElementById('chatMessages');
+    const typingIndicator = document.getElementById('typingIndicator');
+    const suggestedQuestions = document.getElementById('suggestedQuestions');
+
+    // Don't run if chatbot elements don't exist
+    if (!chatInput || !chatSend || !chatMessages) return;
+
+    // Conversation history for context
+    let conversationHistory = [];
+
+    // Send message function
+    async function sendMessage(message) {
+        if (!message || message.trim().length === 0) return;
+
+        // Add user message to UI
+        appendMessage(message, true);
+
+        // Clear input and disable
+        chatInput.value = '';
+        chatInput.disabled = true;
+        chatSend.disabled = true;
+
+        // Hide suggested questions after first message
+        if (suggestedQuestions) {
+            suggestedQuestions.style.display = 'none';
+        }
+
+        // Show typing indicator
+        if (typingIndicator) {
+            typingIndicator.style.display = 'block';
+            scrollToBottom();
+        }
+
+        try {
+            // Add to history
+            conversationHistory.push({ role: 'user', content: message });
+
+            // Call the API
+            const response = await fetch('/.netlify/functions/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    history: conversationHistory.slice(-10) // Last 10 messages for context
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                // Add bot response to UI
+                appendMessage(result.response, false);
+
+                // Add to history
+                conversationHistory.push({ role: 'assistant', content: result.response });
+            } else {
+                appendMessage('Désolé, une erreur est survenue. Veuillez réessayer.', false);
+            }
+        } catch (error) {
+            console.error('Chat error:', error);
+            appendMessage('Désolé, je n\'ai pas pu me connecter au serveur. Veuillez réessayer.', false);
+        } finally {
+            // Hide typing indicator
+            if (typingIndicator) {
+                typingIndicator.style.display = 'none';
+            }
+
+            // Re-enable input
+            chatInput.disabled = false;
+            chatSend.disabled = false;
+            chatInput.focus();
+        }
+    }
+
+    // Append message to chat
+    function appendMessage(content, isUser) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isUser ? 'message-user' : 'message-bot'}`;
+
+        // Avatar
+        const avatarDiv = document.createElement('div');
+        avatarDiv.className = 'message-avatar';
+
+        if (isUser) {
+            avatarDiv.innerHTML = '<span>V</span>'; // V for Vous
+        } else {
+            avatarDiv.innerHTML = '<img src="images/PSEC.png" alt="Assistant">';
+        }
+
+        // Content
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'message-content';
+
+        // Parse the content - convert newlines to paragraphs
+        const paragraphs = content.split('\n\n').filter(p => p.trim());
+        if (paragraphs.length > 1) {
+            paragraphs.forEach(p => {
+                const pElement = document.createElement('p');
+                pElement.innerHTML = formatText(p);
+                contentDiv.appendChild(pElement);
+            });
+        } else {
+            // Single paragraph or simple text
+            const lines = content.split('\n').filter(l => l.trim());
+            lines.forEach(line => {
+                const pElement = document.createElement('p');
+                pElement.innerHTML = formatText(line);
+                contentDiv.appendChild(pElement);
+            });
+        }
+
+        messageDiv.appendChild(avatarDiv);
+        messageDiv.appendChild(contentDiv);
+
+        // Insert before typing indicator if it exists, otherwise append
+        if (typingIndicator && typingIndicator.parentNode === chatMessages) {
+            chatMessages.insertBefore(messageDiv, typingIndicator);
+        } else {
+            chatMessages.appendChild(messageDiv);
+        }
+
+        scrollToBottom();
+    }
+
+    // Format text (bold, etc.)
+    function formatText(text) {
+        // Convert **bold** to <strong>
+        text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        // Convert *italic* to <em>
+        text = text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+        // Convert bullet points
+        text = text.replace(/^[-•]\s*/gm, '• ');
+        return text;
+    }
+
+    // Scroll to bottom of messages
+    function scrollToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Event listeners
+    chatSend.addEventListener('click', () => {
+        sendMessage(chatInput.value);
+    });
+
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage(chatInput.value);
+        }
+    });
+
+    // Suggested questions
+    if (suggestedQuestions) {
+        const suggestedBtns = suggestedQuestions.querySelectorAll('.suggested-btn');
+        suggestedBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const question = btn.getAttribute('data-question');
+                if (question) {
+                    sendMessage(question);
+                }
+            });
+        });
+    }
+}
+
+// Initialize chatbot when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initChatbot);
+} else {
+    initChatbot();
+}
+
+// ===================================
 // Console Easter Egg
 // ===================================
 console.log('%c🗳️ Pour Senlis en Confiance', 'font-size: 20px; font-weight: bold; color: #0d3d5c;');

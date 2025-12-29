@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Assistant IA - Pour Senlis en Confiance | Questions sur notre programme</title>
+    <meta name="title" content="Assistant IA - Pour Senlis en Confiance">
+    <meta name="description" content="Posez vos questions sur le programme de Pascale Loiseleur pour les élections municipales de Senlis 2026. Notre assistant IA répond à toutes vos interrogations.">
+    <meta name="keywords" content="Pascale Loiseleur, Senlis, élections municipales 2026, programme électoral, chatbot, assistant IA, Pour Senlis en Confiance">
+    <meta name="author" content="Pour Senlis en Confiance">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="French">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://poursenlisenconfiance.fr/chatbot.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://poursenlisenconfiance.fr/chatbot.html">
+    <meta property="og:title" content="Assistant IA - Pour Senlis en Confiance">
+    <meta property="og:description" content="Posez vos questions sur notre programme. Notre assistant IA répond à toutes vos interrogations sur Senlis.">
+    <meta property="og:image" content="https://poursenlisenconfiance.fr/images/PSEC.png">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/PSEC.png">
+    <link rel="apple-touch-icon" href="images/PSEC.png">
+
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css?v=20251230a">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="container">
+                <a href="/" class="logo">
+                    <img src="images/PSEC.png" alt="Pour Senlis en Confiance - Logo" loading="eager">
+                </a>
+
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/#candidate" class="nav-link">La Candidate</a></li>
+                    <li><a href="/#programme" class="nav-link">Nos Axes</a></li>
+                    <li><a href="/#programme-details" class="nav-link">Programme</a></li>
+                    <li><a href="/#videos" class="nav-link">Vidéos</a></li>
+                    <li><a href="/#documents" class="nav-link">Documents</a></li>
+                    <li><a href="/#consultation" class="nav-link nav-link-cta">Votre Avis</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Chatbot Section -->
+    <section class="section chatbot-section" id="chatbot">
+        <div class="container">
+            <h1 class="section-title">Assistant Programme</h1>
+            <p class="section-subtitle">Posez vos questions sur notre programme pour Senlis</p>
+
+            <div class="chat-container">
+                <!-- Chat Messages Area -->
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Welcome message -->
+                    <div class="message message-bot">
+                        <div class="message-avatar">
+                            <img src="images/PSEC.png" alt="Assistant">
+                        </div>
+                        <div class="message-content">
+                            <p>Bonjour ! Je suis l'assistant de la liste <strong>Pour Senlis en Confiance</strong>.</p>
+                            <p>Je peux vous renseigner sur notre programme : urbanisme (PLU), centre aquatique, finances, education, securite, sport, stationnement, eau, sante...</p>
+                            <p>Comment puis-je vous aider ?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Suggested Questions -->
+                <div class="suggested-questions" id="suggestedQuestions">
+                    <button class="suggested-btn" data-question="Qu'est-ce que le PLU et comment protege-t-il Senlis ?">PLU et urbanisme</button>
+                    <button class="suggested-btn" data-question="Quand le centre aquatique sera-t-il termine ?">Centre aquatique</button>
+                    <button class="suggested-btn" data-question="La ville est-elle sure ? Quels sont les chiffres de la securite ?">Securite</button>
+                    <button class="suggested-btn" data-question="Comment fonctionne le stationnement au centre-ville ?">Stationnement</button>
+                    <button class="suggested-btn" data-question="Quels services pour les familles et les enfants ?">Familles</button>
+                </div>
+
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                    <div class="message message-bot">
+                        <div class="message-avatar">
+                            <img src="images/PSEC.png" alt="Assistant">
+                        </div>
+                        <div class="message-content">
+                            <div class="typing-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Input Area -->
+                <div class="chat-input-area">
+                    <input
+                        type="text"
+                        id="chatInput"
+                        class="chat-input"
+                        placeholder="Posez votre question..."
+                        maxlength="500"
+                        autocomplete="off"
+                    >
+                    <button type="button" id="chatSend" class="chat-send-btn" aria-label="Envoyer">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="chat-disclaimer">
+                <p>Cet assistant utilise l'intelligence artificielle pour repondre a vos questions. Les reponses sont basees sur notre programme officiel. Pour plus d'informations, consultez nos <a href="/#documents">documents</a> ou <a href="/#consultation">contactez-nous</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="images/PSEC.png" alt="Pour Senlis en Confiance">
+                    <p>Elections Municipales 2026</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/#candidate">La Candidate</a></li>
+                        <li><a href="/#programme">Nos Axes</a></li>
+                        <li><a href="/#consultation">Votre Avis</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-social">
+                    <h4>Suivez-nous</h4>
+                    <p>Rejoignez-nous sur les reseaux sociaux</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/pascale_loiseleur" target="_blank" rel="noopener noreferrer" aria-label="Instagram Pascale Loiseleur" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                            <span>@pascale_loiseleur</span>
+                        </a>
+                        <a href="https://www.facebook.com/pascale.loiseleur" target="_blank" rel="noopener noreferrer" aria-label="Facebook Pascale Loiseleur" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                            <span>Pascale Loiseleur</span>
+                        </a>
+                        <a href="https://www.facebook.com/poursenlisenconfiance" target="_blank" rel="noopener noreferrer" aria-label="Facebook Pour Senlis en Confiance" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                            <span>Pour Senlis en Confiance</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Pour Senlis en Confiance - Tous droits reserves</p>
+                <p>
+                    Site de campagne electorale - Elections municipales de Senlis 2026<br>
+                    <a href="/mentions-legales.html" style="color: rgba(255,255,255,0.8); text-decoration: underline;">Mentions legales</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js?v=20251230a"></script>
+</body>
+</html>
