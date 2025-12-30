@@ -3178,11 +3178,13 @@ a:hover {
     position: relative;
     width: 28px;
     height: 28px;
+    flex-shrink: 0;
 }
 
 .chat-float-icon svg {
-    width: 100%;
-    height: 100%;
+    width: 28px;
+    height: 28px;
+    display: block;
     opacity: 0.9;
 }
 
