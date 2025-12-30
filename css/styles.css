@@ -121,26 +121,41 @@ a:hover {
     border-bottom-color: var(--primary-light);
 }
 
-/* Q&A Link styled as badge */
+/* Assistant Link with animated bubble */
 .nav-link-qa {
-    background: var(--primary-light) !important;
-    color: var(--white) !important;
-    padding: 0.4rem 0.8rem !important;
-    border-radius: 15px !important;
-    font-weight: 600;
-    animation: qa-glow 2s ease-in-out infinite;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.4rem;
 }
 
-.nav-link-qa:hover {
-    background: var(--accent-green) !important;
+.qa-bubble {
+    display: inline-block;
+    width: 16px;
+    height: 14px;
+    background: var(--primary-light);
+    border-radius: 8px 8px 8px 2px;
+    position: relative;
+    animation: bubble-bounce 1.5s ease-in-out infinite;
 }
 
-@keyframes qa-glow {
+.qa-bubble::after {
+    content: '···';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8px;
+    color: white;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+@keyframes bubble-bounce {
     0%, 100% {
-        box-shadow: 0 0 5px rgba(106, 156, 194, 0.5);
+        transform: translateY(0);
     }
     50% {
-        box-shadow: 0 0 15px rgba(106, 156, 194, 0.8);
+        transform: translateY(-2px);
     }
 }
 
