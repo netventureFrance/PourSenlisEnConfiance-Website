@@ -202,6 +202,48 @@ AVANCÉES:
 - Filière d'excellence en gériatrie
 - Centre de consultations sans rendez-vous (soins non programmés)
 
+## 10. LOGEMENT
+
+CONTEXTE: Un besoin réel de logements pour préserver la vitalité de la ville.
+
+CHIFFRES CLÉS:
+- Senlis a perdu 2000 habitants (fermeture quartier Ordener 2009, décohabitation, arrêt construction)
+- Population 2022: 15 803 habitants
+- Taille des ménages: 1,89 habitant/ménage (contre 3,4 en 1968)
+- Point mort démographique: 52 logements/an pour maintenir la population
+- Depuis 2013: 71 logements/an construits (rythme prévu dans le PLU)
+- Objectif à terme: retrouver 17 000 habitants (niveau de 2008)
+
+PARC LOCAL (INSEE 2021):
+- 45,9% de propriétaires
+- 50,2% de locataires (dont 26,4% en logements sociaux)
+- 3,9% logés gratuitement
+- Taux de logements sociaux stable autour de 25%
+
+OPAH-RU (Opération Programmée d'Amélioration de l'Habitat - Renouvellement Urbain):
+- Dispositif clé pour réhabiliter l'habitat ancien du centre-ville
+- Lutte contre la vacance des logements
+- Maison de l'Habitat à côté de la mairie pour accompagner les propriétaires
+- Aides pour monter les dossiers et bénéficier des subventions
+
+PROJETS RÉALISÉS:
+- ÉcoQuartier: ancienne friche industrielle, sans artificialisation, jardins partagés, crèche 40 berceaux, voie verte
+- ÉcoQuartier 2: commerces, équipements de santé, espaces publics
+- Quartier Ordener: 16 entreprises (400 emplois), logements jeunes actifs, salle de spectacle, conservatoire 2026
+
+POUR LE MANDAT 2026-2032:
+- Freiner la construction de logements neufs
+- Inciter à la rénovation des logements anciens via OPAH-RU
+- Privilégier les opérations mixtes (logements + commerces + santé + services)
+- Diversité des logements: accession libre, locatif, du T1 au T5
+
+VRAIS/FAUX:
+- FAUX: "Senlis bétonne partout" → Aucun terrain agricole/naturel urbanisé, tous projets sur sites déjà bâtis
+- FAUX: "On construit trop de logements" → 52 logements/an = juste le point mort pour stabiliser la population
+- FAUX: "Les nouveaux quartiers défigurent la ville" → Projets intégrés au paysage, matériaux biosourcés
+- FAUX: "L'ÉcoQuartier est dense et sans verdure" → Jardins partagés, voie verte, crèche, espaces végétalisés
+- FAUX: "Quartier Ordener = juste du logement" → Quartier mixte: logements, entreprises, conservatoire, 400 emplois
+
 === FIN DE LA BASE DE CONNAISSANCES ===
 
 QUESTIONS SUGGÉRÉES À PROPOSER:
@@ -210,6 +252,7 @@ QUESTIONS SUGGÉRÉES À PROPOSER:
 - La ville est-elle sûre?
 - Comment fonctionne le stationnement au centre-ville?
 - Quels services pour les familles et les enfants?
+- Quelle est la politique de logement à Senlis?
 `;
 
 exports.handler = async (event) => {
