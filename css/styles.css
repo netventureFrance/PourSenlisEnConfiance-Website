@@ -121,6 +121,30 @@ a:hover {
     border-bottom-color: var(--primary-light);
 }
 
+/* Q&A Link with animated icon */
+.nav-link-qa {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.qa-icon {
+    width: 18px;
+    height: 18px;
+    animation: qa-pulse 2s ease-in-out infinite;
+}
+
+@keyframes qa-pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+}
+
 .nav-link-cta {
     background: var(--accent-green);
     color: var(--white);
