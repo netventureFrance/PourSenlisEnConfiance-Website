@@ -286,9 +286,11 @@ Gestion saine, rigoureuse et transparente des finances municipales.
 - Sans augmenter les impôts
 - Capacité d'autofinancement solide pour investir sans fragiliser l'avenir
 
-=== INFORMATIONS COMPLÉMENTAIRES (FICHES ARGUMENTAIRES) ===
+=== FICHES ARGUMENTAIRES DÉTAILLÉES ===
 
-## PLU (Plan Local d'Urbanisme)
+## 1. PLU (Plan Local d'Urbanisme)
+
+CONTEXTE: Le PLU de Senlis fait l'objet de débats. Certains parlent de "bétonnage" ou de "projet illégal", mais c'est un document équilibré et conforme au droit.
 
 FAITS CLÉS:
 - Zéro artificialisation: aucune terre nouvelle urbanisée
@@ -297,36 +299,211 @@ FAITS CLÉS:
 - Objectif: 52 logements/an = "point mort" démographique pour maintenir la population
 - Senlis a perdu près de 2000 habitants en 15 ans
 - Hauteurs limitées à R+1 ou R+2
+- L'avis de la MRAe est consultatif (article L104-6 du Code de l'urbanisme)
+- Compatible avec le SRADDET Hauts-de-France
 
 VRAIS/FAUX:
 - FAUX: "Le PLU est illégal" → Il respecte toutes les obligations réglementaires
 - FAUX: "On bétonne Senlis" → Zéro artificialisation, 10,8 ha rendus à la nature
+- FAUX: "Le PLU favorise les promoteurs" → Il encadre les projets, impose des espaces verts, limite les hauteurs
 
-## CENTRE AQUATIQUE
+## 2. CENTRE AQUATIQUE
 
-- Projet intercommunal financé par la CCSSO
-- Calendrier: livraison été 2028
+CONTEXTE: Projet de centre aquatique intercommunal pour remplacer les anciennes piscines.
+
+FAITS CLÉS:
+- La piscine d'été a fermé en 2015 (coûtait 250 000€/an de maintenance pour 2 mois d'ouverture)
+- Économies réalisées: 122 000€/an en gardant uniquement la piscine Yves Carlier
+- Projet intercommunal financé intégralement par la CC Senlis Sud Oise (CCSSO)
+- Calendrier: cession terrain nov 2025, signature contrat déc 2025, livraison été 2028
 - La piscine Yves Carlier restera ouverte pendant les travaux
 - Le futur centre: bassin sportif + espace ludique + pôle bien-être
+- Emplacement: pôle sportif de Senlis, accessible à pied pour les scolaires
 
-## STATIONNEMENT
+VRAIS/FAUX:
+- FAUX: "Le projet traîne depuis 10 ans" → Les réorganisations intercommunales ont ralenti, mais depuis 2020 il progresse
+- FAUX: "La piscine actuelle va fermer pendant les travaux" → Elle restera ouverte jusqu'à la mise en service
+
+## 3. FINANCES
+
+CONTEXTE: Gestion rigoureuse des finances municipales malgré la baisse des dotations de l'État.
+
+FAITS CLÉS:
+- Taux d'imposition stable sur tout le mandat 2020-2026: aucune augmentation de la taxe foncière
+- Beaucoup de villes ont augmenté la taxe foncière après la suppression de la taxe d'habitation, mais pas Senlis
+- Dette réduite: de 21M€ (pic en 2009) à 11M€ en 2023
+- Capacité d'autofinancement préservée
+- Subventions obtenues (État, Région, Département, Europe)
+- Investissements maintenus: sécurité, voirie, patrimoine, écoles
+
+ÉLÉMENTS DE LANGAGE:
+- "Chaque euro prélevé doit être utile"
+- "Nos finances sont solides: elles permettent d'investir sans hypothéquer l'avenir"
+- "Maîtriser la dette, c'est protéger les générations futures"
+
+## 4. ÉDUCATION & JEUNESSE
+
+CONTEXTE: La commune finance l'éducation de proximité (écoles primaires, périscolaire, restauration).
+
+FAITS CLÉS:
+- ATSEM présents dans toutes les écoles maternelles
+- Subvention fournitures, livres et voyages scolaires
+- Écoles: rénovation, numérique éducatif, accessibilité
+- Cantines: fournisseurs locaux, équilibre nutritionnel, tarifs sociaux (loi EGalim)
+- Périscolaire: accueil matin et soir
+- Centre de loisirs: mercredis à l'Argilière + toutes vacances scolaires (sauf Noël)
+- SPOT (Antenne jeunesse): pour les 12-17 ans, avenue de Creil
+- Pass famille sur justificatif de revenus
+- Infrastructures: city-stades refaits en 2025, aires de jeux rénovées, skate-parks rénovés
+
+PETITE ENFANCE:
+- 2 haltes garderies
+- 1 crèche familiale
+- Multi accueil: 40 berceaux
+- Maison des bébés (partenariat La Nouvelle Forge): diagnostics précoces
+
+## 5. SÉCURITÉ
+
+CONTEXTE: Senlis est une ville sûre où la délinquance recule nettement depuis 2023.
+
+CHIFFRES OFFICIELS (Gendarmerie/Ministère de l'Intérieur):
+- Crimes et délits: -10% en un an
+- Cambriolages: -42% depuis 2023 (niveau historiquement bas)
+- Atteintes aux biens: -15,9%
+- Dégradations: -49%
+- Sécurité routière: -57% d'accidents corporels, 0 tué
+
+MOYENS DÉPLOYÉS:
+- 15 policiers municipaux armés + 3 agents administratifs (ratio 1 pour 1000 habitants)
+- Horaires: 8h à minuit, 6 jours sur 7
+- 100 caméras couvrant tous les quartiers
+- Centre de Supervision Urbain (CSU) connecté 24h/24
+- Capteur Vizzia pour dépôts sauvages
+- GLTD 2023: -25% atteintes aux biens, -58% cambriolages, -32% incivilités
+- CISPD présidé par Pascale Loiseleur (26 partenaires, 4 gendarmeries)
+
+ÉCLAIRAGE PUBLIC:
+- Extinction de minuit à 5h
+- Aucune hausse de délinquance sur cette tranche
+- Économie: 97 000€/an
+- Les heures sensibles sont 13h-19h, pas la nuit
+
+VRAIS/FAUX:
+- FAUX: "Senlis devient Creil bis" → Les chiffres montrent une baisse continue
+- FAUX: "L'éclairage éteint favorise les délits" → Moins de délits la nuit
+
+## 6. SPORT
+
+CONTEXTE: Senlis dispose d'un écosystème sportif complet.
+
+FAITS CLÉS:
+- Près de 5000 adhérents pour une quarantaine de disciplines
+- École Municipale des Sports (EMS) depuis 2018
+
+ÉQUIPEMENTS:
+- Parc des sports Yves Carlier: gymnase multi-activités, salles dédiées, vélodrome, piste d'athlétisme
+- 8 courts de tennis (dont 3 couverts, 2 terre battue)
+- 2 terrains de padel récemment inaugurés
+- Skate-park
+- Complexe des 3 Arches: 3 salles sports de combat, tir à l'arc, stand de tir, salle de gymnastique
+
+## 7. STATIONNEMENT
+
+CONTEXTE: Politique pour fluidifier le stationnement et favoriser la rotation des véhicules.
 
 CHIFFRES:
 - 1350 places au centre-ville: 450 payantes + 900 gratuites
+- Zones vertes: 350 places longue durée (4h30 max)
+- Zones rouges: 100 places courte durée (2h30 max)
+
+RÈGLES:
+- Payant lundi-samedi, 8h-12h et 14h-19h
+- Gratuit: dimanche, jours fériés, et entre 12h-14h
 - 1ère heure GRATUITE (divisible en 2x30min) - mais il faut prendre un ticket!
-- Abonnements riverains: 20€/mois ou 250€/an (1er véhicule)
+- Paiement possible via apps: Indigo Neo, Flowbird, PaybyPhone
 
-## EAU
+ABONNEMENTS RIVERAINS:
+- 20€/mois ou 250€/an (1er véhicule)
+- 10€/mois ou 100€/an (2e véhicule)
+- Moins cher qu'à Chantilly ou Creil (>60€/mois)
 
+VRAIS/FAUX:
+- FAUX: "Il faut payer pour se garer" → 900 places gratuites sur 1350
+- FAUX: "Indigo utilise des caméras" → Un agent à pied vérifie
+- FAUX: "Indigo fait du chiffre" → Payé au forfait, pas au nombre de PV
+- 10 minutes de tolérance pour prendre un ticket
+
+## 8. EAU
+
+CONTEXTE: Alimentation en eau robuste et sécurisée avec investissements dans le traitement.
+
+INFRASTRUCTURE:
 - 3 forages dans la nappe souterraine
-- Construction 2025: unité de traitement par charbon actif (1M€)
+- 2 réservoirs (Bonsecours et Tombray): 6000 m³ de capacité
+- Production: 1 040 000 m³/an pour 6600 abonnés
+- Réseau maillé garantissant la continuité
+
+NOUVEAUTÉS:
+- Construction 2025: unité de traitement par charbon actif (forage d'Aumont)
+- Investissement: 1M€
+- Capacité: 80 m³/h
+- Procédé naturel: adsorption des pesticides et métabolites
+
+QUALITÉ:
 - Près de 100 prélèvements/an par Veolia + analyses ARS
+- Suivi renforcé depuis 2021 sur les métabolites (chloridazone)
+- Première unité charbon actif installée dès 2015 sur Bonsecours 1
 
-## SANTÉ - GHPSO
+## 9. SANTÉ ET SOLIDARITÉ
 
-- Pascale Loiseleur: Vice-présidente du Conseil de surveillance du GHPSO
+CONTEXTE: Le GHPSO (Groupement hospitalier du sud de l'Oise) regroupe les sites de Creil et Senlis depuis 2012.
+
+RÔLE DE PASCALE LOISELEUR: Vice-présidente du Conseil de surveillance du GHPSO
+
+AVANCÉES:
 - Ligne SMUR de Senlis rouverte fin 2024
-- Réouverture des urgences annoncée pour fin 2025-début 2026
+- Réouverture des urgences annoncée pour fin 2025-début 2026 (confirmé par le directeur de l'ARS)
+- Robot de chirurgie: premier de l'Oise
+- Centre de Rééducation Fonctionnelle Pédiatrique à venir
+- Maternité de niveau 3 avec label IHAB (Initiative hôpitaux amis des bébés)
+- Filière d'excellence en gériatrie
+- Centre de consultations sans rendez-vous (soins non programmés)
+
+## 10. LOGEMENT
+
+CONTEXTE: Un besoin réel de logements pour préserver la vitalité de la ville.
+
+CHIFFRES CLÉS:
+- Senlis a perdu 2000 habitants (fermeture quartier Ordener 2009, décohabitation, arrêt construction)
+- Population 2022: 15 803 habitants
+- Taille des ménages: 1,89 habitant/ménage (contre 3,4 en 1968)
+- Point mort démographique: 52 logements/an pour maintenir la population
+- Depuis 2013: 71 logements/an construits (rythme prévu dans le PLU)
+- Objectif à terme: retrouver 17 000 habitants (niveau de 2008)
+
+PARC LOCAL (INSEE 2021):
+- 45,9% de propriétaires
+- 50,2% de locataires (dont 26,4% en logements sociaux)
+- 3,9% logés gratuitement
+- Taux de logements sociaux stable autour de 25%
+
+OPAH-RU (Opération Programmée d'Amélioration de l'Habitat - Renouvellement Urbain):
+- Dispositif clé pour réhabiliter l'habitat ancien du centre-ville
+- Lutte contre la vacance des logements
+- Maison de l'Habitat à côté de la mairie pour accompagner les propriétaires
+- Aides pour monter les dossiers et bénéficier des subventions
+
+PROJETS RÉALISÉS:
+- ÉcoQuartier: ancienne friche industrielle, sans artificialisation, jardins partagés, crèche 40 berceaux, voie verte
+- ÉcoQuartier 2: commerces, équipements de santé, espaces publics
+- Quartier Ordener: 16 entreprises (400 emplois), logements jeunes actifs, salle de spectacle, conservatoire 2026
+
+VRAIS/FAUX:
+- FAUX: "Senlis bétonne partout" → Aucun terrain agricole/naturel urbanisé, tous projets sur sites déjà bâtis
+- FAUX: "On construit trop de logements" → 52 logements/an = juste le point mort pour stabiliser la population
+- FAUX: "Les nouveaux quartiers défigurent la ville" → Projets intégrés au paysage, matériaux biosourcés
+- FAUX: "L'ÉcoQuartier est dense et sans verdure" → Jardins partagés, voie verte, crèche, espaces végétalisés
+- FAUX: "Quartier Ordener = juste du logement" → Quartier mixte: logements, entreprises, conservatoire, 400 emplois
 
 === PROJETS PHARES STRUCTURANTS (PLURIANNUELS) ===
 
