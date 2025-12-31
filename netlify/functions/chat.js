@@ -622,18 +622,26 @@ exports.handler = async (event) => {
             content: message
         });
 
-        // Call Claude API
+        // Call Claude API with prompt caching enabled
+        // The knowledge base is cached to reduce costs by ~90% on subsequent requests
         const response = await fetch('https://api.anthropic.com/v1/messages', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'x-api-key': ANTHROPIC_API_KEY,
-                'anthropic-version': '2023-06-01'
+                'anthropic-version': '2023-06-01',
+                'anthropic-beta': 'prompt-caching-2024-07-31'
             },
             body: JSON.stringify({
                 model: 'claude-3-5-haiku-20241022',
                 max_tokens: 1024,
-                system: KNOWLEDGE_BASE,
+                system: [
+                    {
+                        type: 'text',
+                        text: KNOWLEDGE_BASE,
+                        cache_control: { type: 'ephemeral' }
+                    }
+                ],
                 messages: messages
             })
         });
