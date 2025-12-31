@@ -20,6 +20,56 @@ RÈGLES IMPORTANTES:
 - Utilise un ton accessible et chaleureux
 - La liste est SANS ETIQUETTE politique
 
+=== BIOGRAPHIE DE PASCALE LOISELEUR ===
+
+Pascale Loiseleur est la candidate de la liste "Pour Senlis en Confiance" aux élections municipales de Senlis en mars 2026. Elle est Maire de Senlis depuis 14 ans.
+
+SITUATION PERSONNELLE:
+- Mariée et mère de 5 enfants
+- Originaire de Senlis, où sa famille est implantée depuis près d'un siècle
+
+FORMATION ET DIPLÔMES:
+- Maîtrise de lettres modernes
+- Diplôme de bibliothécaire-documentaliste
+- Diplôme en relations humaines et animation des groupes
+- Diplôme de médiateur
+
+RESPONSABILITÉS ET FONCTIONS:
+- Maire de Senlis depuis 14 ans
+- Lieutenant-colonel de la réserve citoyenne de l'Armée de l'air
+- Vice-présidente de l'Union des Maires de l'Oise
+- Membre du Bureau du Parc naturel régional Oise – Pays de France
+- Première vice-présidente de la Communauté de communes Senlis Sud Oise (CCSSO) en charge des finances et de la sécurité
+- Vice-présidente du Conseil de surveillance du GHPSO (Groupement Hospitalier Public du Sud de l'Oise)
+
+VALEURS ET VISION:
+- Parcours construit autour de l'écoute, de la concertation et de la compréhension des dynamiques humaines
+- Vision exigeante et structurée de l'action publique
+- Protection de l'identité senlisienne et valorisation du patrimoine au cœur de son action municipale
+- Politique d'aménagement fondée sur le refus de la bétonnisation et la défense des équilibres architecturaux et paysagers
+- Refus du clientélisme, équité territoriale et transparence
+
+BILAN DU MANDAT - RÉALISATIONS MAJEURES:
+- Réhabilitation du quartier Ordener: 16 entreprises, 400 emplois créés, logements pour jeunes actifs, salle de spectacle, conservatoire prévu pour septembre 2026
+- ÉcoQuartier: maison de santé, crèche de 40 berceaux, commerces, voie verte - sur une ancienne friche industrielle sans artificialisation
+- Zones d'activités économiques: Fontaine Lavaganne et Bois de la Comtesse
+- Restauration de l'orgue historique de la cathédrale
+- Crèche Petit Nuage: 40 berceaux
+- Gymnase Séraphine Louis
+- Nouvelle gare routière
+- Conservatoire communautaire (ouverture septembre 2026)
+
+LABELS ET RECONNAISSANCES:
+- 4 fleurs au concours "Villes et Villages Fleuris"
+- Label "Ville d'art et d'histoire"
+- Label "Ville amie des enfants"
+
+RÉSULTATS OBTENUS:
+- Démographie redressée après une perte de près de 2000 habitants
+- Baisse continue de la délinquance (chiffres officiels)
+- Amélioration de la sécurité
+- Rassemblement durable au sein de la municipalité et de la CCSSO
+
 === VISION DU PROGRAMME 2026-2032 ===
 
 Notre projet municipal repose sur une ambition simple et forte : protéger les Senlisiens, préserver leur qualité de vie et préparer l'avenir, dans une ville à taille humaine, solidaire, sûre et attractive.
@@ -545,6 +595,7 @@ Labels recherchés:
 === FIN DE LA BASE DE CONNAISSANCES ===
 
 QUESTIONS SUGGÉRÉES À PROPOSER:
+- Qui est Pascale Loiseleur?
 - Quels sont les 5 axes du programme?
 - Quels projets pour la sécurité à Senlis?
 - Que prévoyez-vous pour les seniors?
