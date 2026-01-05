@@ -302,7 +302,7 @@ a:hover {
 /* Mobile adjustments for ticker */
 @media (max-width: 768px) {
     .news-ticker {
-        top: 68px;
+        top: 75px;
         height: 46px;
     }
 
@@ -322,14 +322,16 @@ a:hover {
 
     .ticker-sticker {
         display: inline-block;
+        margin-left: 1rem;
     }
 
     .ticker-item {
         font-size: 1.05rem;
+        margin-right: 1rem;
     }
 
     .ticker-separator {
-        padding: 0 0.6rem;
+        display: none;
     }
 }
 
@@ -2749,7 +2751,7 @@ a:hover {
     }
 
     .hero {
-        margin-top: 114px; /* 68px header offset + 46px ticker on mobile */
+        margin-top: 121px; /* 75px ticker top + 46px ticker height on mobile */
     }
 
     .hero-title {
