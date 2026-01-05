@@ -302,7 +302,7 @@ a:hover {
 /* Mobile adjustments for ticker */
 @media (max-width: 768px) {
     .news-ticker {
-        top: 75px;
+        top: 85px;
         height: 46px;
     }
 
@@ -2751,7 +2751,7 @@ a:hover {
     }
 
     .hero {
-        margin-top: 121px; /* 75px ticker top + 46px ticker height on mobile */
+        margin-top: 131px; /* 85px ticker top + 46px ticker height on mobile */
     }
 
     .hero-title {
