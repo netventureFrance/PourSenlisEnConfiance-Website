@@ -192,12 +192,135 @@ a:hover {
 }
 
 /* ===================================
+   News Ticker - Réunions Publiques
+   =================================== */
+.news-ticker {
+    position: fixed;
+    top: 82px; /* Below header with gap */
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #1a5a80 100%);
+    color: var(--white);
+    z-index: 999;
+    display: flex;
+    align-items: stretch;
+    height: 56px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.ticker-label {
+    background: var(--accent-green);
+    color: var(--white);
+    padding: 0 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.ticker-label::after {
+    content: '';
+    position: absolute;
+    right: -12px;
+    top: 0;
+    bottom: 0;
+    width: 24px;
+    background: var(--accent-green);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.ticker-icon {
+    font-size: 1.4rem;
+}
+
+.ticker-content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding-left: 1.5rem;
+}
+
+.ticker-track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: ticker-scroll 30s linear infinite;
+}
+
+.ticker-track:hover {
+    animation-play-state: paused;
+}
+
+.ticker-item {
+    font-size: 1.25rem;
+    padding: 0 0.5rem;
+}
+
+.ticker-item strong {
+    color: var(--accent-light-green);
+}
+
+.ticker-separator {
+    color: var(--accent-green);
+    padding: 0 1rem;
+    font-size: 0.8rem;
+}
+
+@keyframes ticker-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+
+/* Mobile adjustments for ticker */
+@media (max-width: 768px) {
+    .news-ticker {
+        top: 68px;
+        height: 46px;
+    }
+
+    .ticker-label {
+        padding: 0 0.8rem;
+        font-size: 1rem;
+    }
+
+    .ticker-label span:not(.ticker-icon) {
+        display: none;
+    }
+
+    .ticker-label::after {
+        right: -10px;
+        width: 20px;
+    }
+
+    .ticker-item {
+        font-size: 1.05rem;
+    }
+
+    .ticker-separator {
+        padding: 0 0.6rem;
+    }
+}
+
+/* ===================================
    Hero Section
    =================================== */
 .hero {
     position: relative;
     min-height: 100vh;
-    min-height: calc(100vh - 70px); /* Account for header height */
+    min-height: calc(100vh - 138px); /* Account for header + ticker height */
     min-height: -webkit-fill-available; /* Chrome mobile fix */
     display: flex;
     display: -webkit-flex;
@@ -208,7 +331,7 @@ a:hover {
     background: linear-gradient(to bottom, var(--white) 0%, var(--primary-light) 50%, var(--primary-dark) 100%);
     color: var(--white);
     text-align: center;
-    margin-top: 70px;
+    margin-top: 138px; /* 82px header offset + 56px ticker */
     overflow: visible;
     padding: 2rem 0;
     box-sizing: border-box;
@@ -2607,7 +2730,7 @@ a:hover {
     }
 
     .hero {
-        margin-top: 70px;
+        margin-top: 114px; /* 68px header offset + 46px ticker on mobile */
     }
 
     .hero-title {
@@ -3298,6 +3421,7 @@ body:has(.chatbot-section) .chat-float-btn {
 @media print {
     .header,
     .nav-toggle,
+    .news-ticker,
     .scroll-indicator,
     .contact-form,
     .footer,
