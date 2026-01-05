@@ -274,6 +274,21 @@ a:hover {
     font-size: 0.8rem;
 }
 
+/* Sticker - hidden on desktop, visible on mobile */
+.ticker-sticker {
+    display: none;
+    background: var(--accent-green);
+    color: var(--white);
+    padding: 0.25rem 0.7rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 0.8rem;
+    white-space: nowrap;
+}
+
 @keyframes ticker-scroll {
     0% {
         transform: translateX(0);
@@ -296,13 +311,17 @@ a:hover {
         font-size: 1rem;
     }
 
-    .ticker-label span:not(.ticker-icon) {
+    .ticker-label-text {
         display: none;
     }
 
     .ticker-label::after {
         right: -10px;
         width: 20px;
+    }
+
+    .ticker-sticker {
+        display: inline-block;
     }
 
     .ticker-item {
