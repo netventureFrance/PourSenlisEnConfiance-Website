@@ -404,7 +404,7 @@ exports.handler = async (event) => {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        from: 'Pour Senlis en Confiance <contact@poursenlisenconfiance.fr>',
+                        from: 'Pour Senlis en Confiance avec Pascale Loiseleur <contact@poursenlisenconfiance.fr>',
                         to: [formData.email],
                         subject: isMandant
                             ? 'Votre demande de procuration a été enregistrée'

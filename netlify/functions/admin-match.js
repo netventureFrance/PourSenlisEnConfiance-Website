@@ -127,7 +127,7 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                from: 'Pour Senlis en Confiance <contact@poursenlisenconfiance.fr>',
+                from: 'Pour Senlis en Confiance avec Pascale Loiseleur <contact@poursenlisenconfiance.fr>',
                 to: [mandant.email],
                 subject: 'Votre mandataire de procuration a été trouvé !',
                 html: mandantHtml
@@ -142,7 +142,7 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                from: 'Pour Senlis en Confiance <contact@poursenlisenconfiance.fr>',
+                from: 'Pour Senlis en Confiance avec Pascale Loiseleur <contact@poursenlisenconfiance.fr>',
                 to: [mandataire.email],
                 subject: 'Nouveau mandant pour votre procuration',
                 html: mandataireHtml
