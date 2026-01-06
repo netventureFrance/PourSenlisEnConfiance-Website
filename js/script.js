@@ -834,12 +834,27 @@ function initProcurationForm(type) {
         }
 
         // Additional fields for mandataire
+        let nom, civilite = '', nomNaissance = '', prenoms = '';
         const dateNaissance = type === 'mandataire' ? document.getElementById('mandataireDateNaissance')?.value : '';
         const numeroElecteur = type === 'mandataire' ? document.getElementById('mandataireNumeroElecteur')?.value.trim() : '';
 
+        if (type === 'mandataire') {
+            // Get civilité and name fields for mandataire
+            civilite = form.querySelector('[name="civilite"]:checked')?.value || '';
+            nomNaissance = document.getElementById('mandataireNomNaissance').value.trim().toUpperCase();
+            prenoms = document.getElementById('mandatairePrenoms').value.trim();
+            // Combine for display name
+            nom = `${prenoms} ${nomNaissance}`;
+        } else {
+            nom = document.getElementById(`${prefix}Nom`).value.trim();
+        }
+
         const formData = {
             type: type === 'mandant' ? 'Mandant' : 'Mandataire',
-            nom: document.getElementById(`${prefix}Nom`).value.trim(),
+            nom: nom,
+            civilite: civilite,
+            nomNaissance: nomNaissance,
+            prenoms: prenoms,
             email: document.getElementById(`${prefix}Email`).value.trim(),
             phone: document.getElementById(`${prefix}Phone`).value.trim(),
             dateNaissance: dateNaissance,

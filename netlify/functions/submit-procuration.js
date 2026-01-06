@@ -139,12 +139,22 @@ exports.handler = async (event) => {
             'Localisation': geoLocation
         };
 
-        // Only add date fields if they have values (Airtable rejects empty strings for dates)
+        // Only add optional fields if they have values (Airtable rejects empty strings for some field types)
         if (formData.dateNaissance) {
             airtableFields['Date de Naissance'] = formData.dateNaissance;
         }
         if (formData.numeroElecteur) {
             airtableFields['Numéro Électeur'] = formData.numeroElecteur;
+        }
+        // Mandataire-specific fields for maprocuration.gouv.fr
+        if (formData.civilite) {
+            airtableFields['Civilité'] = formData.civilite;
+        }
+        if (formData.nomNaissance) {
+            airtableFields['Nom de Naissance'] = formData.nomNaissance;
+        }
+        if (formData.prenoms) {
+            airtableFields['Prénoms'] = formData.prenoms;
         }
 
         const airtableData = { fields: airtableFields };

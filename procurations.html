@@ -286,53 +286,75 @@
 
                         <input type="hidden" name="type" value="Mandataire">
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="mandataireNom">Nom et Prénom *</label>
-                                <input type="text" id="mandataireNom" name="nom" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="mandataireEmail">Email *</label>
-                                <input type="email" id="mandataireEmail" name="email" required>
+                        <!-- Civilité -->
+                        <div class="form-group">
+                            <label>Civilité *</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="civilite" value="Monsieur" required>
+                                    <span>Monsieur</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="civilite" value="Madame">
+                                    <span>Madame</span>
+                                </label>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="mandataireNomNaissance">Nom de naissance *</label>
+                                <input type="text" id="mandataireNomNaissance" name="nomNaissance" required placeholder="Ex: DUPONT">
+                                <p class="field-help">En majuscules, tel qu'inscrit sur votre acte de naissance</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="mandatairePrenoms">Tous vos prénoms *</label>
+                                <input type="text" id="mandatairePrenoms" name="prenoms" required placeholder="Ex: Jean-Claude Bernard">
+                                <p class="field-help">Dans l'ordre de l'état civil</p>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="mandataireEmail">Email *</label>
+                                <input type="email" id="mandataireEmail" name="email" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="mandatairePhone">Téléphone *</label>
                                 <input type="tel" id="mandatairePhone" name="phone" required placeholder="06 XX XX XX XX">
                             </div>
+                        </div>
+
+                        <div class="form-row">
                             <div class="form-group">
                                 <label for="mandataireDateNaissance">Date de naissance *</label>
                                 <input type="date" id="mandataireDateNaissance" name="dateNaissance" required>
                                 <p class="field-help">Requise pour établir la procuration officielle</p>
                             </div>
-                        </div>
-
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="mandataireNumeroElecteur">Numéro d'électeur (optionnel)</label>
                                 <input type="text" id="mandataireNumeroElecteur" name="numeroElecteur" placeholder="Sur votre carte électorale">
                                 <p class="field-help">Facilite la démarche sur maprocuration.gouv.fr</p>
                             </div>
-                            <div class="form-group">
-                                <label for="mandataireBureau">Bureau de vote où vous pouvez vous rendre *</label>
-                                <select id="mandataireBureau" name="bureau" required onchange="toggleOtherBureau(this, 'mandataireBureauAutre')">
-                                    <option value="">-- Sélectionnez un bureau de vote --</option>
-                                    <option value="Bureau n°1 - Ancienne Église Saint Pierre">Bureau n°1 - Ancienne Église Saint Pierre</option>
-                                    <option value="Bureau n°2 - Ancienne Église Saint Pierre">Bureau n°2 - Ancienne Église Saint Pierre</option>
-                                    <option value="Bureau n°3 - Gymnase Anne de Kiev">Bureau n°3 - Gymnase Anne de Kiev</option>
-                                    <option value="Bureau n°4 - École Maternelle Anne de Kiev">Bureau n°4 - École Maternelle Anne de Kiev</option>
-                                    <option value="Bureau n°5 - Gymnase de Beauval">Bureau n°5 - Gymnase de Beauval</option>
-                                    <option value="Bureau n°6 - École Maternelle de Beauval">Bureau n°6 - École Maternelle de Beauval</option>
-                                    <option value="Bureau n°7 - Gymnase de Brichebay">Bureau n°7 - Gymnase de Brichebay</option>
-                                    <option value="Bureau n°8 - Gymnase de Brichebay">Bureau n°8 - Gymnase de Brichebay</option>
-                                    <option value="Tous les bureaux">Tous les bureaux (je peux me déplacer partout)</option>
-                                    <option value="autre">Autre (précisez)</option>
-                                </select>
-                                <input type="text" id="mandataireBureauAutre" name="bureauAutre" placeholder="Précisez le bureau de vote" style="display: none; margin-top: 0.5rem;">
-                                <p class="field-help">Vous devrez voter dans le bureau de vote du mandant, pas dans le vôtre.</p>
-                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mandataireBureau">Bureau de vote où vous pouvez vous rendre *</label>
+                            <select id="mandataireBureau" name="bureau" required onchange="toggleOtherBureau(this, 'mandataireBureauAutre')">
+                                <option value="">-- Sélectionnez un bureau de vote --</option>
+                                <option value="Bureau n°1 - Ancienne Église Saint Pierre">Bureau n°1 - Ancienne Église Saint Pierre</option>
+                                <option value="Bureau n°2 - Ancienne Église Saint Pierre">Bureau n°2 - Ancienne Église Saint Pierre</option>
+                                <option value="Bureau n°3 - Gymnase Anne de Kiev">Bureau n°3 - Gymnase Anne de Kiev</option>
+                                <option value="Bureau n°4 - École Maternelle Anne de Kiev">Bureau n°4 - École Maternelle Anne de Kiev</option>
+                                <option value="Bureau n°5 - Gymnase de Beauval">Bureau n°5 - Gymnase de Beauval</option>
+                                <option value="Bureau n°6 - École Maternelle de Beauval">Bureau n°6 - École Maternelle de Beauval</option>
+                                <option value="Bureau n°7 - Gymnase de Brichebay">Bureau n°7 - Gymnase de Brichebay</option>
+                                <option value="Bureau n°8 - Gymnase de Brichebay">Bureau n°8 - Gymnase de Brichebay</option>
+                                <option value="Tous les bureaux">Tous les bureaux (je peux me déplacer partout)</option>
+                                <option value="autre">Autre (précisez)</option>
+                            </select>
+                            <input type="text" id="mandataireBureauAutre" name="bureauAutre" placeholder="Précisez le bureau de vote" style="display: none; margin-top: 0.5rem;">
+                            <p class="field-help">Vous devrez voter dans le bureau de vote du mandant, pas dans le vôtre.</p>
                         </div>
 
                         <div class="form-group">

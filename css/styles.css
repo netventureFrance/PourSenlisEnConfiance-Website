@@ -3721,6 +3721,46 @@ body:has(.chatbot-section) .chat-float-btn {
     color: var(--text-dark);
 }
 
+/* Radio Group */
+.radio-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--bg-light);
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.radio-label:hover {
+    border-color: var(--primary-light);
+    background: rgba(61, 157, 217, 0.05);
+}
+
+.radio-label input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-light);
+}
+
+.radio-label input[type="radio"]:checked + span {
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+.radio-label span {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
 /* Field Help Text */
 .field-help {
     font-size: 0.85rem;
