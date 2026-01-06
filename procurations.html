@@ -303,6 +303,19 @@
                                 <input type="tel" id="mandatairePhone" name="phone" required placeholder="06 XX XX XX XX">
                             </div>
                             <div class="form-group">
+                                <label for="mandataireDateNaissance">Date de naissance *</label>
+                                <input type="date" id="mandataireDateNaissance" name="dateNaissance" required>
+                                <p class="field-help">Requise pour établir la procuration officielle</p>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="mandataireNumeroElecteur">Numéro d'électeur (optionnel)</label>
+                                <input type="text" id="mandataireNumeroElecteur" name="numeroElecteur" placeholder="Sur votre carte électorale">
+                                <p class="field-help">Facilite la démarche sur maprocuration.gouv.fr</p>
+                            </div>
+                            <div class="form-group">
                                 <label for="mandataireBureau">Bureau de vote où vous pouvez vous rendre *</label>
                                 <select id="mandataireBureau" name="bureau" required onchange="toggleOtherBureau(this, 'mandataireBureauAutre')">
                                     <option value="">-- Sélectionnez un bureau de vote --</option>

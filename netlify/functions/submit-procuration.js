@@ -111,6 +111,17 @@ exports.handler = async (event) => {
         if (formData.tour1) tours.push('1er tour (15 mars)');
         if (formData.tour2) tours.push('2e tour (22 mars)');
 
+        // Format date of birth for display
+        let dateNaissanceFormatted = '';
+        if (formData.dateNaissance) {
+            const dob = new Date(formData.dateNaissance);
+            dateNaissanceFormatted = dob.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
         // Prepare data for Airtable
         const airtableData = {
             fields: {
@@ -118,6 +129,8 @@ exports.handler = async (event) => {
                 'Email': formData.email,
                 'Téléphone': formData.phone,
                 'Type': formData.type, // 'Mandant' or 'Mandataire'
+                'Date de Naissance': formData.dateNaissance || '',
+                'Numéro Électeur': formData.numeroElecteur || '',
                 'Bureau de Vote': formData.bureau,
                 'Quartier': formData.quartier,
                 'Tours': tours.join(', '),
@@ -179,6 +192,8 @@ exports.handler = async (event) => {
                         nom: record.fields['Nom'],
                         email: record.fields['Email'],
                         phone: record.fields['Téléphone'],
+                        dateNaissance: record.fields['Date de Naissance'],
+                        numeroElecteur: record.fields['Numéro Électeur'],
                         bureau: record.fields['Bureau de Vote'],
                         quartier: record.fields['Quartier'],
                         tours: record.fields['Tours'],
@@ -287,18 +302,27 @@ exports.handler = async (event) => {
                 if (potentialMatches.length > 0) {
                     matchesHtml = `
                     <h3 style="color: #6cb13e;">Matches potentiels trouvés (${potentialMatches.length})</h3>
-                    ${potentialMatches.map(match => `
+                    ${potentialMatches.map(match => {
+                        // Format date of birth if available
+                        let dobFormatted = '';
+                        if (match.dateNaissance) {
+                            const dob = new Date(match.dateNaissance);
+                            dobFormatted = dob.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+                        }
+                        return `
                         <div class="match-card ${match.sameBureau ? 'same-bureau' : match.sameQuartier ? 'same-quartier' : ''}">
                             ${match.sameBureau ? '<span class="match-badge badge-bureau">Même bureau</span>' : ''}
                             ${match.sameQuartier && !match.sameBureau ? '<span class="match-badge badge-quartier">Même quartier</span>' : ''}
                             <div class="info-row"><span class="info-label">Nom :</span> ${match.nom}</div>
                             <div class="info-row"><span class="info-label">Email :</span> <a href="mailto:${match.email}">${match.email}</a></div>
                             <div class="info-row"><span class="info-label">Téléphone :</span> ${match.phone}</div>
+                            ${dobFormatted ? `<div class="info-row"><span class="info-label">Date de naissance :</span> ${dobFormatted}</div>` : ''}
+                            ${match.numeroElecteur ? `<div class="info-row"><span class="info-label">N° électeur :</span> ${match.numeroElecteur}</div>` : ''}
                             <div class="info-row"><span class="info-label">Bureau :</span> ${match.bureau}</div>
                             <div class="info-row"><span class="info-label">Quartier :</span> ${match.quartier}</div>
                             <div class="info-row"><span class="info-label">Tours :</span> ${match.tours}</div>
                         </div>
-                    `).join('')}
+                    `}).join('')}
                     `;
                 } else {
                     matchesHtml = `
@@ -330,6 +354,8 @@ exports.handler = async (event) => {
                                 <div class="info-row"><span class="info-label">Nom :</span> ${formData.nom}</div>
                                 <div class="info-row"><span class="info-label">Email :</span> <a href="mailto:${formData.email}">${formData.email}</a></div>
                                 <div class="info-row"><span class="info-label">Téléphone :</span> ${formData.phone}</div>
+                                ${formData.type === 'Mandataire' && dateNaissanceFormatted ? `<div class="info-row"><span class="info-label">Date de naissance :</span> ${dateNaissanceFormatted}</div>` : ''}
+                                ${formData.type === 'Mandataire' && formData.numeroElecteur ? `<div class="info-row"><span class="info-label">N° électeur :</span> ${formData.numeroElecteur}</div>` : ''}
                                 <div class="info-row"><span class="info-label">Bureau de vote :</span> ${formData.bureau}</div>
                                 <div class="info-row"><span class="info-label">Quartier :</span> ${formData.quartier}</div>
                                 <div class="info-row"><span class="info-label">Tours :</span> ${tours.join(' et ')}</div>

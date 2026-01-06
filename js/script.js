@@ -833,11 +833,17 @@ function initProcurationForm(type) {
             bureauValue = document.getElementById(`${prefix}BureauAutre`).value.trim();
         }
 
+        // Additional fields for mandataire
+        const dateNaissance = type === 'mandataire' ? document.getElementById('mandataireDateNaissance')?.value : '';
+        const numeroElecteur = type === 'mandataire' ? document.getElementById('mandataireNumeroElecteur')?.value.trim() : '';
+
         const formData = {
             type: type === 'mandant' ? 'Mandant' : 'Mandataire',
             nom: document.getElementById(`${prefix}Nom`).value.trim(),
             email: document.getElementById(`${prefix}Email`).value.trim(),
             phone: document.getElementById(`${prefix}Phone`).value.trim(),
+            dateNaissance: dateNaissance,
+            numeroElecteur: numeroElecteur,
             bureau: bureauValue,
             quartier: document.getElementById(`${prefix}Quartier`).value,
             tour1: form.querySelector('[name="tour1"]').checked ? form.querySelector('[name="tour1"]').value : '',
@@ -851,6 +857,12 @@ function initProcurationForm(type) {
         // Validation
         if (!formData.nom || !formData.email || !formData.phone || !formData.bureau || !formData.quartier) {
             showProcurationMessage(messageEl, 'Veuillez remplir tous les champs obligatoires.', 'error');
+            return;
+        }
+
+        // Validate date of birth for mandataire
+        if (type === 'mandataire' && !formData.dateNaissance) {
+            showProcurationMessage(messageEl, 'Veuillez indiquer votre date de naissance.', 'error');
             return;
         }
 
