@@ -302,7 +302,7 @@ a:hover {
 /* Mobile adjustments for ticker */
 @media (max-width: 768px) {
     .news-ticker {
-        top: 70px;
+        top: 78px;
         height: 46px;
     }
 
@@ -2893,7 +2893,7 @@ a:hover {
     }
 
     .news-ticker {
-        top: 60px;
+        top: 68px;
     }
 
     .section-title {
