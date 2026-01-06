@@ -123,25 +123,31 @@ exports.handler = async (event) => {
         }
 
         // Prepare data for Airtable
-        const airtableData = {
-            fields: {
-                'Nom': formData.nom,
-                'Email': formData.email,
-                'Téléphone': formData.phone,
-                'Type': formData.type, // 'Mandant' or 'Mandataire'
-                'Date de Naissance': formData.dateNaissance || '',
-                'Numéro Électeur': formData.numeroElecteur || '',
-                'Bureau de Vote': formData.bureau,
-                'Quartier': formData.quartier,
-                'Tours': tours.join(', '),
-                'Message': formData.message || '',
-                'Statut': 'En attente',
-                'Date': submissionDate.toISOString(),
-                'GDPR Consent': formData.gdpr || false,
-                'Adresse IP': clientIP,
-                'Localisation': geoLocation
-            }
+        const airtableFields = {
+            'Nom': formData.nom,
+            'Email': formData.email,
+            'Téléphone': formData.phone,
+            'Type': formData.type, // 'Mandant' or 'Mandataire'
+            'Bureau de Vote': formData.bureau,
+            'Quartier': formData.quartier,
+            'Tours': tours.join(', '),
+            'Message': formData.message || '',
+            'Statut': 'En attente',
+            'Date': submissionDate.toISOString(),
+            'GDPR Consent': formData.gdpr || false,
+            'Adresse IP': clientIP,
+            'Localisation': geoLocation
         };
+
+        // Only add date fields if they have values (Airtable rejects empty strings for dates)
+        if (formData.dateNaissance) {
+            airtableFields['Date de Naissance'] = formData.dateNaissance;
+        }
+        if (formData.numeroElecteur) {
+            airtableFields['Numéro Électeur'] = formData.numeroElecteur;
+        }
+
+        const airtableData = { fields: airtableFields };
 
         // Send to Airtable
         const airtableResponse = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_PROCURATIONS_TABLE)}`, {
