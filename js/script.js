@@ -739,6 +739,215 @@ if (document.readyState === 'loading') {
 }
 
 // ===================================
+// Procuration Page - Tabs and Forms
+// ===================================
+function initProcurationPage() {
+    const tabs = document.querySelectorAll('.procuration-tab');
+    const mandantForm = document.getElementById('mandant-form');
+    const mandataireForm = document.getElementById('mandataire-form');
+
+    if (!tabs.length || !mandantForm || !mandataireForm) return;
+
+    // Tab switching
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Update tab active state
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // Show/hide forms
+            const tabType = tab.getAttribute('data-tab');
+            if (tabType === 'mandant') {
+                mandantForm.style.display = 'block';
+                mandataireForm.style.display = 'none';
+            } else {
+                mandantForm.style.display = 'none';
+                mandataireForm.style.display = 'block';
+            }
+        });
+    });
+
+    // Generate security questions for both forms
+    generateProcurationSecurityQuestion('mandant');
+    generateProcurationSecurityQuestion('mandataire');
+
+    // Initialize form handlers
+    initProcurationForm('mandant');
+    initProcurationForm('mandataire');
+}
+
+// Generate security question for procuration forms
+function generateProcurationSecurityQuestion(type) {
+    const questionEl = document.getElementById(`${type}SecurityQuestion`);
+    const expectedEl = document.getElementById(`${type}ExpectedAnswer`);
+
+    if (questionEl && expectedEl) {
+        const num1 = Math.floor(Math.random() * 10) + 1;
+        const num2 = Math.floor(Math.random() * 10) + 1;
+        const operations = [
+            { symbol: '+', calc: (a, b) => a + b },
+            { symbol: '-', calc: (a, b) => a - b },
+            { symbol: '×', calc: (a, b) => a * b }
+        ];
+
+        const adjustedNum1 = Math.max(num1, num2);
+        const adjustedNum2 = Math.min(num1, num2);
+
+        const op = operations[Math.floor(Math.random() * operations.length)];
+        const answer = op.symbol === '-'
+            ? op.calc(adjustedNum1, adjustedNum2)
+            : op.calc(num1, num2);
+
+        const displayNum1 = op.symbol === '-' ? adjustedNum1 : num1;
+        const displayNum2 = op.symbol === '-' ? adjustedNum2 : num2;
+
+        questionEl.textContent = `${displayNum1} ${op.symbol} ${displayNum2} = ?`;
+        expectedEl.value = answer;
+    }
+}
+
+// Initialize procuration form submission
+function initProcurationForm(type) {
+    const formId = type === 'mandant' ? 'procurationMandantForm' : 'procurationMandataireForm';
+    const form = document.getElementById(formId);
+    const messageId = type === 'mandant' ? 'mandantMessage' : 'mandataireFormMessage';
+    const messageEl = document.getElementById(messageId);
+
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Check honeypot
+        const honeypot = form.querySelector('[name="bot-field"]');
+        if (honeypot && honeypot.value) {
+            return false;
+        }
+
+        // Collect form data
+        const prefix = type === 'mandant' ? 'mandant' : 'mandataire';
+        const formData = {
+            type: type === 'mandant' ? 'Mandant' : 'Mandataire',
+            nom: document.getElementById(`${prefix}Nom`).value.trim(),
+            email: document.getElementById(`${prefix}Email`).value.trim(),
+            phone: document.getElementById(`${prefix}Phone`).value.trim(),
+            bureau: document.getElementById(`${prefix}Bureau`).value.trim(),
+            quartier: document.getElementById(`${prefix}Quartier`).value,
+            tour1: form.querySelector('[name="tour1"]').checked ? form.querySelector('[name="tour1"]').value : '',
+            tour2: form.querySelector('[name="tour2"]').checked ? form.querySelector('[name="tour2"]').value : '',
+            message: document.getElementById(`${prefix}Message`).value.trim(),
+            gdpr: document.getElementById(`${prefix}Gdpr`).checked,
+            securityAnswer: document.getElementById(`${prefix}SecurityAnswer`).value.trim(),
+            expectedAnswer: parseInt(document.getElementById(`${prefix}ExpectedAnswer`).value)
+        };
+
+        // Validation
+        if (!formData.nom || !formData.email || !formData.phone || !formData.bureau || !formData.quartier) {
+            showProcurationMessage(messageEl, 'Veuillez remplir tous les champs obligatoires.', 'error');
+            return;
+        }
+
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            showProcurationMessage(messageEl, 'Veuillez entrer une adresse email valide.', 'error');
+            return;
+        }
+
+        // Validate at least one tour
+        if (!formData.tour1 && !formData.tour2) {
+            showProcurationMessage(messageEl, 'Veuillez sélectionner au moins un tour.', 'error');
+            return;
+        }
+
+        // Check GDPR
+        if (!formData.gdpr) {
+            showProcurationMessage(messageEl, 'Vous devez accepter la politique de confidentialité.', 'error');
+            return;
+        }
+
+        // Check security answer
+        if (!formData.securityAnswer || parseInt(formData.securityAnswer) !== formData.expectedAnswer) {
+            showProcurationMessage(messageEl, 'La réponse à la vérification est incorrecte.', 'error');
+            generateProcurationSecurityQuestion(type);
+            document.getElementById(`${prefix}SecurityAnswer`).value = '';
+            return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Envoi en cours...';
+
+        try {
+            const response = await fetch('/.netlify/functions/submit-procuration', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                showProcurationMessage(messageEl, result.message, 'success');
+                form.reset();
+                generateProcurationSecurityQuestion(type);
+            } else {
+                showProcurationMessage(messageEl, result.error || 'Une erreur est survenue. Veuillez réessayer.', 'error');
+            }
+        } catch (error) {
+            console.error('Procuration error:', error);
+            showProcurationMessage(messageEl, 'Erreur de connexion. Veuillez réessayer.', 'error');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    });
+}
+
+// Show procuration message
+function showProcurationMessage(el, message, type) {
+    if (el) {
+        el.textContent = message;
+        el.className = `form-message ${type}`;
+        el.style.display = 'block';
+
+        // Scroll to message
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        if (type === 'error') {
+            setTimeout(() => {
+                el.style.display = 'none';
+            }, 5000);
+        }
+    }
+}
+
+// Toggle bureau help
+function toggleBureauHelp(event) {
+    event.preventDefault();
+    const helpEl = document.getElementById('bureau-help');
+    if (helpEl) {
+        helpEl.style.display = helpEl.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+function toggleBureauHelp2(event) {
+    event.preventDefault();
+    const helpEl = document.getElementById('bureau-help-2');
+    if (helpEl) {
+        helpEl.style.display = helpEl.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+// Initialize procuration page when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProcurationPage);
+} else {
+    initProcurationPage();
+}
+
+// ===================================
 // Console Easter Egg
 // ===================================
 console.log('%c🗳️ Pour Senlis en Confiance', 'font-size: 20px; font-weight: bold; color: #0d3d5c;');
