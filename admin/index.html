@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Admin - Pour Senlis en Confiance</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/PSEC.png">
+    <link rel="apple-touch-icon" href="/images/PSEC.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/css/styles.css?v=20260106b">
+</head>
+<body class="admin-login-page">
+    <div class="admin-login-card">
+        <div class="admin-login-logo">
+            <img src="/images/PSEC.png" alt="Pour Senlis en Confiance">
+        </div>
+        <h1>Administration</h1>
+        <p class="admin-login-subtitle">Gestion des procurations</p>
+
+        <form id="loginForm" class="admin-login-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                Se connecter
+            </button>
+        </form>
+
+        <div id="loginMessage" class="form-message" style="display: none;"></div>
+
+        <a href="/" class="admin-back-link">Retour au site</a>
+    </div>
+
+    <script>
+        // Check if already logged in
+        const token = localStorage.getItem('adminToken');
+        if (token) {
+            // Verify token
+            fetch('/.netlify/functions/auth-verify', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.valid) {
+                    window.location.href = '/admin/dashboard.html';
+                } else {
+                    localStorage.removeItem('adminToken');
+                    localStorage.removeItem('adminUser');
+                }
+            })
+            .catch(() => {
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('adminUser');
+            });
+        }
+
+        // Handle login form
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const messageEl = document.getElementById('loginMessage');
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Connexion...';
+            messageEl.style.display = 'none';
+
+            try {
+                const response = await fetch('/.netlify/functions/auth-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    // Store token and user info
+                    localStorage.setItem('adminToken', data.token);
+                    localStorage.setItem('adminUser', JSON.stringify(data.user));
+
+                    // Redirect to dashboard
+                    window.location.href = '/admin/dashboard.html';
+                } else {
+                    showMessage(data.error || 'Erreur de connexion', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showMessage('Erreur de connexion au serveur', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Se connecter';
+            }
+        });
+
+        function showMessage(message, type) {
+            const messageEl = document.getElementById('loginMessage');
+            messageEl.textContent = message;
+            messageEl.className = `form-message ${type}`;
+            messageEl.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

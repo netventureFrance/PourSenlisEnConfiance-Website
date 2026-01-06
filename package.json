@@ -1,0 +1,10 @@
+{
+  "name": "pour-senlis-en-confiance",
+  "version": "1.0.0",
+  "description": "Site de campagne Pour Senlis en Confiance",
+  "private": true,
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
