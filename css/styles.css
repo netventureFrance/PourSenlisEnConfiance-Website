@@ -302,7 +302,7 @@ a:hover {
 /* Mobile adjustments for ticker */
 @media (max-width: 768px) {
     .news-ticker {
-        top: 85px;
+        top: 70px;
         height: 46px;
     }
 
@@ -2890,6 +2890,10 @@ a:hover {
 @media (max-width: 480px) {
     .logo img {
         height: 40px;
+    }
+
+    .news-ticker {
+        top: 60px;
     }
 
     .section-title {
