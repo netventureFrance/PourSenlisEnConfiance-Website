@@ -826,12 +826,19 @@ function initProcurationForm(type) {
 
         // Collect form data
         const prefix = type === 'mandant' ? 'mandant' : 'mandataire';
+
+        // Handle "autre" bureau de vote
+        let bureauValue = document.getElementById(`${prefix}Bureau`).value;
+        if (bureauValue === 'autre') {
+            bureauValue = document.getElementById(`${prefix}BureauAutre`).value.trim();
+        }
+
         const formData = {
             type: type === 'mandant' ? 'Mandant' : 'Mandataire',
             nom: document.getElementById(`${prefix}Nom`).value.trim(),
             email: document.getElementById(`${prefix}Email`).value.trim(),
             phone: document.getElementById(`${prefix}Phone`).value.trim(),
-            bureau: document.getElementById(`${prefix}Bureau`).value.trim(),
+            bureau: bureauValue,
             quartier: document.getElementById(`${prefix}Quartier`).value,
             tour1: form.querySelector('[name="tour1"]').checked ? form.querySelector('[name="tour1"]').value : '',
             tour2: form.querySelector('[name="tour2"]').checked ? form.querySelector('[name="tour2"]').value : '',
@@ -923,20 +930,19 @@ function showProcurationMessage(el, message, type) {
     }
 }
 
-// Toggle bureau help
-function toggleBureauHelp(event) {
-    event.preventDefault();
-    const helpEl = document.getElementById('bureau-help');
-    if (helpEl) {
-        helpEl.style.display = helpEl.style.display === 'none' ? 'block' : 'none';
-    }
-}
-
-function toggleBureauHelp2(event) {
-    event.preventDefault();
-    const helpEl = document.getElementById('bureau-help-2');
-    if (helpEl) {
-        helpEl.style.display = helpEl.style.display === 'none' ? 'block' : 'none';
+// Toggle "Autre" bureau de vote field
+function toggleOtherBureau(selectEl, inputId) {
+    const inputEl = document.getElementById(inputId);
+    if (inputEl) {
+        if (selectEl.value === 'autre') {
+            inputEl.style.display = 'block';
+            inputEl.required = true;
+            inputEl.focus();
+        } else {
+            inputEl.style.display = 'none';
+            inputEl.required = false;
+            inputEl.value = '';
+        }
     }
 }
 
