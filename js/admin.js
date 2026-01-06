@@ -192,6 +192,17 @@
         return div.innerHTML;
     }
 
+    // Escape for HTML attributes (prevents XSS in onclick handlers)
+    function escapeAttr(text) {
+        if (!text) return '';
+        return text
+            .replace(/&/g, '&amp;')
+            .replace(/'/g, '&#39;')
+            .replace(/"/g, '&quot;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
     // Open Detail Panel
     function openDetail(recordId) {
         const record = allRecords.find(r => r.id === recordId);
@@ -282,8 +293,8 @@
                         </div>
                         ${existingMatch.status === 'Proposé' ? `
                             <div class="match-actions">
-                                <button class="btn btn-small btn-success" onclick="updateMatchStatus('${existingMatch.id}', 'Confirmé')">Confirmer</button>
-                                <button class="btn btn-small btn-danger" onclick="updateMatchStatus('${existingMatch.id}', 'Annulé')">Annuler</button>
+                                <button class="btn btn-small btn-success" onclick="updateMatchStatus('${escapeAttr(existingMatch.id)}', 'Confirmé')">Confirmer</button>
+                                <button class="btn btn-small btn-danger" onclick="updateMatchStatus('${escapeAttr(existingMatch.id)}', 'Annulé')">Annuler</button>
                             </div>
                         ` : ''}
                     </div>
@@ -323,9 +334,9 @@
         }
 
         suggestionsContainer.innerHTML = potentialMatches.slice(0, 10).map(match => `
-            <div class="match-suggestion ${match.matchType}">
+            <div class="match-suggestion ${escapeAttr(match.matchType)}">
                 <div class="match-info">
-                    <div class="match-badge ${match.matchType}">
+                    <div class="match-badge ${escapeAttr(match.matchType)}">
                         ${match.matchType === 'same-bureau' ? 'Même bureau' :
                           match.matchType === 'same-quartier' ? 'Même quartier' : 'Compatible'}
                     </div>
@@ -334,7 +345,7 @@
                     <span class="match-detail">${escapeHtml(match.quartier)}</span>
                     <span class="match-detail">${escapeHtml(match.tours)}</span>
                 </div>
-                <button class="match-btn" onclick="createMatch('${record.id}', '${match.id}')">
+                <button class="match-btn" onclick="createMatch('${escapeAttr(record.id)}', '${escapeAttr(match.id)}')">
                     Matcher
                 </button>
             </div>

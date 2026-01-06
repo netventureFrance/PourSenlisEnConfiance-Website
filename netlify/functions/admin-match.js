@@ -1,11 +1,25 @@
 // Netlify Function for creating and managing procuration matches
 const jwt = require('jsonwebtoken');
 
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Access-Control-Allow-Methods': 'POST, PATCH, GET, OPTIONS'
-};
+// Allowed origins for CORS
+const ALLOWED_ORIGINS = [
+    'https://poursenlisenconfiance.fr',
+    'https://www.poursenlisenconfiance.fr'
+];
+
+function getCorsHeaders(event) {
+    const origin = event.headers.origin || event.headers.Origin || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+    return {
+        'Access-Control-Allow-Origin': allowedOrigin,
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'POST, PATCH, GET, OPTIONS',
+        'Access-Control-Allow-Credentials': 'true'
+    };
+}
+
+// Valid statuses for matches
+const VALID_STATUSES = ['Proposé', 'Confirmé', 'Annulé'];
 
 // Verify JWT token helper
 function verifyToken(event) {
@@ -156,6 +170,8 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
 }
 
 exports.handler = async (event) => {
+    const corsHeaders = getCorsHeaders(event);
+
     // Handle preflight OPTIONS request
     if (event.httpMethod === 'OPTIONS') {
         return {
@@ -335,6 +351,15 @@ exports.handler = async (event) => {
                     statusCode: 400,
                     headers: corsHeaders,
                     body: JSON.stringify({ error: 'matchId requis' })
+                };
+            }
+
+            // Validate status against whitelist
+            if (status && !VALID_STATUSES.includes(status)) {
+                return {
+                    statusCode: 400,
+                    headers: corsHeaders,
+                    body: JSON.stringify({ error: 'Statut invalide' })
                 };
             }
 

@@ -2,11 +2,34 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS'
-};
+// Allowed origins for CORS
+const ALLOWED_ORIGINS = [
+    'https://poursenlisenconfiance.fr',
+    'https://www.poursenlisenconfiance.fr'
+];
+
+function getCorsHeaders(event) {
+    const origin = event.headers.origin || event.headers.Origin || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+    return {
+        'Access-Control-Allow-Origin': allowedOrigin,
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
+        'Access-Control-Allow-Credentials': 'true'
+    };
+}
+
+// Safe escape for Airtable formula strings
+function escapeAirtableValue(value) {
+    if (typeof value !== 'string') return '';
+    return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+}
+
+// Email validation
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
 
 // Verify JWT token helper
 function verifyToken(event) {
@@ -27,6 +50,8 @@ function verifyToken(event) {
 }
 
 exports.handler = async (event) => {
+    const corsHeaders = getCorsHeaders(event);
+
     // Handle preflight OPTIONS request
     if (event.httpMethod === 'OPTIONS') {
         return {
@@ -100,9 +125,18 @@ exports.handler = async (event) => {
                 };
             }
 
-            // Check if user already exists
+            // Validate email format
+            if (!isValidEmail(email)) {
+                return {
+                    statusCode: 400,
+                    headers: corsHeaders,
+                    body: JSON.stringify({ error: 'Format d\'email invalide' })
+                };
+            }
+
+            // Check if user already exists (safely escaped)
             const checkResponse = await fetch(
-                `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_USERS_TABLE)}?filterByFormula=${encodeURIComponent(`{Email}='${email.replace(/'/g, "\\'")}'`)}`,
+                `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_USERS_TABLE)}?filterByFormula=${encodeURIComponent(`{Email}='${escapeAirtableValue(email)}'`)}`,
                 {
                     headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` }
                 }

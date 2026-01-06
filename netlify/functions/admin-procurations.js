@@ -1,11 +1,26 @@
 // Netlify Function to fetch procurations for admin dashboard
 const jwt = require('jsonwebtoken');
 
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS'
-};
+// Allowed origins for CORS
+const ALLOWED_ORIGINS = [
+    'https://poursenlisenconfiance.fr',
+    'https://www.poursenlisenconfiance.fr'
+];
+
+function getCorsHeaders(event) {
+    const origin = event.headers.origin || event.headers.Origin || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+    return {
+        'Access-Control-Allow-Origin': allowedOrigin,
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Credentials': 'true'
+    };
+}
+
+// Whitelist for query parameter validation
+const VALID_TYPES = ['Mandant', 'Mandataire'];
+const VALID_STATUTS = ['En attente', 'Proposé', 'Confirmé', 'Annulé'];
 
 // Verify JWT token helper
 function verifyToken(event) {
@@ -26,6 +41,8 @@ function verifyToken(event) {
 }
 
 exports.handler = async (event) => {
+    const corsHeaders = getCorsHeaders(event);
+
     // Handle preflight OPTIONS request
     if (event.httpMethod === 'OPTIONS') {
         return {
@@ -69,10 +86,26 @@ exports.handler = async (event) => {
 
         // Parse query parameters
         const params = event.queryStringParameters || {};
-        const type = params.type; // 'Mandant' or 'Mandataire'
-        const statut = params.statut; // 'En attente', 'Proposé', 'Confirmé'
+        const type = params.type;
+        const statut = params.statut;
 
-        // Build filter formula
+        // Validate query parameters against whitelist
+        if (type && !VALID_TYPES.includes(type)) {
+            return {
+                statusCode: 400,
+                headers: corsHeaders,
+                body: JSON.stringify({ error: 'Type invalide' })
+            };
+        }
+        if (statut && !VALID_STATUTS.includes(statut)) {
+            return {
+                statusCode: 400,
+                headers: corsHeaders,
+                body: JSON.stringify({ error: 'Statut invalide' })
+            };
+        }
+
+        // Build filter formula (values are now validated)
         const filters = [];
         if (type) {
             filters.push(`{Type}='${type}'`);

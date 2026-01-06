@@ -1,13 +1,26 @@
 // Netlify Function for JWT token verification
 const jwt = require('jsonwebtoken');
 
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS'
-};
+// Allowed origins for CORS
+const ALLOWED_ORIGINS = [
+    'https://poursenlisenconfiance.fr',
+    'https://www.poursenlisenconfiance.fr'
+];
+
+function getCorsHeaders(event) {
+    const origin = event.headers.origin || event.headers.Origin || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+    return {
+        'Access-Control-Allow-Origin': allowedOrigin,
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Credentials': 'true'
+    };
+}
 
 exports.handler = async (event) => {
+    const corsHeaders = getCorsHeaders(event);
+
     // Handle preflight OPTIONS request
     if (event.httpMethod === 'OPTIONS') {
         return {

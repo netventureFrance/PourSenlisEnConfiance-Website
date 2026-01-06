@@ -1,12 +1,41 @@
 // Netlify Function to handle procuration form submission to Airtable with matching logic
 
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS'
-};
+// Allowed origins for CORS
+const ALLOWED_ORIGINS = [
+    'https://poursenlisenconfiance.fr',
+    'https://www.poursenlisenconfiance.fr'
+];
+
+function getCorsHeaders(event) {
+    const origin = event.headers.origin || event.headers.Origin || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+    return {
+        'Access-Control-Allow-Origin': allowedOrigin,
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Credentials': 'true'
+    };
+}
+
+// Email validation
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Phone validation (French format)
+function isValidPhone(phone) {
+    // Accept various French phone formats
+    const phoneRegex = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/;
+    return phoneRegex.test(phone.replace(/\s/g, ''));
+}
+
+// Valid types for procuration
+const VALID_TYPES = ['Mandant', 'Mandataire'];
 
 exports.handler = async (event) => {
+    const corsHeaders = getCorsHeaders(event);
+
     // Handle preflight OPTIONS request
     if (event.httpMethod === 'OPTIONS') {
         return {
@@ -34,6 +63,33 @@ exports.handler = async (event) => {
                 statusCode: 400,
                 headers: corsHeaders,
                 body: JSON.stringify({ error: 'Champs requis manquants' })
+            };
+        }
+
+        // Validate email format
+        if (!isValidEmail(formData.email)) {
+            return {
+                statusCode: 400,
+                headers: corsHeaders,
+                body: JSON.stringify({ error: 'Format d\'email invalide' })
+            };
+        }
+
+        // Validate phone format
+        if (!isValidPhone(formData.phone)) {
+            return {
+                statusCode: 400,
+                headers: corsHeaders,
+                body: JSON.stringify({ error: 'Format de téléphone invalide' })
+            };
+        }
+
+        // Validate type against whitelist
+        if (!VALID_TYPES.includes(formData.type)) {
+            return {
+                statusCode: 400,
+                headers: corsHeaders,
+                body: JSON.stringify({ error: 'Type de procuration invalide' })
             };
         }
 
