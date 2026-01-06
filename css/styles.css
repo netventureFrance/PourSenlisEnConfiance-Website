@@ -3555,6 +3555,29 @@ body:has(.chatbot-section) .chat-float-btn {
     align-items: center;
 }
 
+.procuration-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.procuration-buttons .btn {
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .procuration-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .procuration-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 /* Matching Section */
 .procuration-matching-section {
     padding: 4rem 0;
