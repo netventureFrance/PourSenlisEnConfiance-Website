@@ -225,6 +225,7 @@
                                     <option value="Bureau n°8 - Gymnase de Brichebay">Bureau n°8 - Gymnase de Brichebay</option>
                                     <option value="autre">Autre (précisez)</option>
                                 </select>
+                                <label for="mandantBureauAutre" class="sr-only">Autre bureau de vote</label>
                                 <input type="text" id="mandantBureauAutre" name="bureauAutre" placeholder="Précisez votre bureau de vote" style="display: none; margin-top: 0.5rem;">
                                 <p class="field-help">Consultez votre carte électorale ou vérifiez sur <a href="https://www.service-public.fr/particuliers/vosdroits/services-en-ligne-et-formulaires/ISE" target="_blank" rel="noopener">service-public.fr</a></p>
                             </div>
@@ -344,7 +345,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="mandataireDateNaissance">Date de naissance *</label>
-                                <input type="date" id="mandataireDateNaissance" name="dateNaissance" required autocomplete="bday">
+                                <input type="date" id="mandataireDateNaissance" name="dateNaissance" required>
                                 <p class="field-help">Requise pour établir la procuration officielle</p>
                             </div>
                             <div class="form-group">
@@ -369,6 +370,7 @@
                                 <option value="Tous les bureaux">Tous les bureaux (je peux me déplacer partout)</option>
                                 <option value="autre">Autre (précisez)</option>
                             </select>
+                            <label for="mandataireBureauAutre" class="sr-only">Autre bureau de vote</label>
                             <input type="text" id="mandataireBureauAutre" name="bureauAutre" placeholder="Précisez le bureau de vote" style="display: none; margin-top: 0.5rem;">
                             <p class="field-help">Vous devrez voter dans le bureau de vote du mandant, pas dans le vôtre.</p>
                         </div>
