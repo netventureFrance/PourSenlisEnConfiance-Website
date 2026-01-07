@@ -1,5 +1,11 @@
 // Netlify Function for creating and managing procuration matches
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+
+// Generate secure random token
+function generateToken() {
+    return crypto.randomBytes(32).toString('hex');
+}
 
 // Allowed origins for CORS
 const ALLOWED_ORIGINS = [
@@ -68,8 +74,13 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
         .info-label { font-weight: bold; color: #0d3d5c; }
         .footer { background-color: #0d3d5c; color: #ffffff; padding: 20px; text-align: center; font-size: 14px; }
         .footer a { color: #a8d98f; text-decoration: none; }
-        .btn { display: inline-block; background-color: #6cb13e; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; margin-top: 15px; }
+        .btn { display: inline-block; background-color: #6cb13e; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; margin-top: 15px; margin-right: 10px; }
+        .btn-confirm { background-color: #0d3d5c; }
+        .confirm-section { background-color: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 20px; margin: 25px 0; text-align: center; }
+        .confirm-section h3 { color: #856404; margin-bottom: 15px; }
     `;
+
+    const confirmUrlBase = 'https://poursenlisenconfiance.fr/.netlify/functions/confirm-match';
 
     // Email to Mandant
     const mandantHtml = `
@@ -97,6 +108,13 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
                     <li>Vous aurez besoin de sa date de naissance${mandataire.dateNaissance ? ` : <strong>${new Date(mandataire.dateNaissance).toLocaleDateString('fr-FR')}</strong>` : ''}</li>
                 </ol>
                 <a href="https://www.maprocuration.gouv.fr/" class="btn">Faire ma procuration</a>
+
+                <div class="confirm-section">
+                    <h3>Confirmer la procuration</h3>
+                    <p>Une fois que vous avez échangé avec votre mandataire et que tout est en ordre, cliquez sur le bouton ci-dessous :</p>
+                    <a href="${confirmUrlBase}?token=${mandant.confirmToken}" class="btn btn-confirm">Je confirme la procuration</a>
+                </div>
+
                 <p style="margin-top: 30px;">À très bientôt,<br><strong>L'équipe Pour Senlis en Confiance avec Pascale Loiseleur</strong></p>
             </div>
             <div class="footer">
@@ -134,6 +152,13 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
                     <li>Le mandant établira la procuration sur maprocuration.gouv.fr</li>
                     <li>N'oubliez pas d'apporter votre pièce d'identité le jour du vote</li>
                 </ul>
+
+                <div class="confirm-section">
+                    <h3>Confirmer la procuration</h3>
+                    <p>Une fois que vous avez échangé avec le mandant et que vous acceptez de voter pour lui/elle, cliquez sur le bouton ci-dessous :</p>
+                    <a href="${confirmUrlBase}?token=${mandataire.confirmToken}" class="btn btn-confirm">Je confirme la procuration</a>
+                </div>
+
                 <p style="margin-top: 30px;">Merci encore pour votre aide,<br><strong>L'équipe Pour Senlis en Confiance avec Pascale Loiseleur</strong></p>
             </div>
             <div class="footer">
@@ -262,6 +287,10 @@ exports.handler = async (event) => {
                 };
             }
 
+            // Generate confirmation tokens
+            const tokenMandant = generateToken();
+            const tokenMandataire = generateToken();
+
             // Create match record
             const matchData = {
                 fields: {
@@ -271,7 +300,9 @@ exports.handler = async (event) => {
                     'Matched At': new Date().toISOString(),
                     'Status': 'Proposé',
                     'Tour': tour || '',
-                    'Notes': notes || ''
+                    'Notes': notes || '',
+                    'Token Mandant': tokenMandant,
+                    'Token Mandataire': tokenMandataire
                 }
             };
 
@@ -333,7 +364,8 @@ exports.handler = async (event) => {
                 civilite: mandantData.fields['Civilité'],
                 email: mandantData.fields['Email'],
                 phone: mandantData.fields['Téléphone'],
-                bureau: mandantData.fields['Bureau de Vote']
+                bureau: mandantData.fields['Bureau de Vote'],
+                confirmToken: tokenMandant
             };
 
             const mandataire = {
@@ -342,7 +374,8 @@ exports.handler = async (event) => {
                 civilite: mandataireData.fields['Civilité'],
                 email: mandataireData.fields['Email'],
                 phone: mandataireData.fields['Téléphone'],
-                dateNaissance: mandataireData.fields['Date de Naissance']
+                dateNaissance: mandataireData.fields['Date de Naissance'],
+                confirmToken: tokenMandataire
             };
 
             // Send notification emails
