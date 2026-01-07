@@ -227,11 +227,8 @@ async function sendFinalConfirmationEmails(mandant, mandataire, RESEND_API_KEY) 
                 </div>
                 <p>Votre mandataire <strong>${formatGreeting(mandataire)}</strong> votera pour vous.</p>
                 <div class="info-box">
-                    <h3>Rappels importants :</h3>
-                    <ul>
-                        <li>Si ce n'est pas déjà fait, établissez la procuration officielle sur <a href="https://www.maprocuration.gouv.fr/">maprocuration.gouv.fr</a></li>
-                        <li>Votre mandataire votera dans votre bureau de vote : <strong>${mandant.bureau}</strong></li>
-                    </ul>
+                    <h3>Rappel important :</h3>
+                    <p>Votre mandataire <strong>${formatGreeting(mandataire)}</strong> votera dans votre bureau de vote : <strong>${mandant.bureau}</strong></p>
                 </div>
                 <p>Merci pour votre confiance et votre participation !</p>
                 <p style="margin-top: 30px;">À très bientôt,<br><strong>L'équipe Pour Senlis en Confiance avec Pascale Loiseleur</strong></p>

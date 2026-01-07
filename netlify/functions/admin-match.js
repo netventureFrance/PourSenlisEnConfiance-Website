@@ -111,7 +111,7 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
 
                 <div class="confirm-section">
                     <h3>Confirmer la procuration</h3>
-                    <p>Une fois que vous avez échangé avec votre mandataire et que tout est en ordre, cliquez sur le bouton ci-dessous :</p>
+                    <p>Une fois que vous avez établi la procuration sur maprocuration.gouv.fr et reçu la confirmation de la police, cliquez sur le bouton ci-dessous :</p>
                     <a href="${confirmUrlBase}?token=${mandant.confirmToken}" class="btn btn-confirm" style="display: inline-block; background-color: #0d3d5c; color: #ffffff !important; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold;">Je confirme la procuration</a>
                 </div>
 
