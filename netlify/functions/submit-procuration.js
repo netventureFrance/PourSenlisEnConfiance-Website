@@ -442,7 +442,7 @@ exports.handler = async (event) => {
                                 <div class="info-row"><span class="info-label">ID Airtable :</span> ${airtableResult.id}</div>
                             </div>
 
-                            <a href="mailto:${formData.email}?subject=Re: Votre demande de procuration" class="btn">Répondre à ${formData.nom.split(' ')[0]}</a>
+                            <a href="mailto:${formData.email}?subject=Re: Votre demande de procuration" class="btn" style="display: inline-block; background-color: #6cb13e; color: #ffffff !important; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold;">Répondre à ${formData.nom.split(' ')[0]}</a>
                         </div>
                         <div class="footer">
                             <p>Notification automatique - Pour Senlis en Confiance avec Pascale Loiseleur</p>

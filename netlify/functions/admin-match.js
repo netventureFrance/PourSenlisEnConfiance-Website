@@ -107,12 +107,12 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
                     <li>Établissez la procuration officielle sur maprocuration.gouv.fr</li>
                     <li>Vous aurez besoin de sa date de naissance${mandataire.dateNaissance ? ` : <strong>${new Date(mandataire.dateNaissance).toLocaleDateString('fr-FR')}</strong>` : ''}</li>
                 </ol>
-                <a href="https://www.maprocuration.gouv.fr/" class="btn">Faire ma procuration</a>
+                <a href="https://www.maprocuration.gouv.fr/" class="btn" style="display: inline-block; background-color: #6cb13e; color: #ffffff !important; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold;">Faire ma procuration</a>
 
                 <div class="confirm-section">
                     <h3>Confirmer la procuration</h3>
                     <p>Une fois que vous avez échangé avec votre mandataire et que tout est en ordre, cliquez sur le bouton ci-dessous :</p>
-                    <a href="${confirmUrlBase}?token=${mandant.confirmToken}" class="btn btn-confirm">Je confirme la procuration</a>
+                    <a href="${confirmUrlBase}?token=${mandant.confirmToken}" class="btn btn-confirm" style="display: inline-block; background-color: #0d3d5c; color: #ffffff !important; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold;">Je confirme la procuration</a>
                 </div>
 
                 <p style="margin-top: 30px;">À très bientôt,<br><strong>L'équipe Pour Senlis en Confiance avec Pascale Loiseleur</strong></p>
@@ -156,7 +156,7 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
                 <div class="confirm-section">
                     <h3>Confirmer la procuration</h3>
                     <p>Une fois que vous avez échangé avec le mandant et que vous acceptez de voter pour lui/elle, cliquez sur le bouton ci-dessous :</p>
-                    <a href="${confirmUrlBase}?token=${mandataire.confirmToken}" class="btn btn-confirm">Je confirme la procuration</a>
+                    <a href="${confirmUrlBase}?token=${mandataire.confirmToken}" class="btn btn-confirm" style="display: inline-block; background-color: #0d3d5c; color: #ffffff !important; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold;">Je confirme la procuration</a>
                 </div>
 
                 <p style="margin-top: 30px;">Merci encore pour votre aide,<br><strong>L'équipe Pour Senlis en Confiance avec Pascale Loiseleur</strong></p>
