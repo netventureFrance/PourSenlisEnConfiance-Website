@@ -1006,10 +1006,23 @@ function openDocumentViewer(url, type, title) {
 
     // Add content based on type
     if (type === 'pdf') {
-        const iframe = document.createElement('iframe');
-        iframe.src = url;
-        iframe.title = title;
-        documentViewerContent.appendChild(iframe);
+        // Use object tag for better cross-browser PDF support
+        const obj = document.createElement('object');
+        obj.data = url;
+        obj.type = 'application/pdf';
+        obj.style.width = '100%';
+        obj.style.height = '100%';
+
+        // Fallback content if PDF can't be displayed
+        const fallback = document.createElement('div');
+        fallback.className = 'pdf-fallback';
+        fallback.innerHTML = `
+            <p>Impossible d'afficher le PDF dans votre navigateur.</p>
+            <a href="${url}" target="_blank" class="btn btn-primary">Ouvrir dans un nouvel onglet</a>
+        `;
+        obj.appendChild(fallback);
+
+        documentViewerContent.appendChild(obj);
     } else if (type === 'image') {
         const img = document.createElement('img');
         img.src = url;
