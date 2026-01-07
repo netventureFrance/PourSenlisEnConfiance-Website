@@ -494,6 +494,16 @@ function initConsultationMap() {
                 const result = await response.json();
 
                 if (response.ok && result.success) {
+                    // Track with Plausible
+                    if (typeof plausible !== 'undefined') {
+                        plausible('Consultation', {
+                            props: {
+                                quartier: formData.quartier,
+                                statut: formData.statut,
+                                age: formData.age
+                            }
+                        });
+                    }
                     showConsultationMessage('Merci ! Votre idée a été enregistrée.', 'success');
                     consultationForm.reset();
                     generateConsultSecurityQuestion();
@@ -923,6 +933,16 @@ function initProcurationForm(type) {
             const result = await response.json();
 
             if (response.ok && result.success) {
+                // Track with Plausible
+                if (typeof plausible !== 'undefined') {
+                    plausible('Procuration', {
+                        props: {
+                            type: formData.type,
+                            quartier: formData.quartier,
+                            bureau: formData.bureau
+                        }
+                    });
+                }
                 showProcurationMessage(messageEl, result.message, 'success');
                 form.reset();
                 generateProcurationSecurityQuestion(type);
