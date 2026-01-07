@@ -31,3 +31,7 @@ Temporary Items
 
 # Node modules (if using npm/yarn)
 node_modules/
+preview/
+
+# Local Netlify folder
+.netlify
