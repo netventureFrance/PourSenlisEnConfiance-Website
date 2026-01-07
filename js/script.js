@@ -981,6 +981,78 @@ if (document.readyState === 'loading') {
 }
 
 // ===================================
+// Document Viewer Modal
+// ===================================
+const documentViewerOverlay = document.getElementById('documentViewerOverlay');
+const documentViewerModal = document.getElementById('documentViewerModal');
+const documentViewerTitle = document.getElementById('documentViewerTitle');
+const documentViewerContent = document.getElementById('documentViewerContent');
+const documentViewerDownload = document.getElementById('documentViewerDownload');
+const documentViewerClose = document.getElementById('documentViewerClose');
+
+function openDocumentViewer(url, type, title) {
+    if (!documentViewerModal) return;
+
+    // Set title
+    documentViewerTitle.textContent = title || 'Document';
+
+    // Set download link
+    documentViewerDownload.href = url;
+    const filename = url.split('/').pop();
+    documentViewerDownload.setAttribute('download', filename);
+
+    // Clear previous content
+    documentViewerContent.innerHTML = '';
+
+    // Add content based on type
+    if (type === 'pdf') {
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.title = title;
+        documentViewerContent.appendChild(iframe);
+    } else if (type === 'image') {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = title;
+        documentViewerContent.appendChild(img);
+    }
+
+    // Show modal
+    documentViewerOverlay.classList.add('visible');
+    documentViewerModal.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDocumentViewer() {
+    if (!documentViewerModal) return;
+
+    documentViewerOverlay.classList.remove('visible');
+    documentViewerModal.classList.remove('visible');
+    document.body.style.overflow = '';
+
+    // Clear content after animation
+    setTimeout(() => {
+        documentViewerContent.innerHTML = '';
+    }, 300);
+}
+
+// Event listeners for document viewer
+if (documentViewerClose) {
+    documentViewerClose.addEventListener('click', closeDocumentViewer);
+}
+
+if (documentViewerOverlay) {
+    documentViewerOverlay.addEventListener('click', closeDocumentViewer);
+}
+
+// Close on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && documentViewerModal && documentViewerModal.classList.contains('visible')) {
+        closeDocumentViewer();
+    }
+});
+
+// ===================================
 // Console Easter Egg
 // ===================================
 console.log('%c🗳️ Pour Senlis en Confiance', 'font-size: 20px; font-weight: bold; color: #0d3d5c;');

@@ -53,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="css/styles.css?v=20260105b" as="style">
+    <link rel="preload" href="css/styles.css?v=20260106a" as="style">
     <link rel="preload" href="images/new-logo-transparent.png" as="image">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" as="style">
 
@@ -61,7 +61,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/styles.css?v=20260105b">
+    <link rel="stylesheet" href="css/styles.css?v=20260106a">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -695,7 +695,10 @@
                     </div>
                     <span class="document-type document-type-pdf">PDF</span>
                     <h3>Tract de lancement de campagne</h3>
-                    <a href="documents/tract.pdf" class="btn btn-outline" download="tract.pdf" aria-label="Télécharger le tract de campagne en PDF">Télécharger</a>
+                    <div class="document-buttons">
+                        <button class="btn btn-primary" onclick="openDocumentViewer('documents/tract.pdf', 'pdf', 'Tract de lancement de campagne')" aria-label="Voir le tract de campagne">Voir</button>
+                        <a href="documents/tract.pdf" class="btn btn-outline" download="tract.pdf" aria-label="Télécharger le tract de campagne en PDF">Télécharger</a>
+                    </div>
                 </div>
                 <div class="document-card">
                     <div class="document-icon" aria-hidden="true">
@@ -705,7 +708,10 @@
                     </div>
                     <span class="document-type document-type-image">Image</span>
                     <h3>QR Code du site</h3>
-                    <a href="images/qrcode_senlis_logo.png" class="btn btn-outline" download="qrcode_senlis_logo.png" aria-label="Télécharger le QR code en PNG">Télécharger</a>
+                    <div class="document-buttons">
+                        <button class="btn btn-primary" onclick="openDocumentViewer('images/qrcode_senlis_logo.png', 'image', 'QR Code du site')" aria-label="Voir le QR code">Voir</button>
+                        <a href="images/qrcode_senlis_logo.png" class="btn btn-outline" download="qrcode_senlis_logo.png" aria-label="Télécharger le QR code en PNG">Télécharger</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -966,7 +972,27 @@
         <button class="lightbox-nav lightbox-next" id="lightboxNext">&gt;</button>
     </div>
 
+    <!-- Document Viewer Modal -->
+    <div class="document-viewer-overlay" id="documentViewerOverlay"></div>
+    <div class="document-viewer-modal" id="documentViewerModal">
+        <div class="document-viewer-header">
+            <h3 class="document-viewer-title" id="documentViewerTitle">Document</h3>
+            <button class="document-viewer-close" id="documentViewerClose" aria-label="Fermer">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="document-viewer-content" id="documentViewerContent">
+            <!-- Content will be inserted dynamically -->
+        </div>
+        <div class="document-viewer-footer">
+            <a href="" class="btn btn-outline" id="documentViewerDownload" download aria-label="Télécharger le document">Télécharger</a>
+        </div>
+    </div>
+
     <!-- JavaScript -->
-    <script src="js/script.js?v=20251226a"></script>
+    <script src="js/script.js?v=20260106a"></script>
 </body>
 </html>
