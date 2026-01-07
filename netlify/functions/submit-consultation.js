@@ -266,7 +266,7 @@ exports.handler = async (event) => {
                             ${formData.newsletter ? '<p class="green-accent">Vous êtes inscrit(e) à notre newsletter de campagne.</p>' : ''}
 
                             <p>À très bientôt,</p>
-                            <p><strong>L'équipe Pour Senlis en Confiance</strong><br>
+                            <p><strong>L'équipe Pour Senlis en Confiance avec Pascale Loiseleur</strong><br>
                             <em>Pascale Loiseleur - Candidate aux élections municipales 2026</em></p>
 
                             <a href="https://poursenlisenconfiance.fr" class="btn">Visiter notre site</a>

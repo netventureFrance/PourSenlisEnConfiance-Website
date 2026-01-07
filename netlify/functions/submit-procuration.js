@@ -358,7 +358,7 @@ exports.handler = async (event) => {
                             `}
 
                             <p style="margin-top: 30px;">À très bientôt,</p>
-                            <p><strong>L'équipe Pour Senlis en Confiance</strong></p>
+                            <p><strong>L'équipe Pour Senlis en Confiance avec Pascale Loiseleur</strong></p>
                         </div>
                         <div class="footer">
                             <p>Pour Senlis en Confiance - Élections Municipales 2026</p>

@@ -84,7 +84,7 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
                     <li>Vous aurez besoin de sa date de naissance${mandataire.dateNaissance ? ` : <strong>${new Date(mandataire.dateNaissance).toLocaleDateString('fr-FR')}</strong>` : ''}</li>
                 </ol>
                 <a href="https://www.maprocuration.gouv.fr/" class="btn">Faire ma procuration</a>
-                <p style="margin-top: 30px;">À très bientôt,<br><strong>L'équipe Pour Senlis en Confiance</strong></p>
+                <p style="margin-top: 30px;">À très bientôt,<br><strong>L'équipe Pour Senlis en Confiance avec Pascale Loiseleur</strong></p>
             </div>
             <div class="footer">
                 <p>Pour Senlis en Confiance - Élections Municipales 2026</p>
@@ -121,7 +121,7 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
                     <li>Le mandant établira la procuration sur maprocuration.gouv.fr</li>
                     <li>N'oubliez pas d'apporter votre pièce d'identité le jour du vote</li>
                 </ul>
-                <p style="margin-top: 30px;">Merci encore pour votre aide,<br><strong>L'équipe Pour Senlis en Confiance</strong></p>
+                <p style="margin-top: 30px;">Merci encore pour votre aide,<br><strong>L'équipe Pour Senlis en Confiance avec Pascale Loiseleur</strong></p>
             </div>
             <div class="footer">
                 <p>Pour Senlis en Confiance - Élections Municipales 2026</p>
