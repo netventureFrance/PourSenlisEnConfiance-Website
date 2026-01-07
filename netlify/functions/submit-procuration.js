@@ -445,7 +445,7 @@ exports.handler = async (event) => {
                             <a href="mailto:${formData.email}?subject=Re: Votre demande de procuration" class="btn">Répondre à ${formData.nom.split(' ')[0]}</a>
                         </div>
                         <div class="footer">
-                            <p>Notification automatique - Pour Senlis en Confiance</p>
+                            <p>Notification automatique - Pour Senlis en Confiance avec Pascale Loiseleur</p>
                         </div>
                     </div>
                 </body>
