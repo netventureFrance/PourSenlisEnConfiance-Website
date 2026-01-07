@@ -39,6 +39,19 @@ function verifyToken(event) {
     }
 }
 
+// Format greeting: "Civilité Nom" or "Prénom Nom" as fallback
+function formatGreeting(person) {
+    if (person.civilite) {
+        return `${person.civilite} ${person.nom}`;
+    }
+    if (person.prenoms) {
+        const firstPrenom = person.prenoms.split(' ')[0];
+        return `${firstPrenom} ${person.nom}`;
+    }
+    // Fallback: nom might already contain "Prénom Nom"
+    return person.nom;
+}
+
 // Send match notification emails
 async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
     if (!RESEND_API_KEY) return;
@@ -67,7 +80,7 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
         <div class="container">
             <div class="header"><h1>Pour Senlis en Confiance</h1></div>
             <div class="content">
-                <h2>Bonjour ${mandant.civilite || ''} ${mandant.nom},</h2>
+                <h2>Bonjour ${formatGreeting(mandant)},</h2>
                 <div class="highlight-box">
                     <strong>Bonne nouvelle !</strong> Nous avons trouvé un mandataire pour voter à votre place.
                 </div>
@@ -104,7 +117,7 @@ async function sendMatchEmails(mandant, mandataire, RESEND_API_KEY) {
         <div class="container">
             <div class="header"><h1>Pour Senlis en Confiance</h1></div>
             <div class="content">
-                <h2>Bonjour ${mandataire.civilite || ''} ${mandataire.nom},</h2>
+                <h2>Bonjour ${formatGreeting(mandataire)},</h2>
                 <div class="highlight-box">
                     <strong>Merci pour votre engagement !</strong> Nous avons trouvé un mandant qui a besoin de vous.
                 </div>
@@ -316,6 +329,7 @@ exports.handler = async (event) => {
 
             const mandant = {
                 nom: mandantData.fields['Nom'],
+                prenoms: mandantData.fields['Prénoms'],
                 civilite: mandantData.fields['Civilité'],
                 email: mandantData.fields['Email'],
                 phone: mandantData.fields['Téléphone'],
@@ -324,6 +338,7 @@ exports.handler = async (event) => {
 
             const mandataire = {
                 nom: mandataireData.fields['Nom'],
+                prenoms: mandataireData.fields['Prénoms'],
                 civilite: mandataireData.fields['Civilité'],
                 email: mandataireData.fields['Email'],
                 phone: mandataireData.fields['Téléphone'],

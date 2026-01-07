@@ -330,7 +330,7 @@ exports.handler = async (event) => {
                             <h1>Pour Senlis en Confiance</h1>
                         </div>
                         <div class="content">
-                            <h2>Bonjour ${formData.civilite || ''} ${formData.nom},</h2>
+                            <h2>Bonjour ${formData.civilite ? `${formData.civilite} ${formData.nom}` : (formData.prenoms ? `${formData.prenoms.split(' ')[0]} ${formData.nom}` : formData.nom)},</h2>
 
                             <p>${isMandant
                                 ? 'Votre demande de procuration a bien été enregistrée.'
