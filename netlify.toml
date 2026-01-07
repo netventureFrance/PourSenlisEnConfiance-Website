@@ -5,6 +5,10 @@
 [functions]
   directory = "netlify/functions"
 
+# Scheduled function - Daily stats email at 3 AM CET (2 AM UTC)
+[functions."daily-stats"]
+  schedule = "0 2 * * *"
+
 # Redirects
 [[redirects]]
   from = "/merci"
