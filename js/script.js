@@ -1013,6 +1013,15 @@ const documentViewerClose = document.getElementById('documentViewerClose');
 function openDocumentViewer(url, type, title) {
     if (!documentViewerModal) return;
 
+    // Track document view with Plausible
+    if (typeof plausible !== 'undefined') {
+        plausible('Document View', {
+            props: {
+                document_name: title || url.split('/').pop()
+            }
+        });
+    }
+
     // Set title
     documentViewerTitle.textContent = title || 'Document';
 
@@ -1076,6 +1085,19 @@ if (documentViewerClose) {
 
 if (documentViewerOverlay) {
     documentViewerOverlay.addEventListener('click', closeDocumentViewer);
+}
+
+// Track document downloads
+if (documentViewerDownload) {
+    documentViewerDownload.addEventListener('click', function() {
+        if (typeof plausible !== 'undefined') {
+            plausible('Document Download', {
+                props: {
+                    document_name: documentViewerTitle.textContent || 'Unknown'
+                }
+            });
+        }
+    });
 }
 
 // Close on Escape key
