@@ -123,10 +123,10 @@ exports.handler = async (event, context) => {
                 .list-name { color: #333; }
                 .list-value { font-weight: bold; color: #0d3d5c; }
                 .empty-state { color: #999; font-style: italic; padding: 10px 0; }
-                .actions-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; }
-                .action-card { background: linear-gradient(135deg, #6cb13e 0%, #8bc34a 100%); padding: 20px; border-radius: 8px; text-align: center; color: white; }
-                .action-value { font-size: 28px; font-weight: bold; }
-                .action-label { font-size: 13px; margin-top: 5px; opacity: 0.9; }
+                .actions-table { width: 100%; margin-bottom: 30px; border-collapse: separate; border-spacing: 8px; }
+                .action-card { background-color: #6cb13e; padding: 20px; border-radius: 8px; text-align: center; }
+                .action-value { font-size: 28px; font-weight: bold; color: #ffffff; }
+                .action-label { font-size: 13px; margin-top: 5px; color: #ffffff; }
                 .footer { background: #f8f9fa; padding: 20px; text-align: center; font-size: 13px; color: #6c757d; }
                 .footer a { color: #3d9dd9; text-decoration: none; }
             </style>
@@ -159,24 +159,28 @@ exports.handler = async (event, context) => {
                     </div>
 
                     <!-- Actions Summary -->
-                    <div class="actions-grid">
-                        <div class="action-card">
-                            <div class="action-value">${totalConsultations}</div>
-                            <div class="action-label">Idées soumises</div>
-                        </div>
-                        <div class="action-card">
-                            <div class="action-value">${totalProcurations}</div>
-                            <div class="action-label">Procurations</div>
-                        </div>
-                        <div class="action-card">
-                            <div class="action-value">${totalDocViews}</div>
-                            <div class="action-label">Documents vus</div>
-                        </div>
-                        <div class="action-card">
-                            <div class="action-value">${totalDocDownloads}</div>
-                            <div class="action-label">Téléchargements</div>
-                        </div>
-                    </div>
+                    <table class="actions-table" cellpadding="0" cellspacing="8" style="width: 100%; margin-bottom: 30px;">
+                        <tr>
+                            <td style="background-color: #6cb13e; padding: 20px; border-radius: 8px; text-align: center; width: 50%;">
+                                <div style="font-size: 28px; font-weight: bold; color: #ffffff;">${totalConsultations}</div>
+                                <div style="font-size: 13px; margin-top: 5px; color: #ffffff;">Idées soumises</div>
+                            </td>
+                            <td style="background-color: #6cb13e; padding: 20px; border-radius: 8px; text-align: center; width: 50%;">
+                                <div style="font-size: 28px; font-weight: bold; color: #ffffff;">${totalProcurations}</div>
+                                <div style="font-size: 13px; margin-top: 5px; color: #ffffff;">Procurations</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: #6cb13e; padding: 20px; border-radius: 8px; text-align: center; width: 50%;">
+                                <div style="font-size: 28px; font-weight: bold; color: #ffffff;">${totalDocViews}</div>
+                                <div style="font-size: 13px; margin-top: 5px; color: #ffffff;">Documents vus</div>
+                            </td>
+                            <td style="background-color: #6cb13e; padding: 20px; border-radius: 8px; text-align: center; width: 50%;">
+                                <div style="font-size: 28px; font-weight: bold; color: #ffffff;">${totalDocDownloads}</div>
+                                <div style="font-size: 13px; margin-top: 5px; color: #ffffff;">Téléchargements</div>
+                            </td>
+                        </tr>
+                    </table>
 
                     <!-- Consultation Details -->
                     ${totalConsultations > 0 ? `
