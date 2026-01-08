@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Stratégie Promotion - Admin</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/PSEC.png">
+    <link rel="apple-touch-icon" href="/images/PSEC.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/css/styles.css?v=20260108">
+    <style>
+        .strategy-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .strategy-header {
+            margin-bottom: 2rem;
+        }
+
+        .strategy-header h1 {
+            font-size: 1.75rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .strategy-header p {
+            color: #666;
+        }
+
+        .strategy-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .strategy-section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .strategy-section-header svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .strategy-section-header h2 {
+            font-size: 1.1rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .task-list {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #eee;
+            gap: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .task-item.completed {
+            background-color: #f0fdf4;
+        }
+
+        .task-item.completed .task-description {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .task-checkbox {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+            margin-top: 2px;
+        }
+
+        .task-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .task-description {
+            font-size: 0.95rem;
+            color: #333;
+            margin-bottom: 0.35rem;
+            line-height: 1.4;
+        }
+
+        .task-detail {
+            font-size: 0.8rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .task-team {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .team-terrain {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .team-com {
+            background: #fce7f3;
+            color: #9d174d;
+        }
+
+        .team-digital {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .team-direction {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .team-tous {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .task-team svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            border-radius: 10px;
+            height: 8px;
+            margin-top: 1.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .reminder-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .reminder-box h3 {
+            color: #92400e;
+            font-size: 1rem;
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .reminder-box p {
+            color: #78350f;
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .strategy-container {
+                padding: 1rem;
+            }
+
+            .task-item {
+                flex-wrap: wrap;
+            }
+
+            .task-team {
+                margin-top: 0.5rem;
+                margin-left: 38px;
+            }
+
+            .legend {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="admin-dashboard-page">
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-left">
+            <img src="/images/PSEC.png" alt="Logo" class="admin-logo">
+            <span class="admin-title">Stratégie Promotion</span>
+        </div>
+        <div class="admin-header-right">
+            <a href="/admin/dashboard.html" class="btn-nav">Procurations</a>
+            <a href="/admin/users.html" class="btn-nav">Utilisateurs</a>
+            <span class="admin-user" id="adminUserName"></span>
+            <button class="btn-logout" id="logoutBtn">Déconnexion</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <div class="strategy-container">
+            <div class="strategy-header">
+                <h1>Plan de Promotion du Site</h1>
+                <p>Suivi des actions pour promouvoir le site auprès des Senlisiens</p>
+            </div>
+
+            <!-- Progress -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <p class="progress-text"><span id="completedCount">0</span> / <span id="totalCount">0</span> tâches complétées</p>
+
+            <!-- Legend -->
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="legend-dot" style="background: #1e40af;"></span>
+                    <span>Équipe Terrain</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot" style="background: #9d174d;"></span>
+                    <span>Équipe Communication</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot" style="background: #065f46;"></span>
+                    <span>Équipe Digital</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot" style="background: #92400e;"></span>
+                    <span>Direction</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot" style="background: #374151;"></span>
+                    <span>Tous</span>
+                </div>
+            </div>
+
+            <!-- Reminder -->
+            <div class="reminder-box">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        <line x1="12" y1="9" x2="12" y2="13"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    Rappel Législation Électorale
+                </h3>
+                <p>Plafond des dépenses de campagne à respecter. Interdiction de la publicité payante dans les 6 mois précédant le scrutin (y compris réseaux sociaux). Toute communication doit être déclarée au compte de campagne.</p>
+            </div>
+
+            <!-- Section 1: Terrain -->
+            <section class="strategy-section">
+                <div class="strategy-section-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <h2>1. Communication Terrain</h2>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item" data-id="t1">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Imprimer les QR codes sur tous les tracts et affiches</div>
+                            <div class="task-detail">Utiliser le générateur QR du site, format haute résolution</div>
+                        </div>
+                        <span class="task-team team-com">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Com
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t2">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Mentionner l'URL du site à chaque réunion publique</div>
+                            <div class="task-detail">27 jan, 11 fév, 12 et 19 mars - Préparer un slide avec QR code</div>
+                        </div>
+                        <span class="task-team team-direction">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Direction
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t3">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Former les équipes porte-à-porte sur les fonctionnalités du site</div>
+                            <div class="task-detail">Insister sur la carte interactive et le système de procurations</div>
+                        </div>
+                        <span class="task-team team-terrain">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Terrain
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t4">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Contacter la presse locale (L'Oise Hebdo, Courrier Picard)</div>
+                            <div class="task-detail">Communiqué sur la carte interactive quartiers et système procurations</div>
+                        </div>
+                        <span class="task-team team-com">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Com
+                        </span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Section 2: Bouche à oreille -->
+            <section class="strategy-section">
+                <div class="strategy-section-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <h2>2. Bouche-à-oreille</h2>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item" data-id="t5">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Encourager les soutiens à partager le site avec leurs voisins</div>
+                            <div class="task-detail">Message type à envoyer aux militants</div>
+                        </div>
+                        <span class="task-team team-tous">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Tous
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t6">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Promouvoir la carte interactive des quartiers</div>
+                            <div class="task-detail">Argument: "Donnez votre avis sur VOTRE quartier"</div>
+                        </div>
+                        <span class="task-team team-terrain">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Terrain
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t7">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Mettre en avant le système de procurations</div>
+                            <div class="task-detail">Service unique et utile - les gens le partageront naturellement</div>
+                        </div>
+                        <span class="task-team team-terrain">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Terrain
+                        </span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Section 3: Réseaux sociaux -->
+            <section class="strategy-section">
+                <div class="strategy-section-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                    <h2>3. Réseaux Sociaux</h2>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item" data-id="t8">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Créer/mettre à jour la page Facebook de campagne</div>
+                            <div class="task-detail">Facebook essentiel pour démographie municipales françaises</div>
+                        </div>
+                        <span class="task-team team-digital">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Digital
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t9">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Partager les vidéos de campagne YouTube</div>
+                            <div class="task-detail">Planifier un calendrier de publications régulier</div>
+                        </div>
+                        <span class="task-team team-digital">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Digital
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t10">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Renvoyer systématiquement vers le site pour le programme</div>
+                            <div class="task-detail">Lien vers /programme.html et /procurations.html</div>
+                        </div>
+                        <span class="task-team team-digital">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Digital
+                        </span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Section 4: Email -->
+            <section class="strategy-section">
+                <div class="strategy-section-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    <h2>4. Campagne Email</h2>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item" data-id="t11">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Exploiter les emails collectés via les formulaires</div>
+                            <div class="task-detail">Consultation quartiers + inscriptions newsletter</div>
+                        </div>
+                        <span class="task-team team-digital">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Digital
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t12">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Envoyer des rappels pour les réunions publiques</div>
+                            <div class="task-detail">Email 1 semaine avant + rappel J-1</div>
+                        </div>
+                        <span class="task-team team-com">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Com
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t13">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Créer une newsletter avec points de programme</div>
+                            <div class="task-detail">1 axe par email, lien vers page programme détaillé</div>
+                        </div>
+                        <span class="task-team team-com">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Com
+                        </span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Section 5: SEO -->
+            <section class="strategy-section">
+                <div class="strategy-section-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <h2>5. Référencement Local (SEO)</h2>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item" data-id="t14">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Vérifier la fiche Google Business Profile</div>
+                            <div class="task-detail">Mentionner le site et la campagne</div>
+                        </div>
+                        <span class="task-team team-digital">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Digital
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t15">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Optimiser les mots-clés pour recherches locales</div>
+                            <div class="task-detail">"élections municipales Senlis 2026", "maire Senlis"</div>
+                        </div>
+                        <span class="task-team team-digital">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Digital
+                        </span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Section 6: Points forts -->
+            <section class="strategy-section">
+                <div class="strategy-section-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <h2>6. Points Forts à Valoriser</h2>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item" data-id="t16">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Préparer argumentaire sur le système de procurations</div>
+                            <div class="task-detail">Service pratique et unique - différenciateur fort</div>
+                        </div>
+                        <span class="task-team team-com">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Com
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t17">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Mettre en avant la carte interactive des quartiers</div>
+                            <div class="task-detail">Démontre l'écoute citoyenne et l'engagement local</div>
+                        </div>
+                        <span class="task-team team-com">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Com
+                        </span>
+                    </li>
+                    <li class="task-item" data-id="t18">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-description">Communiquer sur le bilan de 14 ans</div>
+                            <div class="task-detail">Réalisations concrètes: Ordener, EcoQuartier, 4 fleurs, etc.</div>
+                        </div>
+                        <span class="task-team team-direction">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                            Direction
+                        </span>
+                    </li>
+                </ul>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // Check authentication
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+            window.location.href = '/admin/index.html';
+        }
+
+        // Display user name
+        const user = JSON.parse(localStorage.getItem('adminUser') || '{}');
+        document.getElementById('adminUserName').textContent = user.name || user.email || '';
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminUser');
+            window.location.href = '/admin/index.html';
+        });
+
+        // Task management
+        const STORAGE_KEY = 'strategyTasks';
+
+        function loadTasks() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        function saveTasks(tasks) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const completed = document.querySelectorAll('.task-checkbox:checked').length;
+            const total = checkboxes.length;
+
+            document.getElementById('completedCount').textContent = completed;
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('progressFill').style.width = `${(completed / total) * 100}%`;
+        }
+
+        // Initialize checkboxes
+        const tasks = loadTasks();
+        document.querySelectorAll('.task-item').forEach(item => {
+            const checkbox = item.querySelector('.task-checkbox');
+            const id = item.dataset.id;
+
+            // Restore state
+            if (tasks[id]) {
+                checkbox.checked = true;
+                item.classList.add('completed');
+            }
+
+            // Handle changes
+            checkbox.addEventListener('change', () => {
+                const currentTasks = loadTasks();
+                if (checkbox.checked) {
+                    currentTasks[id] = true;
+                    item.classList.add('completed');
+                } else {
+                    delete currentTasks[id];
+                    item.classList.remove('completed');
+                }
+                saveTasks(currentTasks);
+                updateProgress();
+            });
+        });
+
+        updateProgress();
+    </script>
+</body>
+</html>
