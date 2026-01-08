@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="/css/styles.css?v=20260108">
+    <link rel="stylesheet" href="/css/styles.css?v=20260108b">
     <style>
         .strategy-container {
             max-width: 1000px;
@@ -74,11 +74,7 @@
         }
 
         .task-item {
-            display: flex;
-            align-items: flex-start;
-            padding: 1rem 1.5rem;
             border-bottom: 1px solid #eee;
-            gap: 1rem;
             transition: background-color 0.2s;
         }
 
@@ -97,6 +93,14 @@
         .task-item.completed .task-description {
             text-decoration: line-through;
             color: #888;
+        }
+
+        .task-main {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem 1.5rem;
+            gap: 1rem;
+            cursor: pointer;
         }
 
         .task-checkbox {
@@ -118,9 +122,24 @@
             color: #333;
             margin-bottom: 0.35rem;
             line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .task-detail {
+        .task-description .expand-icon {
+            width: 18px;
+            height: 18px;
+            color: #999;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .task-item.expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        .task-summary {
             font-size: 0.8rem;
             color: #666;
             font-style: italic;
@@ -138,34 +157,123 @@
             white-space: nowrap;
         }
 
-        .team-terrain {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .team-com {
-            background: #fce7f3;
-            color: #9d174d;
-        }
-
-        .team-digital {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .team-direction {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .team-tous {
-            background: #e5e7eb;
-            color: #374151;
-        }
+        .team-terrain { background: #dbeafe; color: #1e40af; }
+        .team-com { background: #fce7f3; color: #9d174d; }
+        .team-digital { background: #d1fae5; color: #065f46; }
+        .team-direction { background: #fef3c7; color: #92400e; }
+        .team-tous { background: #e5e7eb; color: #374151; }
 
         .task-team svg {
             width: 14px;
             height: 14px;
+        }
+
+        /* Expandable details */
+        .task-details {
+            display: none;
+            padding: 0 1.5rem 1.5rem 3.5rem;
+            border-top: 1px dashed #e5e7eb;
+            margin-top: -0.5rem;
+        }
+
+        .task-item.expanded .task-details {
+            display: block;
+        }
+
+        .detail-section {
+            margin-bottom: 1rem;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-section h4 {
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-section h4 svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .detail-section ul {
+            margin: 0;
+            padding-left: 1.25rem;
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .detail-section li {
+            margin-bottom: 0.35rem;
+            line-height: 1.4;
+        }
+
+        .detail-section p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .tool-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tool-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.75rem;
+            background: #f1f5f9;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #475569;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .tool-tag:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .tool-tag svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .example-box {
+            background: #f8fafc;
+            border-left: 3px solid var(--primary-color);
+            padding: 0.75rem 1rem;
+            border-radius: 0 6px 6px 0;
+            margin-top: 0.5rem;
+        }
+
+        .example-box code {
+            display: block;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.8rem;
+            color: #334155;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .example-label {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.35rem;
         }
 
         .progress-bar {
@@ -237,18 +345,39 @@
             line-height: 1.5;
         }
 
+        .expand-all-btn {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 1rem;
+        }
+
+        .expand-all-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
         @media (max-width: 768px) {
             .strategy-container {
                 padding: 1rem;
             }
 
-            .task-item {
+            .task-main {
                 flex-wrap: wrap;
             }
 
             .task-team {
                 margin-top: 0.5rem;
                 margin-left: 38px;
+            }
+
+            .task-details {
+                padding-left: 1.5rem;
             }
 
             .legend {
@@ -278,7 +407,7 @@
         <div class="strategy-container">
             <div class="strategy-header">
                 <h1>Plan de Promotion du Site</h1>
-                <p>Suivi des actions pour promouvoir le site auprès des Senlisiens</p>
+                <p>Suivi des actions pour promouvoir le site auprès des Senlisiens - Cliquez sur une tâche pour voir les détails</p>
             </div>
 
             <!-- Progress -->
@@ -311,6 +440,8 @@
                 </div>
             </div>
 
+            <button class="expand-all-btn" id="expandAllBtn">Tout déplier / replier</button>
+
             <!-- Reminder -->
             <div class="reminder-box">
                 <h3>
@@ -336,49 +467,223 @@
                     <h2>1. Communication Terrain</h2>
                 </div>
                 <ul class="task-list">
+                    <!-- Task 1 -->
                     <li class="task-item" data-id="t1">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Imprimer les QR codes sur tous les tracts et affiches</div>
-                            <div class="task-detail">Utiliser le générateur QR du site, format haute résolution</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Imprimer les QR codes sur tous les tracts et affiches
+                                </div>
+                                <div class="task-summary">Utiliser le générateur QR du site, format haute résolution</div>
+                            </div>
+                            <span class="task-team team-com">Com</span>
                         </div>
-                        <span class="task-team team-com">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Com
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Comment faire
+                                </h4>
+                                <ul>
+                                    <li>Aller sur la page /documents.html du site - le QR code y est généré automatiquement</li>
+                                    <li>Clic droit > "Enregistrer l'image" pour télécharger en haute résolution</li>
+                                    <li>Taille recommandée sur tract : minimum 2cm x 2cm pour être scannable</li>
+                                    <li>Placer le QR code près d'un texte explicatif : "Scannez pour découvrir notre programme"</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    Outils recommandés
+                                </h4>
+                                <div class="tool-list">
+                                    <a href="https://www.canva.com" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                                        Canva (design tracts)
+                                    </a>
+                                    <a href="https://www.qr-code-generator.com" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                                        QR Code Generator
+                                    </a>
+                                    <a href="https://www.vistaprint.fr" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg>
+                                        Vistaprint (impression)
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 2 -->
                     <li class="task-item" data-id="t2">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Mentionner l'URL du site à chaque réunion publique</div>
-                            <div class="task-detail">27 jan, 11 fév, 12 et 19 mars - Préparer un slide avec QR code</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Mentionner l'URL du site à chaque réunion publique
+                                </div>
+                                <div class="task-summary">27 jan, 11 fév, 12 et 19 mars - Préparer un slide avec QR code</div>
+                            </div>
+                            <span class="task-team team-direction">Direction</span>
                         </div>
-                        <span class="task-team team-direction">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Direction
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Comment faire
+                                </h4>
+                                <ul>
+                                    <li>Préparer un slide dédié avec QR code géant + URL en texte</li>
+                                    <li>Afficher le slide pendant les questions/réponses</li>
+                                    <li>Mentionner oralement : "Retrouvez tout notre programme sur poursenlisençonfiance.fr"</li>
+                                    <li>Insister sur les fonctionnalités : carte des quartiers, procurations</li>
+                                    <li>Projeter le site en direct si possible pour montrer la carte interactive</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Exemple de texte
+                                </h4>
+                                <div class="example-box">
+                                    <div class="example-label">Script suggéré</div>
+                                    <code>"Vous pouvez retrouver l'intégralité de notre programme sur notre site poursenlisençonfiance.fr. Vous y trouverez aussi une carte interactive de Senlis où vous pouvez nous faire part de vos idées quartier par quartier. Et si vous ne pouvez pas voter le 15 ou 22 mars, nous avons un système pour vous mettre en relation avec quelqu'un qui portera votre voix."</code>
+                                </div>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    Outils recommandés
+                                </h4>
+                                <div class="tool-list">
+                                    <a href="https://www.canva.com/presentations" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                                        Canva Présentations
+                                    </a>
+                                    <a href="https://docs.google.com/presentation" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/></svg>
+                                        Google Slides
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 3 -->
                     <li class="task-item" data-id="t3">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Former les équipes porte-à-porte sur les fonctionnalités du site</div>
-                            <div class="task-detail">Insister sur la carte interactive et le système de procurations</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Former les équipes porte-à-porte sur les fonctionnalités du site
+                                </div>
+                                <div class="task-summary">Insister sur la carte interactive et le système de procurations</div>
+                            </div>
+                            <span class="task-team team-terrain">Terrain</span>
                         </div>
-                        <span class="task-team team-terrain">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Terrain
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Points clés à transmettre
+                                </h4>
+                                <ul>
+                                    <li><strong>Carte interactive</strong> : Chaque habitant peut donner son avis sur SON quartier spécifiquement</li>
+                                    <li><strong>Procurations</strong> : Le site met en relation les personnes absentes avec des volontaires pour porter leur voix</li>
+                                    <li><strong>Programme complet</strong> : Les 5 axes détaillés sont sur le site, pas besoin de tout expliquer au porte-à-porte</li>
+                                    <li><strong>Vidéos</strong> : Des vidéos de campagne sont disponibles pour ceux qui préfèrent ce format</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Phrases types pour le porte-à-porte
+                                </h4>
+                                <div class="example-box">
+                                    <div class="example-label">Accroches suggérées</div>
+                                    <code>"Vous habitez le quartier X ? Sur notre site, vous pouvez nous dire directement ce que vous aimeriez voir amélioré dans votre quartier."
+
+"Vous partez en vacances pendant les élections ? Notre site peut vous mettre en contact avec quelqu'un pour porter votre vote."
+
+"Le programme complet est sur le site, je vous laisse juste ce tract avec le QR code pour y accéder facilement."</code>
+                                </div>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    Matériel à préparer
+                                </h4>
+                                <ul>
+                                    <li>Fiche récapitulative A5 recto/verso pour les bénévoles</li>
+                                    <li>Démo du site sur smartphone (garder les pages en favoris)</li>
+                                    <li>Mini-formation de 15 min avant chaque session de porte-à-porte</li>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 4 -->
                     <li class="task-item" data-id="t4">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Contacter la presse locale (L'Oise Hebdo, Courrier Picard)</div>
-                            <div class="task-detail">Communiqué sur la carte interactive quartiers et système procurations</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Contacter la presse locale (L'Oise Hebdo, Courrier Picard)
+                                </div>
+                                <div class="task-summary">Communiqué sur la carte interactive quartiers et système procurations</div>
+                            </div>
+                            <span class="task-team team-com">Com</span>
                         </div>
-                        <span class="task-team team-com">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Com
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Angle du communiqué
+                                </h4>
+                                <ul>
+                                    <li><strong>Accroche</strong> : Innovation démocratique - une candidate écoute quartier par quartier</li>
+                                    <li><strong>Différenciateur</strong> : Premier système de mise en relation pour procurations à Senlis</li>
+                                    <li><strong>Humain</strong> : Le site répond aux besoins des Senlisiens pas sur les réseaux sociaux</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Modèle de communiqué
+                                </h4>
+                                <div class="example-box">
+                                    <div class="example-label">Communiqué de presse</div>
+                                    <code>MUNICIPALES 2026 : PASCALE LOISELEUR LANCE UNE PLATEFORME DE DÉMOCRATIE PARTICIPATIVE
+
+Senlis, le [DATE] - À l'approche des élections municipales des 15 et 22 mars 2026, la liste "Pour Senlis en Confiance" menée par Pascale Loiseleur dévoile un site internet innovant permettant aux Senlisiens de s'exprimer quartier par quartier.
+
+UNE CARTE INTERACTIVE DES 8 QUARTIERS
+Les habitants peuvent sélectionner leur quartier sur une carte interactive et partager directement leurs idées, préoccupations et suggestions.
+
+UN SERVICE INÉDIT DE MISE EN RELATION POUR LES PROCURATIONS
+Pour lutter contre l'abstention, le site propose de mettre en relation les électeurs absents avec des volontaires pour porter leur vote.
+
+Plus d'informations : poursenlisençonfiance.fr
+Contact presse : [EMAIL]</code>
+                                </div>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                    Contacts presse
+                                </h4>
+                                <ul>
+                                    <li><strong>L'Oise Hebdo</strong> : redaction@oise-hebdo.fr</li>
+                                    <li><strong>Le Courrier Picard</strong> : senlis@courrier-picard.fr</li>
+                                    <li><strong>La Gazette de l'Oise</strong> : redaction@lagazetteoise.fr</li>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </section>
@@ -392,38 +697,154 @@
                     <h2>2. Bouche-à-oreille</h2>
                 </div>
                 <ul class="task-list">
+                    <!-- Task 5 -->
                     <li class="task-item" data-id="t5">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Encourager les soutiens à partager le site avec leurs voisins</div>
-                            <div class="task-detail">Message type à envoyer aux militants</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Encourager les soutiens à partager le site avec leurs voisins
+                                </div>
+                                <div class="task-summary">Message type à envoyer aux militants</div>
+                            </div>
+                            <span class="task-team team-tous">Tous</span>
                         </div>
-                        <span class="task-team team-tous">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Tous
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Messages prêts à envoyer
+                                </h4>
+                                <div class="example-box">
+                                    <div class="example-label">SMS / WhatsApp</div>
+                                    <code>Bonjour ! Connaissez-vous le site de campagne de Pascale Loiseleur ? Vous pouvez y donner votre avis sur votre quartier et même trouver quelqu'un pour voter à votre place si vous êtes absent le 15 mars. Jetez un oeil : poursenlisençonfiance.fr</code>
+                                </div>
+                                <div class="example-box" style="margin-top: 0.75rem;">
+                                    <div class="example-label">Email</div>
+                                    <code>Objet : Découvrez le site de campagne de Pascale Loiseleur
+
+Cher(e) voisin(e),
+
+Les élections municipales approchent (15 et 22 mars). Je voulais vous partager le site de la liste "Pour Senlis en Confiance" : poursenlisençonfiance.fr
+
+Ce que j'ai trouvé intéressant :
+- Une carte interactive où on peut donner son avis quartier par quartier
+- Un système pour se faire représenter si on est absent le jour du vote
+- Le programme complet en 5 axes
+
+Bonne découverte !</code>
+                                </div>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    Outils de partage
+                                </h4>
+                                <div class="tool-list">
+                                    <a href="https://wa.me/?text=Découvrez%20le%20site%20de%20campagne%20poursenlisençonfiance.fr" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                                        Partager WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 6 -->
                     <li class="task-item" data-id="t6">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Promouvoir la carte interactive des quartiers</div>
-                            <div class="task-detail">Argument: "Donnez votre avis sur VOTRE quartier"</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Promouvoir la carte interactive des quartiers
+                                </div>
+                                <div class="task-summary">Argument: "Donnez votre avis sur VOTRE quartier"</div>
+                            </div>
+                            <span class="task-team team-terrain">Terrain</span>
                         </div>
-                        <span class="task-team team-terrain">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Terrain
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Pourquoi ça marche
+                                </h4>
+                                <ul>
+                                    <li>Les gens aiment parler de LEUR quartier - c'est personnel</li>
+                                    <li>Sentiment d'être écouté directement par la candidate</li>
+                                    <li>Différent des sondages génériques - c'est localisé</li>
+                                    <li>Montre une approche moderne et participative</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Arguments par quartier
+                                </h4>
+                                <ul>
+                                    <li><strong>Centre historique</strong> : Stationnement, piétonisation, commerces</li>
+                                    <li><strong>Ordener</strong> : Suivi des rénovations, espaces verts</li>
+                                    <li><strong>Villevert</strong> : Transports, liaisons avec le centre</li>
+                                    <li><strong>Saint-Vincent</strong> : Vie de quartier, équipements</li>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 7 -->
                     <li class="task-item" data-id="t7">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Mettre en avant le système de procurations</div>
-                            <div class="task-detail">Service unique et utile - les gens le partageront naturellement</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Mettre en avant le système de procurations
+                                </div>
+                                <div class="task-summary">Service unique et utile - les gens le partageront naturellement</div>
+                            </div>
+                            <span class="task-team team-terrain">Terrain</span>
                         </div>
-                        <span class="task-team team-terrain">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Terrain
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Cibles prioritaires
+                                </h4>
+                                <ul>
+                                    <li><strong>Seniors</strong> : Difficultés de déplacement, hospitalisation possible</li>
+                                    <li><strong>Familles</strong> : Vacances scolaires proches des dates d'élection</li>
+                                    <li><strong>Professionnels</strong> : Déplacements fréquents</li>
+                                    <li><strong>Étudiants</strong> : Inscrits à Senlis mais études ailleurs</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Argument clé
+                                </h4>
+                                <div class="example-box">
+                                    <div class="example-label">Pitch 30 secondes</div>
+                                    <code>"Vous ne pourrez pas voter le 15 mars ? Notre site peut vous mettre en contact avec un Senlisien de confiance qui ira voter pour vous. C'est gratuit, légal, et ça prend 2 minutes à s'inscrire. Votre voix compte, ne la perdez pas."</code>
+                                </div>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    Ressources officielles
+                                </h4>
+                                <div class="tool-list">
+                                    <a href="https://www.maprocuration.gouv.fr" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+                                        MaProcuration.gouv.fr
+                                    </a>
+                                    <a href="https://www.service-public.fr/particuliers/vosdroits/F1604" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                        Service-Public.fr
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </section>
@@ -437,38 +858,154 @@
                     <h2>3. Réseaux Sociaux</h2>
                 </div>
                 <ul class="task-list">
+                    <!-- Task 8 -->
                     <li class="task-item" data-id="t8">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Créer/mettre à jour la page Facebook de campagne</div>
-                            <div class="task-detail">Facebook essentiel pour démographie municipales françaises</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Créer/mettre à jour la page Facebook de campagne
+                                </div>
+                                <div class="task-summary">Facebook essentiel pour démographie municipales françaises</div>
+                            </div>
+                            <span class="task-team team-digital">Digital</span>
                         </div>
-                        <span class="task-team team-digital">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Digital
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Éléments essentiels
+                                </h4>
+                                <ul>
+                                    <li><strong>Photo de couverture</strong> : Visuel de campagne avec slogan</li>
+                                    <li><strong>Photo de profil</strong> : Logo PSEC ou photo de Pascale</li>
+                                    <li><strong>À propos</strong> : Lien vers le site, dates des réunions</li>
+                                    <li><strong>Bouton d'action</strong> : "En savoir plus" vers le site</li>
+                                    <li><strong>Posts épinglés</strong> : Annonce prochaine réunion publique</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    Calendrier de publication suggéré
+                                </h4>
+                                <ul>
+                                    <li><strong>Lundi</strong> : Rappel réunion publique (si dans la semaine)</li>
+                                    <li><strong>Mercredi</strong> : Point de programme (1 axe)</li>
+                                    <li><strong>Vendredi</strong> : Photo/vidéo de terrain (marché, porte-à-porte)</li>
+                                    <li><strong>Dimanche</strong> : Bilan de la semaine ou témoignage</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    Outils recommandés
+                                </h4>
+                                <div class="tool-list">
+                                    <a href="https://business.facebook.com" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                                        Meta Business Suite
+                                    </a>
+                                    <a href="https://www.canva.com" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                                        Canva (visuels)
+                                    </a>
+                                    <a href="https://buffer.com" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                                        Buffer (planification)
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 9 -->
                     <li class="task-item" data-id="t9">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Partager les vidéos de campagne YouTube</div>
-                            <div class="task-detail">Planifier un calendrier de publications régulier</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Partager les vidéos de campagne YouTube
+                                </div>
+                                <div class="task-summary">Planifier un calendrier de publications régulier</div>
+                            </div>
+                            <span class="task-team team-digital">Digital</span>
                         </div>
-                        <span class="task-team team-digital">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Digital
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Vidéos disponibles sur le site
+                                </h4>
+                                <ul>
+                                    <li>Message principal de campagne</li>
+                                    <li>Rencontres sur le marché</li>
+                                    <li>Ouverture du local de campagne</li>
+                                    <li>Questions/réponses (qualité de l'eau)</li>
+                                    <li>Porte-à-porte et événements</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Bonnes pratiques
+                                </h4>
+                                <ul>
+                                    <li>Ajouter une accroche texte au-dessus du lien vidéo</li>
+                                    <li>Privilégier les vidéos courtes (&lt;2 min) pour Facebook</li>
+                                    <li>Publier aux heures de forte audience (12h-14h, 18h-21h)</li>
+                                    <li>Répondre aux commentaires rapidement</li>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 10 -->
                     <li class="task-item" data-id="t10">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Renvoyer systématiquement vers le site pour le programme</div>
-                            <div class="task-detail">Lien vers /programme.html et /procurations.html</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Renvoyer systématiquement vers le site pour le programme
+                                </div>
+                                <div class="task-summary">Lien vers /programme.html et /procurations.html</div>
+                            </div>
+                            <span class="task-team team-digital">Digital</span>
                         </div>
-                        <span class="task-team team-digital">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Digital
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Liens directs à utiliser
+                                </h4>
+                                <ul>
+                                    <li><strong>Programme complet</strong> : poursenlisençonfiance.fr/programme.html</li>
+                                    <li><strong>Procurations</strong> : poursenlisençonfiance.fr/procurations.html</li>
+                                    <li><strong>Carte quartiers</strong> : poursenlisençonfiance.fr/votre-avis-compte.html</li>
+                                    <li><strong>La candidate</strong> : poursenlisençonfiance.fr/la-candidate.html</li>
+                                    <li><strong>Vidéos</strong> : poursenlisençonfiance.fr/videos.html</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Exemples de posts
+                                </h4>
+                                <div class="example-box">
+                                    <div class="example-label">Post Facebook type</div>
+                                    <code>🏠 Axe 1 : Protéger les Senlisiens
+
+La sécurité est notre priorité. Découvrez nos propositions concrètes pour un Senlis plus sûr.
+
+👉 Programme complet : poursenlisençonfiance.fr/programme.html
+
+#Senlis #Municipales2026 #PourSenlisEnConfiance</code>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </section>
@@ -483,38 +1020,158 @@
                     <h2>4. Campagne Email</h2>
                 </div>
                 <ul class="task-list">
+                    <!-- Task 11 -->
                     <li class="task-item" data-id="t11">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Exploiter les emails collectés via les formulaires</div>
-                            <div class="task-detail">Consultation quartiers + inscriptions newsletter</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Exploiter les emails collectés via les formulaires
+                                </div>
+                                <div class="task-summary">Consultation quartiers + inscriptions newsletter</div>
+                            </div>
+                            <span class="task-team team-digital">Digital</span>
                         </div>
-                        <span class="task-team team-digital">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Digital
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Sources d'emails
+                                </h4>
+                                <ul>
+                                    <li>Formulaires de consultation par quartier (avec opt-in newsletter)</li>
+                                    <li>Inscriptions procurations (mandants et mandataires)</li>
+                                    <li>Liste existante de contacts de campagne</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    Outils d'emailing gratuits
+                                </h4>
+                                <div class="tool-list">
+                                    <a href="https://www.brevo.com/fr/" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/></svg>
+                                        Brevo (ex-Sendinblue)
+                                    </a>
+                                    <a href="https://mailchimp.com" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/></svg>
+                                        Mailchimp
+                                    </a>
+                                </div>
+                                <p style="margin-top: 0.75rem; font-size: 0.8rem; color: #666;">Brevo recommandé : serveurs en France, conforme RGPD, 300 emails/jour gratuits</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                                    RGPD - À respecter
+                                </h4>
+                                <ul>
+                                    <li>N'envoyer qu'aux personnes ayant coché "recevoir des informations"</li>
+                                    <li>Inclure un lien de désinscription dans chaque email</li>
+                                    <li>Identifier clairement l'expéditeur (liste Pascale Loiseleur)</li>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 12 -->
                     <li class="task-item" data-id="t12">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Envoyer des rappels pour les réunions publiques</div>
-                            <div class="task-detail">Email 1 semaine avant + rappel J-1</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Envoyer des rappels pour les réunions publiques
+                                </div>
+                                <div class="task-summary">Email 1 semaine avant + rappel J-1</div>
+                            </div>
+                            <span class="task-team team-com">Com</span>
                         </div>
-                        <span class="task-team team-com">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Com
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                    Planning des réunions
+                                </h4>
+                                <ul>
+                                    <li><strong>27 janvier</strong> : Envoi rappel le 20/01 + relance le 26/01</li>
+                                    <li><strong>11 février</strong> : Envoi rappel le 04/02 + relance le 10/02</li>
+                                    <li><strong>12 mars</strong> : Envoi rappel le 05/03 + relance le 11/03</li>
+                                    <li><strong>19 mars</strong> : Envoi rappel le 12/03 + relance le 18/03</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Modèle d'email
+                                </h4>
+                                <div class="example-box">
+                                    <div class="example-label">Email de rappel J-7</div>
+                                    <code>Objet : Réunion publique le [DATE] - Venez échanger avec Pascale Loiseleur
+
+Bonjour,
+
+Nous avons le plaisir de vous inviter à notre prochaine réunion publique :
+
+📅 [DATE] à [HEURE]
+📍 [LIEU]
+
+Pascale Loiseleur et son équipe présenteront le programme et répondront à toutes vos questions.
+
+Venez nombreux !
+
+L'équipe "Pour Senlis en Confiance"
+poursenlisençonfiance.fr</code>
+                                </div>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 13 -->
                     <li class="task-item" data-id="t13">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Créer une newsletter avec points de programme</div>
-                            <div class="task-detail">1 axe par email, lien vers page programme détaillé</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Créer une newsletter avec points de programme
+                                </div>
+                                <div class="task-summary">1 axe par email, lien vers page programme détaillé</div>
+                            </div>
+                            <span class="task-team team-com">Com</span>
                         </div>
-                        <span class="task-team team-com">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Com
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Série de 5 newsletters (1 par axe)
+                                </h4>
+                                <ul>
+                                    <li><strong>NL 1</strong> : Axe 1 - Protéger les Senlisiens (sécurité)</li>
+                                    <li><strong>NL 2</strong> : Axe 2 - Excellence des services</li>
+                                    <li><strong>NL 3</strong> : Axe 3 - Toutes les générations</li>
+                                    <li><strong>NL 4</strong> : Axe 4 - Ville durable et patrimoine</li>
+                                    <li><strong>NL 5</strong> : Axe 5 - Équipe renouvelée</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Structure type
+                                </h4>
+                                <div class="example-box">
+                                    <div class="example-label">Structure newsletter</div>
+                                    <code>1. Titre accrocheur lié à l'axe
+2. Introduction (2-3 phrases)
+3. Les 3-4 propositions clés (bullet points)
+4. Citation de Pascale Loiseleur
+5. Bouton "Lire le programme complet"
+6. Rappel : prochaine réunion publique</code>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </section>
@@ -529,27 +1186,100 @@
                     <h2>5. Référencement Local (SEO)</h2>
                 </div>
                 <ul class="task-list">
+                    <!-- Task 14 -->
                     <li class="task-item" data-id="t14">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Vérifier la fiche Google Business Profile</div>
-                            <div class="task-detail">Mentionner le site et la campagne</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Vérifier la fiche Google Business Profile
+                                </div>
+                                <div class="task-summary">Mentionner le site et la campagne</div>
+                            </div>
+                            <span class="task-team team-digital">Digital</span>
                         </div>
-                        <span class="task-team team-digital">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Digital
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Actions à effectuer
+                                </h4>
+                                <ul>
+                                    <li>Vérifier si une fiche existe pour le local de campagne</li>
+                                    <li>Créer une fiche si nécessaire avec l'adresse du local</li>
+                                    <li>Ajouter le site web dans les informations</li>
+                                    <li>Publier des "posts" Google régulièrement (réunions, actualités)</li>
+                                    <li>Ajouter des photos du local et des événements</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    Accès
+                                </h4>
+                                <div class="tool-list">
+                                    <a href="https://business.google.com" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                        Google Business Profile
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 15 -->
                     <li class="task-item" data-id="t15">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Optimiser les mots-clés pour recherches locales</div>
-                            <div class="task-detail">"élections municipales Senlis 2026", "maire Senlis"</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Optimiser les mots-clés pour recherches locales
+                                </div>
+                                <div class="task-summary">"élections municipales Senlis 2026", "maire Senlis"</div>
+                            </div>
+                            <span class="task-team team-digital">Digital</span>
                         </div>
-                        <span class="task-team team-digital">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Digital
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Mots-clés à cibler
+                                </h4>
+                                <ul>
+                                    <li>"élections municipales Senlis 2026"</li>
+                                    <li>"maire Senlis"</li>
+                                    <li>"Pascale Loiseleur"</li>
+                                    <li>"liste municipale Senlis"</li>
+                                    <li>"programme municipal Senlis"</li>
+                                    <li>"procuration Senlis"</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    Déjà optimisé sur le site
+                                </h4>
+                                <p>Le site utilise déjà les balises meta, schema.org et les titres optimisés. Vérifier régulièrement le positionnement sur Google en recherchant ces termes.</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    Outils de suivi
+                                </h4>
+                                <div class="tool-list">
+                                    <a href="https://search.google.com/search-console" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/></svg>
+                                        Google Search Console
+                                    </a>
+                                    <a href="https://plausible.io" target="_blank" class="tool-tag">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                                        Plausible Analytics
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </section>
@@ -563,38 +1293,140 @@
                     <h2>6. Points Forts à Valoriser</h2>
                 </div>
                 <ul class="task-list">
+                    <!-- Task 16 -->
                     <li class="task-item" data-id="t16">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Préparer argumentaire sur le système de procurations</div>
-                            <div class="task-detail">Service pratique et unique - différenciateur fort</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Préparer argumentaire sur le système de procurations
+                                </div>
+                                <div class="task-summary">Service pratique et unique - différenciateur fort</div>
+                            </div>
+                            <span class="task-team team-com">Com</span>
                         </div>
-                        <span class="task-team team-com">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Com
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Points clés de l'argumentaire
+                                </h4>
+                                <ul>
+                                    <li><strong>Unique</strong> : Aucune autre liste ne propose ce service à Senlis</li>
+                                    <li><strong>Citoyen</strong> : Lutte contre l'abstention, chaque voix compte</li>
+                                    <li><strong>Pratique</strong> : Inscription en 2 minutes, mise en relation automatique</li>
+                                    <li><strong>Légal</strong> : Conforme à la loi, lien vers maprocuration.gouv.fr</li>
+                                    <li><strong>Confiance</strong> : Mise en relation entre Senlisiens du même quartier</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    FAQ type
+                                </h4>
+                                <div class="example-box">
+                                    <div class="example-label">Questions fréquentes</div>
+                                    <code>Q: C'est légal ?
+R: Oui, la procuration est un droit. Nous facilitons juste la mise en relation.
+
+Q: Comment ça marche ?
+R: Vous vous inscrivez, on vous met en contact avec un volontaire, vous faites la démarche officielle sur maprocuration.gouv.fr
+
+Q: C'est gratuit ?
+R: Totalement gratuit, c'est un service citoyen.
+
+Q: Et si je ne connais pas la personne ?
+R: On privilégie les mises en relation par quartier et bureau de vote.</code>
+                                </div>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 17 -->
                     <li class="task-item" data-id="t17">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Mettre en avant la carte interactive des quartiers</div>
-                            <div class="task-detail">Démontre l'écoute citoyenne et l'engagement local</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Mettre en avant la carte interactive des quartiers
+                                </div>
+                                <div class="task-summary">Démontre l'écoute citoyenne et l'engagement local</div>
+                            </div>
+                            <span class="task-team team-com">Com</span>
                         </div>
-                        <span class="task-team team-com">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Com
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Messages clés
+                                </h4>
+                                <ul>
+                                    <li>"Votre quartier, votre voix" - personnalisation de l'écoute</li>
+                                    <li>"Nous ne décidons pas pour vous, nous décidons avec vous"</li>
+                                    <li>"8 quartiers, 8 consultations ciblées"</li>
+                                    <li>"Vos idées nourriront le programme du prochain mandat"</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    Supports à créer
+                                </h4>
+                                <ul>
+                                    <li>Capture d'écran de la carte pour les réseaux sociaux</li>
+                                    <li>Vidéo courte (30s) montrant l'interaction avec la carte</li>
+                                    <li>Affichette A4 par quartier avec QR code direct</li>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
+
+                    <!-- Task 18 -->
                     <li class="task-item" data-id="t18">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-content">
-                            <div class="task-description">Communiquer sur le bilan de 14 ans</div>
-                            <div class="task-detail">Réalisations concrètes: Ordener, EcoQuartier, 4 fleurs, etc.</div>
+                        <div class="task-main">
+                            <input type="checkbox" class="task-checkbox" onclick="event.stopPropagation()">
+                            <div class="task-content">
+                                <div class="task-description">
+                                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    Communiquer sur le bilan de 14 ans
+                                </div>
+                                <div class="task-summary">Réalisations concrètes: Ordener, EcoQuartier, 4 fleurs, etc.</div>
+                            </div>
+                            <span class="task-team team-direction">Direction</span>
                         </div>
-                        <span class="task-team team-direction">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-                            Direction
-                        </span>
+                        <div class="task-details">
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Réalisations à mettre en avant
+                                </h4>
+                                <ul>
+                                    <li><strong>Quartier Ordener</strong> : Rénovation urbaine complète</li>
+                                    <li><strong>EcoQuartier</strong> : Développement durable exemplaire</li>
+                                    <li><strong>4 fleurs</strong> : Label Villes et Villages Fleuris</li>
+                                    <li><strong>Ville d'Art et d'Histoire</strong> : Reconnaissance du patrimoine</li>
+                                    <li><strong>Orgue restauré</strong> : Patrimoine culturel préservé</li>
+                                    <li><strong>Crèche municipale</strong> : Services aux familles</li>
+                                    <li><strong>Équipements sportifs</strong> : Modernisation</li>
+                                    <li><strong>Croissance démographique</strong> : Ville attractive</li>
+                                    <li><strong>Sécurité renforcée</strong> : Vidéoprotection, police municipale</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Formats de communication
+                                </h4>
+                                <ul>
+                                    <li><strong>Infographie</strong> : "14 ans en chiffres" (Canva)</li>
+                                    <li><strong>Avant/Après</strong> : Photos comparatives (Ordener, espaces verts)</li>
+                                    <li><strong>Témoignages</strong> : Habitants satisfaits</li>
+                                    <li><strong>Chronologie</strong> : Frise des réalisations par année</li>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </section>
@@ -642,19 +1474,20 @@
             document.getElementById('progressFill').style.width = `${(completed / total) * 100}%`;
         }
 
-        // Initialize checkboxes
+        // Initialize checkboxes and expand/collapse
         const tasks = loadTasks();
         document.querySelectorAll('.task-item').forEach(item => {
             const checkbox = item.querySelector('.task-checkbox');
+            const taskMain = item.querySelector('.task-main');
             const id = item.dataset.id;
 
-            // Restore state
+            // Restore checkbox state
             if (tasks[id]) {
                 checkbox.checked = true;
                 item.classList.add('completed');
             }
 
-            // Handle changes
+            // Handle checkbox changes
             checkbox.addEventListener('change', () => {
                 const currentTasks = loadTasks();
                 if (checkbox.checked) {
@@ -666,6 +1499,25 @@
                 }
                 saveTasks(currentTasks);
                 updateProgress();
+            });
+
+            // Handle expand/collapse
+            taskMain.addEventListener('click', (e) => {
+                if (e.target.classList.contains('task-checkbox')) return;
+                item.classList.toggle('expanded');
+            });
+        });
+
+        // Expand all / collapse all
+        let allExpanded = false;
+        document.getElementById('expandAllBtn').addEventListener('click', () => {
+            allExpanded = !allExpanded;
+            document.querySelectorAll('.task-item').forEach(item => {
+                if (allExpanded) {
+                    item.classList.add('expanded');
+                } else {
+                    item.classList.remove('expanded');
+                }
             });
         });
 
