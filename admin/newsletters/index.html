@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Newsletters - Admin</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/PSEC.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css?v=20260108c">
+    <style>
+        .newsletters-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .newsletters-header {
+            margin-bottom: 2rem;
+        }
+
+        .newsletters-header h1 {
+            font-size: 1.75rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletters-header p {
+            color: #666;
+        }
+
+        .newsletter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .newsletter-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .newsletter-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .newsletter-badge {
+            padding: 1rem 1.25rem;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .badge-securite { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+        .badge-excellence { background: linear-gradient(135deg, #eab308, #ca8a04); }
+        .badge-generations { background: linear-gradient(135deg, #10b981, #059669); }
+        .badge-patrimoine { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .badge-equipe { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+
+        .newsletter-content {
+            padding: 1.25rem;
+        }
+
+        .newsletter-content h3 {
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            margin: 0 0 0.5rem 0;
+            line-height: 1.3;
+        }
+
+        .newsletter-content p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0 0 1rem 0;
+            line-height: 1.5;
+        }
+
+        .newsletter-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-preview {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .btn-preview:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-copy {
+            padding: 0.6rem 1rem;
+            background: #f1f5f9;
+            color: #475569;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-copy.copied {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-preview svg, .btn-copy svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .instructions-box {
+            background: linear-gradient(135deg, #f0f7ff, #e0f2fe);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .instructions-box h3 {
+            color: var(--primary-dark);
+            font-size: 1rem;
+            margin: 0 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .instructions-box ol {
+            margin: 0;
+            padding-left: 1.25rem;
+            color: #334155;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .instructions-box code {
+            background: rgba(0,0,0,0.1);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .back-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .newsletters-container {
+                padding: 1rem;
+            }
+
+            .newsletter-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="admin-dashboard-page">
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-left">
+            <img src="/images/PSEC.png" alt="Logo" class="admin-logo">
+            <span class="admin-title">Newsletters</span>
+        </div>
+        <div class="admin-header-right">
+            <a href="/admin/dashboard.html" class="btn-nav">Procurations</a>
+            <a href="/admin/strategie.html" class="btn-nav">Stratégie</a>
+            <a href="/admin/users.html" class="btn-nav">Utilisateurs</a>
+            <span class="admin-user" id="adminUserName"></span>
+            <button class="btn-logout" id="logoutBtn">Déconnexion</button>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <div class="newsletters-container">
+
+            <a href="/admin/strategie.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                Retour à la stratégie
+            </a>
+
+            <div class="newsletters-header">
+                <h1>Newsletters prêtes à l'emploi</h1>
+                <p>5 newsletters correspondant aux 5 axes du programme, prêtes à être envoyées via Brevo</p>
+            </div>
+
+            <!-- Instructions -->
+            <div class="instructions-box">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="16" x2="12" y2="12"/>
+                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                    Comment utiliser ces newsletters avec Brevo
+                </h3>
+                <ol>
+                    <li>Cliquez sur <strong>"Voir"</strong> pour prévisualiser la newsletter</li>
+                    <li>Cliquez sur <strong>"Copier HTML"</strong> pour copier le code source</li>
+                    <li>Dans Brevo, créez une nouvelle campagne email</li>
+                    <li>Choisissez l'éditeur "Code HTML" et collez le contenu</li>
+                    <li>Remplacez <code>{{unsubscribe_url}}</code> par la variable Brevo correspondante</li>
+                    <li>Testez et envoyez !</li>
+                </ol>
+            </div>
+
+            <!-- Newsletter Grid -->
+            <div class="newsletter-grid">
+
+                <!-- Newsletter 1 -->
+                <div class="newsletter-card">
+                    <div class="newsletter-badge badge-securite">Axe 1 - Sécurité</div>
+                    <div class="newsletter-content">
+                        <h3>Protéger les Senlisiens</h3>
+                        <p>Les 4 piliers de notre politique de sécurité : protéger, prévenir, rassurer, faire respecter la loi.</p>
+                        <div class="newsletter-actions">
+                            <a href="newsletter-1-securite.html" target="_blank" class="btn-preview">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                Voir
+                            </a>
+                            <button class="btn-copy" onclick="copyHTML('newsletter-1-securite.html', this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                Copier HTML
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter 2 -->
+                <div class="newsletter-card">
+                    <div class="newsletter-badge badge-excellence">Axe 2 - Excellence</div>
+                    <div class="newsletter-content">
+                        <h3>Viser l'excellence</h3>
+                        <p>Services publics de qualité, projets urbains exemplaires, gestion rigoureuse.</p>
+                        <div class="newsletter-actions">
+                            <a href="newsletter-2-excellence.html" target="_blank" class="btn-preview">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                Voir
+                            </a>
+                            <button class="btn-copy" onclick="copyHTML('newsletter-2-excellence.html', this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                Copier HTML
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter 3 -->
+                <div class="newsletter-card">
+                    <div class="newsletter-badge badge-generations">Axe 3 - Générations</div>
+                    <div class="newsletter-content">
+                        <h3>Toutes les générations</h3>
+                        <p>Petite enfance, familles, seniors : une ville accueillante pour tous les âges.</p>
+                        <div class="newsletter-actions">
+                            <a href="newsletter-3-generations.html" target="_blank" class="btn-preview">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                Voir
+                            </a>
+                            <button class="btn-copy" onclick="copyHTML('newsletter-3-generations.html', this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                Copier HTML
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter 4 -->
+                <div class="newsletter-card">
+                    <div class="newsletter-badge badge-patrimoine">Axe 4 - Patrimoine</div>
+                    <div class="newsletter-content">
+                        <h3>Ville durable et patrimoine</h3>
+                        <p>Préserver notre héritage, protéger la nature, construire l'avenir.</p>
+                        <div class="newsletter-actions">
+                            <a href="newsletter-4-patrimoine.html" target="_blank" class="btn-preview">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                Voir
+                            </a>
+                            <button class="btn-copy" onclick="copyHTML('newsletter-4-patrimoine.html', this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                Copier HTML
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter 5 -->
+                <div class="newsletter-card">
+                    <div class="newsletter-badge badge-equipe">Axe 5 - Équipe</div>
+                    <div class="newsletter-content">
+                        <h3>Équipe renouvelée</h3>
+                        <p>Communication moderne, dialogue permanent, participation citoyenne.</p>
+                        <div class="newsletter-actions">
+                            <a href="newsletter-5-equipe.html" target="_blank" class="btn-preview">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                Voir
+                            </a>
+                            <button class="btn-copy" onclick="copyHTML('newsletter-5-equipe.html', this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                Copier HTML
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Auth check
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+            window.location.href = '/admin/index.html';
+        }
+
+        const user = JSON.parse(localStorage.getItem('adminUser') || '{}');
+        document.getElementById('adminUserName').textContent = user.name || user.email || '';
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminUser');
+            window.location.href = '/admin/index.html';
+        });
+
+        // Copy HTML function
+        async function copyHTML(filename, button) {
+            try {
+                const response = await fetch(filename);
+                const html = await response.text();
+                await navigator.clipboard.writeText(html);
+
+                button.classList.add('copied');
+                button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copié !';
+
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                    button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copier HTML';
+                }, 2000);
+            } catch (err) {
+                alert('Erreur lors de la copie. Ouvrez la newsletter et copiez manuellement le code source.');
+            }
+        }
+    </script>
+</body>
+</html>
