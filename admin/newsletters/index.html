@@ -95,8 +95,8 @@
             justify-content: center;
             gap: 0.5rem;
             padding: 0.6rem 1rem;
-            background: var(--primary-color);
-            color: white;
+            background: #1e3a5f;
+            color: white !important;
             text-decoration: none;
             border-radius: 6px;
             font-size: 0.85rem;
@@ -105,7 +105,7 @@
         }
 
         .btn-preview:hover {
-            background: var(--primary-dark);
+            background: #2d5a87;
         }
 
         .btn-copy {
@@ -365,9 +365,30 @@
         // Copy HTML function
         async function copyHTML(filename, button) {
             try {
-                const response = await fetch(filename);
+                // Use full path for fetch
+                const basePath = window.location.pathname.replace('index.html', '').replace(/\/$/, '');
+                const fullPath = basePath + '/' + filename;
+
+                const response = await fetch(fullPath);
+                if (!response.ok) {
+                    throw new Error('Fetch failed: ' + response.status);
+                }
                 const html = await response.text();
-                await navigator.clipboard.writeText(html);
+
+                // Try modern clipboard API first
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(html);
+                } else {
+                    // Fallback for older browsers
+                    const textarea = document.createElement('textarea');
+                    textarea.value = html;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                }
 
                 button.classList.add('copied');
                 button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copié !';
@@ -377,7 +398,10 @@
                     button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copier HTML';
                 }, 2000);
             } catch (err) {
-                alert('Erreur lors de la copie. Ouvrez la newsletter et copiez manuellement le code source.');
+                console.error('Copy error:', err);
+                // Open in new tab as fallback
+                window.open(filename, '_blank');
+                alert('La copie automatique a échoué. La newsletter s\'ouvre dans un nouvel onglet.\n\nPour copier le HTML :\n1. Clic droit sur la page\n2. "Afficher le code source"\n3. Sélectionner tout (Ctrl+A)\n4. Copier (Ctrl+C)');
             }
         }
     </script>
