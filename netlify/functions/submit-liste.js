@@ -203,10 +203,11 @@ exports.handler = async (event) => {
         if (!airtableResponse.ok) {
             const errorText = await airtableResponse.text();
             console.error('Airtable error response:', errorText);
+            console.error('Airtable fields sent:', JSON.stringify(airtableFields));
             return {
                 statusCode: airtableResponse.status,
                 headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ error: 'Erreur lors de l\'enregistrement' })
+                body: JSON.stringify({ error: 'Erreur Airtable: ' + errorText })
             };
         }
 
