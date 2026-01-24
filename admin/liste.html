@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Gestion Liste - Admin</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/PSEC.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css?v=20260124c">
+
+    <style>
+        .admin-liste-page {
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #eee;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        .stat-number.green { color: var(--accent-green); }
+        .stat-number.orange { color: #e67e22; }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Main Content */
+        .admin-liste-content {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Filters */
+        .filters-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover { border-color: var(--primary-light); }
+        .filter-btn.active {
+            background: var(--primary-dark);
+            color: white;
+            border-color: var(--primary-dark);
+        }
+
+        /* Table */
+        .liste-table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .liste-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .liste-table th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-dark);
+            border-bottom: 2px solid #eee;
+        }
+        .liste-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        .liste-table tr:hover { background: #f8f9fa; }
+        .liste-table tr:last-child td { border-bottom: none; }
+
+        /* Cell styles */
+        .cell-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .cell-photo-placeholder {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-weight: 600;
+        }
+        .cell-name {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        .cell-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status-a-valider { background: #fff3cd; color: #856404; }
+        .status-valide { background: #d4edda; color: #155724; }
+        .status-publie { background: #cce5ff; color: #004085; }
+        .status-incomplet { background: #f8d7da; color: #721c24; }
+
+        .cell-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .btn-action {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .btn-validate { background: var(--accent-green); color: white; }
+        .btn-validate:hover { background: #5a9e33; }
+        .btn-view { background: var(--primary-light); color: white; }
+        .btn-view:hover { background: var(--primary-dark); }
+        .btn-delete { background: #dc3545; color: white; }
+        .btn-delete:hover { background: #c82333; }
+
+        /* Detail Modal */
+        .detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .detail-modal.visible { display: flex; }
+        .detail-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .detail-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .detail-header h2 { margin: 0; }
+        .detail-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        .detail-body { padding: 1.5rem; }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+        }
+        .detail-photo-section { text-align: center; }
+        .detail-photo {
+            width: 180px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        .detail-photo-placeholder {
+            width: 180px;
+            height: 220px;
+            background: #e0e0e0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .detail-info-section h3 {
+            color: var(--primary-dark);
+            margin: 0 0 0.5rem;
+            font-size: 1rem;
+        }
+        .detail-info-section p {
+            margin: 0 0 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        .detail-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        .meta-item label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+        .meta-item span {
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+        .detail-actions {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-bar { justify-content: center; }
+            .liste-table-container { overflow-x: auto; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .detail-photo-section { order: -1; }
+        }
+    </style>
+</head>
+<body class="admin-liste-page">
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-left">
+            <img src="/images/PSEC.png" alt="Logo" class="admin-logo">
+            <span class="admin-title">Gestion La Liste</span>
+        </div>
+        <div class="admin-header-right">
+            <a href="/admin/dashboard.html" class="btn-nav">Procurations</a>
+            <a href="/admin/liste.html" class="btn-nav active">La Liste</a>
+            <a href="/admin/strategie.html" class="btn-nav">Stratégie</a>
+            <button class="btn-logout" id="logoutBtn">Déconnexion</button>
+        </div>
+    </header>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number" id="statTotal">0</div>
+            <div class="stat-label">Total</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number green" id="statComplete">0</div>
+            <div class="stat-label">Complètes</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number orange" id="statIncomplete">0</div>
+            <div class="stat-label">Incomplètes</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number green" id="statValidated">0</div>
+            <div class="stat-label">Validées</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">35</div>
+            <div class="stat-label">Objectif</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="admin-liste-content">
+        <!-- Filters -->
+        <div class="filters-bar">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="incomplete">Incomplètes</button>
+            <button class="filter-btn" data-filter="a-valider">À valider</button>
+            <button class="filter-btn" data-filter="valide">Validées</button>
+            <button class="filter-btn" data-filter="publie">Publiées</button>
+        </div>
+
+        <!-- Table -->
+        <div class="liste-table-container">
+            <div id="loadingState" class="loading">Chargement...</div>
+            <table class="liste-table" id="listeTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Nom</th>
+                        <th>Profession</th>
+                        <th>Quartier</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                Aucune fiche trouvée
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="detail-modal" id="detailModal">
+        <div class="detail-content">
+            <div class="detail-header">
+                <h2 id="detailName">Nom</h2>
+                <button class="detail-close" id="closeDetail">&times;</button>
+            </div>
+            <div class="detail-body">
+                <div class="detail-grid">
+                    <div class="detail-photo-section">
+                        <div id="detailPhotoContainer"></div>
+                        <div class="cell-status" id="detailStatus">À valider</div>
+                    </div>
+                    <div class="detail-info-section">
+                        <h3>Biographie</h3>
+                        <p id="detailBio">-</p>
+
+                        <h3>Message personnel</h3>
+                        <p id="detailMessage">-</p>
+
+                        <div class="detail-meta">
+                            <div class="meta-item">
+                                <label>Profession</label>
+                                <span id="detailProfession">-</span>
+                            </div>
+                            <div class="meta-item">
+                                <label>Quartier</label>
+                                <span id="detailQuartier">-</span>
+                            </div>
+                            <div class="meta-item">
+                                <label>Âge</label>
+                                <span id="detailAge">-</span>
+                            </div>
+                            <div class="meta-item">
+                                <label>Email</label>
+                                <span id="detailEmail">-</span>
+                            </div>
+                            <div class="meta-item">
+                                <label>Téléphone</label>
+                                <span id="detailPhone">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-actions">
+                <button class="btn btn-secondary" id="btnCloseDetail">Fermer</button>
+                <button class="btn btn-primary" id="btnValidate" style="background: var(--accent-green);">Valider</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+            window.location.href = '/admin/';
+        }
+
+        let allRecords = [];
+        let currentFilter = 'all';
+        let currentRecord = null;
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminUser');
+            window.location.href = '/admin/';
+        });
+
+        // Load data
+        async function loadData() {
+            const loading = document.getElementById('loadingState');
+            const table = document.getElementById('listeTable');
+            const empty = document.getElementById('emptyState');
+
+            try {
+                const response = await fetch('/.netlify/functions/get-liste');
+                const data = await response.json();
+
+                if (data.success) {
+                    allRecords = data.records;
+                    updateStats(data.stats, allRecords);
+                    renderTable();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function updateStats(stats, records) {
+            document.getElementById('statTotal').textContent = stats.total;
+            document.getElementById('statComplete').textContent = stats.complete;
+            document.getElementById('statIncomplete').textContent = stats.total - stats.complete;
+            document.getElementById('statValidated').textContent = stats.validated;
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            const table = document.getElementById('listeTable');
+            const empty = document.getElementById('emptyState');
+
+            // Filter records
+            let filtered = allRecords;
+            if (currentFilter === 'incomplete') {
+                filtered = allRecords.filter(r => !r.isComplete);
+            } else if (currentFilter === 'a-valider') {
+                filtered = allRecords.filter(r => r.statut === 'À valider');
+            } else if (currentFilter === 'valide') {
+                filtered = allRecords.filter(r => r.statut === 'Validé');
+            } else if (currentFilter === 'publie') {
+                filtered = allRecords.filter(r => r.statut === 'Publié');
+            }
+
+            if (filtered.length === 0) {
+                table.style.display = 'none';
+                empty.style.display = 'block';
+                return;
+            }
+
+            table.style.display = 'table';
+            empty.style.display = 'none';
+
+            tbody.innerHTML = filtered.map(record => {
+                const photo = record.photo && record.photo.url
+                    ? `<img src="${record.photo.url}" class="cell-photo" alt="${record.nom}">`
+                    : `<div class="cell-photo-placeholder">${record.nom ? record.nom.charAt(0) : '?'}</div>`;
+
+                let statusClass = 'status-a-valider';
+                let statusText = 'À valider';
+                if (!record.isComplete) {
+                    statusClass = 'status-incomplet';
+                    statusText = 'Incomplet';
+                } else if (record.statut === 'Validé') {
+                    statusClass = 'status-valide';
+                    statusText = 'Validé';
+                } else if (record.statut === 'Publié') {
+                    statusClass = 'status-publie';
+                    statusText = 'Publié';
+                }
+
+                return `
+                    <tr data-id="${record.id}">
+                        <td>${photo}</td>
+                        <td class="cell-name">${record.nom || '-'}</td>
+                        <td>${record.profession || '-'}</td>
+                        <td>${record.quartier || '-'}</td>
+                        <td><span class="cell-status ${statusClass}">${statusText}</span></td>
+                        <td class="cell-actions">
+                            <button class="btn-action btn-view" onclick="viewRecord('${record.id}')">Voir</button>
+                            ${record.isComplete && record.statut !== 'Validé' ? `<button class="btn-action btn-validate" onclick="validateRecord('${record.id}')">Valider</button>` : ''}
+                            <button class="btn-action btn-delete" onclick="deleteRecord('${record.id}')">Suppr.</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderTable();
+            });
+        });
+
+        // View record
+        function viewRecord(id) {
+            currentRecord = allRecords.find(r => r.id === id);
+            if (!currentRecord) return;
+
+            document.getElementById('detailName').textContent = currentRecord.nom || '-';
+            document.getElementById('detailBio').textContent = currentRecord.bio || '-';
+            document.getElementById('detailMessage').textContent = currentRecord.message || '-';
+            document.getElementById('detailProfession').textContent = currentRecord.profession || '-';
+            document.getElementById('detailQuartier').textContent = currentRecord.quartier || '-';
+            document.getElementById('detailAge').textContent = currentRecord.age ? `${currentRecord.age} ans` : '-';
+            document.getElementById('detailEmail').textContent = currentRecord.email || '-';
+            document.getElementById('detailPhone').textContent = currentRecord.telephone || '-';
+
+            // Photo
+            const photoContainer = document.getElementById('detailPhotoContainer');
+            if (currentRecord.photo && currentRecord.photo.url) {
+                photoContainer.innerHTML = `<img src="${currentRecord.photo.url}" class="detail-photo" alt="${currentRecord.nom}">`;
+            } else {
+                photoContainer.innerHTML = `<div class="detail-photo-placeholder">${currentRecord.nom ? currentRecord.nom.charAt(0) : '?'}</div>`;
+            }
+
+            // Status
+            const statusEl = document.getElementById('detailStatus');
+            statusEl.className = 'cell-status';
+            if (!currentRecord.isComplete) {
+                statusEl.classList.add('status-incomplet');
+                statusEl.textContent = 'Incomplet';
+            } else if (currentRecord.statut === 'Validé') {
+                statusEl.classList.add('status-valide');
+                statusEl.textContent = 'Validé';
+            } else if (currentRecord.statut === 'Publié') {
+                statusEl.classList.add('status-publie');
+                statusEl.textContent = 'Publié';
+            } else {
+                statusEl.classList.add('status-a-valider');
+                statusEl.textContent = 'À valider';
+            }
+
+            // Show/hide validate button
+            const btnValidate = document.getElementById('btnValidate');
+            btnValidate.style.display = currentRecord.isComplete && currentRecord.statut !== 'Validé' ? 'block' : 'none';
+
+            document.getElementById('detailModal').classList.add('visible');
+        }
+
+        // Validate record
+        async function validateRecord(id) {
+            if (!confirm('Valider cette fiche ?')) return;
+
+            try {
+                const response = await fetch('/.netlify/functions/admin-liste', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        action: 'updateStatus',
+                        recordId: id,
+                        status: 'Validé'
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    loadData();
+                    document.getElementById('detailModal').classList.remove('visible');
+                } else {
+                    alert(result.error || 'Erreur');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Erreur de connexion');
+            }
+        }
+
+        // Delete record
+        async function deleteRecord(id) {
+            if (!confirm('Supprimer cette fiche ? Cette action est irréversible.')) return;
+
+            try {
+                const response = await fetch('/.netlify/functions/admin-liste', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        action: 'delete',
+                        recordId: id
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    loadData();
+                } else {
+                    alert(result.error || 'Erreur');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Erreur de connexion');
+            }
+        }
+
+        // Close modal
+        document.getElementById('closeDetail').addEventListener('click', () => {
+            document.getElementById('detailModal').classList.remove('visible');
+        });
+        document.getElementById('btnCloseDetail').addEventListener('click', () => {
+            document.getElementById('detailModal').classList.remove('visible');
+        });
+        document.getElementById('detailModal').addEventListener('click', (e) => {
+            if (e.target.id === 'detailModal') {
+                document.getElementById('detailModal').classList.remove('visible');
+            }
+        });
+        document.getElementById('btnValidate').addEventListener('click', () => {
+            if (currentRecord) validateRecord(currentRecord.id);
+        });
+
+        // Load on start
+        loadData();
+    </script>
+</body>
+</html>
