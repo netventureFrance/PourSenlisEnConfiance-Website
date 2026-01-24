@@ -353,54 +353,92 @@
         </div>
     </div>
 
-    <!-- Detail Modal -->
-    <div class="detail-modal" id="detailModal">
+    <!-- Edit Modal -->
+    <div class="detail-modal" id="editModal">
         <div class="detail-content">
             <div class="detail-header">
-                <h2 id="detailName">Nom</h2>
-                <button class="detail-close" id="closeDetail">&times;</button>
+                <h2>Éditer la fiche</h2>
+                <button class="detail-close" id="closeEdit">&times;</button>
             </div>
             <div class="detail-body">
-                <div class="detail-grid">
-                    <div class="detail-photo-section">
-                        <div id="detailPhotoContainer"></div>
-                        <div class="cell-status" id="detailStatus">À valider</div>
-                    </div>
-                    <div class="detail-info-section">
-                        <h3>Biographie</h3>
-                        <p id="detailBio">-</p>
+                <form id="editForm">
+                    <input type="hidden" id="editId">
 
-                        <h3>Message personnel</h3>
-                        <p id="detailMessage">-</p>
+                    <div class="detail-grid">
+                        <div class="detail-photo-section">
+                            <div id="editPhotoContainer"></div>
+                            <div class="form-group" style="margin-top: 1rem;">
+                                <label>Statut</label>
+                                <select id="editStatut" class="form-select" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                    <option value="À valider">À valider</option>
+                                    <option value="Validé">Validé</option>
+                                    <option value="Publié">Publié</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="detail-info-section">
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Nom *</label>
+                                <input type="text" id="editNom" required style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                            </div>
 
-                        <div class="detail-meta">
-                            <div class="meta-item">
-                                <label>Profession</label>
-                                <span id="detailProfession">-</span>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="form-group">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Profession</label>
+                                    <input type="text" id="editProfession" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                </div>
+                                <div class="form-group">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Quartier</label>
+                                    <input type="text" id="editQuartier" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                </div>
                             </div>
-                            <div class="meta-item">
-                                <label>Quartier</label>
-                                <span id="detailQuartier">-</span>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="form-group">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Âge</label>
+                                    <input type="number" id="editAge" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                </div>
+                                <div class="form-group">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Email</label>
+                                    <input type="email" id="editEmail" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                </div>
+                                <div class="form-group">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Téléphone</label>
+                                    <input type="text" id="editPhone" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                </div>
                             </div>
-                            <div class="meta-item">
-                                <label>Âge</label>
-                                <span id="detailAge">-</span>
+
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Biographie</label>
+                                <textarea id="editBio" rows="3" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd; resize: vertical;"></textarea>
                             </div>
-                            <div class="meta-item">
-                                <label>Email</label>
-                                <span id="detailEmail">-</span>
+
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Message personnel</label>
+                                <textarea id="editMessage" rows="3" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd; resize: vertical;"></textarea>
                             </div>
-                            <div class="meta-item">
-                                <label>Téléphone</label>
-                                <span id="detailPhone">-</span>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Facebook</label>
+                                    <input type="text" id="editFacebook" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                </div>
+                                <div class="form-group">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">LinkedIn</label>
+                                    <input type="text" id="editLinkedin" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                </div>
+                                <div class="form-group">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Instagram</label>
+                                    <input type="text" id="editInstagram" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="detail-actions">
-                <button class="btn btn-secondary" id="btnCloseDetail">Fermer</button>
-                <button class="btn btn-primary" id="btnValidate" style="background: var(--accent-green);">Valider</button>
+                <button type="button" class="btn btn-secondary" id="btnCloseEdit">Annuler</button>
+                <button type="button" class="btn btn-primary" id="btnSaveEdit">Enregistrer</button>
             </div>
         </div>
     </div>
@@ -504,8 +542,7 @@
                         <td>${record.quartier || '-'}</td>
                         <td><span class="cell-status ${statusClass}">${statusText}</span></td>
                         <td class="cell-actions">
-                            <button class="btn-action btn-view" onclick="viewRecord('${record.id}')">Voir</button>
-                            ${record.isComplete && record.statut !== 'Validé' ? `<button class="btn-action btn-validate" onclick="validateRecord('${record.id}')">Valider</button>` : ''}
+                            <button class="btn-action btn-view" onclick="editRecord('${record.id}')">Éditer</button>
                             <button class="btn-action btn-delete" onclick="deleteRecord('${record.id}')">Suppr.</button>
                         </td>
                     </tr>
@@ -523,77 +560,97 @@
             });
         });
 
-        // View record
-        function viewRecord(id) {
+        // Edit record
+        function editRecord(id) {
             currentRecord = allRecords.find(r => r.id === id);
             if (!currentRecord) return;
 
-            document.getElementById('detailName').textContent = currentRecord.nom || '-';
-            document.getElementById('detailBio').textContent = currentRecord.bio || '-';
-            document.getElementById('detailMessage').textContent = currentRecord.message || '-';
-            document.getElementById('detailProfession').textContent = currentRecord.profession || '-';
-            document.getElementById('detailQuartier').textContent = currentRecord.quartier || '-';
-            document.getElementById('detailAge').textContent = currentRecord.age ? `${currentRecord.age} ans` : '-';
-            document.getElementById('detailEmail').textContent = currentRecord.email || '-';
-            document.getElementById('detailPhone').textContent = currentRecord.telephone || '-';
+            document.getElementById('editId').value = currentRecord.id;
+            document.getElementById('editNom').value = currentRecord.nom || '';
+            document.getElementById('editProfession').value = currentRecord.profession || '';
+            document.getElementById('editQuartier').value = currentRecord.quartier || '';
+            document.getElementById('editAge').value = currentRecord.age || '';
+            document.getElementById('editEmail').value = currentRecord.email || '';
+            document.getElementById('editPhone').value = currentRecord.telephone || '';
+            document.getElementById('editBio').value = currentRecord.bio || '';
+            document.getElementById('editMessage').value = currentRecord.message || '';
+            document.getElementById('editFacebook').value = currentRecord.facebook || '';
+            document.getElementById('editLinkedin').value = currentRecord.linkedin || '';
+            document.getElementById('editInstagram').value = currentRecord.instagram || '';
+            document.getElementById('editStatut').value = currentRecord.statut || 'À valider';
 
             // Photo
-            const photoContainer = document.getElementById('detailPhotoContainer');
+            const photoContainer = document.getElementById('editPhotoContainer');
             if (currentRecord.photo && currentRecord.photo.url) {
                 photoContainer.innerHTML = `<img src="${currentRecord.photo.url}" class="detail-photo" alt="${currentRecord.nom}">`;
             } else {
                 photoContainer.innerHTML = `<div class="detail-photo-placeholder">${currentRecord.nom ? currentRecord.nom.charAt(0) : '?'}</div>`;
             }
 
-            // Status
-            const statusEl = document.getElementById('detailStatus');
-            statusEl.className = 'cell-status';
-            if (!currentRecord.isComplete) {
-                statusEl.classList.add('status-incomplet');
-                statusEl.textContent = 'Incomplet';
-            } else if (currentRecord.statut === 'Validé') {
-                statusEl.classList.add('status-valide');
-                statusEl.textContent = 'Validé';
-            } else if (currentRecord.statut === 'Publié') {
-                statusEl.classList.add('status-publie');
-                statusEl.textContent = 'Publié';
-            } else {
-                statusEl.classList.add('status-a-valider');
-                statusEl.textContent = 'À valider';
-            }
-
-            // Show/hide validate button
-            const btnValidate = document.getElementById('btnValidate');
-            btnValidate.style.display = currentRecord.isComplete && currentRecord.statut !== 'Validé' ? 'block' : 'none';
-
-            document.getElementById('detailModal').classList.add('visible');
+            document.getElementById('editModal').classList.add('visible');
         }
 
-        // Validate record
-        async function validateRecord(id) {
-            if (!confirm('Valider cette fiche ?')) return;
+        // Save edited record
+        async function saveRecord() {
+            const id = document.getElementById('editId').value;
+            const newStatut = document.getElementById('editStatut').value;
+            const oldStatut = currentRecord.statut;
+
+            const formData = {
+                id: id,
+                nomComplet: document.getElementById('editNom').value.trim(),
+                profession: document.getElementById('editProfession').value.trim(),
+                quartier: document.getElementById('editQuartier').value.trim(),
+                age: document.getElementById('editAge').value ? parseInt(document.getElementById('editAge').value) : null,
+                email: document.getElementById('editEmail').value.trim(),
+                telephone: document.getElementById('editPhone').value.trim(),
+                bio: document.getElementById('editBio').value.trim(),
+                message: document.getElementById('editMessage').value.trim(),
+                facebook: document.getElementById('editFacebook').value.trim(),
+                linkedin: document.getElementById('editLinkedin').value.trim(),
+                instagram: document.getElementById('editInstagram').value.trim()
+            };
 
             try {
-                const response = await fetch('/.netlify/functions/admin-liste', {
+                // Update fields via submit-liste (with admin token to bypass validation check)
+                const response = await fetch('/.netlify/functions/submit-liste', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify({
-                        action: 'updateStatus',
-                        recordId: id,
-                        status: 'Validé'
-                    })
+                    body: JSON.stringify(formData)
                 });
 
                 const result = await response.json();
-                if (result.success) {
-                    loadData();
-                    document.getElementById('detailModal').classList.remove('visible');
-                } else {
-                    alert(result.error || 'Erreur');
+                if (!result.success) {
+                    alert(result.error || 'Erreur lors de la mise à jour');
+                    return;
                 }
+
+                // If status changed, update it via admin-liste
+                if (newStatut !== oldStatut) {
+                    const statusResponse = await fetch('/.netlify/functions/admin-liste', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            action: 'updateStatus',
+                            recordId: id,
+                            status: newStatut
+                        })
+                    });
+
+                    const statusResult = await statusResponse.json();
+                    if (!statusResult.success) {
+                        alert(statusResult.error || 'Erreur lors du changement de statut');
+                    }
+                }
+
+                loadData();
+                document.getElementById('editModal').classList.remove('visible');
             } catch (error) {
                 console.error('Error:', error);
                 alert('Erreur de connexion');
@@ -630,20 +687,18 @@
         }
 
         // Close modal
-        document.getElementById('closeDetail').addEventListener('click', () => {
-            document.getElementById('detailModal').classList.remove('visible');
+        document.getElementById('closeEdit').addEventListener('click', () => {
+            document.getElementById('editModal').classList.remove('visible');
         });
-        document.getElementById('btnCloseDetail').addEventListener('click', () => {
-            document.getElementById('detailModal').classList.remove('visible');
+        document.getElementById('btnCloseEdit').addEventListener('click', () => {
+            document.getElementById('editModal').classList.remove('visible');
         });
-        document.getElementById('detailModal').addEventListener('click', (e) => {
-            if (e.target.id === 'detailModal') {
-                document.getElementById('detailModal').classList.remove('visible');
+        document.getElementById('editModal').addEventListener('click', (e) => {
+            if (e.target.id === 'editModal') {
+                document.getElementById('editModal').classList.remove('visible');
             }
         });
-        document.getElementById('btnValidate').addEventListener('click', () => {
-            if (currentRecord) validateRecord(currentRecord.id);
-        });
+        document.getElementById('btnSaveEdit').addEventListener('click', saveRecord);
 
         // Load on start
         loadData();

@@ -109,8 +109,25 @@ exports.handler = async (event) => {
             };
         }
 
-        // If updating, first check if record is validated
-        if (isUpdate) {
+        // Check if admin (has valid token)
+        const JWT_SECRET = process.env.JWT_SECRET;
+        const authHeader = event.headers.authorization || event.headers.Authorization;
+        let isAdmin = false;
+        if (authHeader && authHeader.startsWith('Bearer ') && JWT_SECRET) {
+            try {
+                const token = authHeader.split(' ')[1];
+                const parts = token.split('.');
+                if (parts.length === 3) {
+                    const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
+                    if (!payload.exp || payload.exp >= Date.now() / 1000) {
+                        isAdmin = true;
+                    }
+                }
+            } catch (e) { /* not admin */ }
+        }
+
+        // If updating, first check if record is validated (unless admin)
+        if (isUpdate && !isAdmin) {
             const checkResponse = await fetch(
                 `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_LISTE_TABLE)}/${formData.id}`,
                 {
@@ -129,7 +146,7 @@ exports.handler = async (event) => {
             }
 
             const existingRecord = await checkResponse.json();
-            if (existingRecord.fields['Statut'] === 'Validé') {
+            if (existingRecord.fields['Statut'] === 'Validé' || existingRecord.fields['Statut'] === 'Publié') {
                 return {
                     statusCode: 403,
                     headers: corsHeaders,
