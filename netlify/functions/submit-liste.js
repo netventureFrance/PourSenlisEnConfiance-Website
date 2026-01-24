@@ -159,9 +159,9 @@ exports.handler = async (event) => {
         if (formData.quartier) airtableFields['Quartier'] = formData.quartier;
         if (formData.bio) airtableFields['Bio'] = formData.bio;
         if (formData.message) airtableFields['Message Personnel'] = formData.message;
-        if (formData.age) airtableFields['Âge'] = formData.age;
+        if (formData.age) airtableFields['Age'] = formData.age;
         if (formData.email) airtableFields['Email'] = formData.email;
-        if (formData.telephone) airtableFields['Téléphone'] = formData.telephone;
+        if (formData.telephone) airtableFields['Telephone'] = formData.telephone;
         if (formData.facebook) airtableFields['Facebook'] = formData.facebook;
         if (formData.linkedin) airtableFields['LinkedIn'] = formData.linkedin;
         if (formData.instagram) airtableFields['Instagram'] = formData.instagram;
@@ -181,7 +181,7 @@ exports.handler = async (event) => {
         // For new records, set initial status and GDPR consent
         if (!isUpdate) {
             airtableFields['Statut'] = 'À valider';
-            airtableFields['GDPR Consent'] = formData.gdpr || false;
+            if (formData.gdpr) airtableFields['GDPR Consent'] = true;
         }
 
         const airtableData = { fields: airtableFields };
