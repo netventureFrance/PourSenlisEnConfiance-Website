@@ -20,10 +20,9 @@ function getCorsHeaders(event) {
 function isRecordComplete(fields) {
     const requiredFields = ['Nom', 'Photo', 'Profession', 'Quartier', 'Bio', 'Message Personnel'];
     return requiredFields.every(field => {
-        if (field === 'Photo') {
-            return fields[field] && fields[field].length > 0;
-        }
-        return fields[field] && fields[field].toString().trim() !== '';
+        const value = fields[field];
+        if (!value) return false;
+        return value.toString().trim() !== '';
     });
 }
 
@@ -103,7 +102,7 @@ exports.handler = async (event) => {
             quartier: record.fields['Quartier'] || '',
             bio: record.fields['Bio'] || '',
             message: record.fields['Message Personnel'] || '',
-            photo: record.fields['Photo'] ? record.fields['Photo'][0] : null,
+            photo: record.fields['Photo'] ? { url: record.fields['Photo'] } : null,
             email: record.fields['Email'] || '',
             telephone: record.fields['Telephone'] || '',
             facebook: record.fields['Facebook'] || '',

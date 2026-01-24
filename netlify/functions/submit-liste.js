@@ -183,9 +183,9 @@ exports.handler = async (event) => {
         if (formData.linkedin) airtableFields['LinkedIn'] = formData.linkedin;
         if (formData.instagram) airtableFields['Instagram'] = formData.instagram;
 
-        // Handle photo URL - Airtable accepts attachments as array of {url: "..."}
+        // Handle photo URL - now using URL field type in Airtable
         if (formData.photoUrl) {
-            airtableFields['Photo'] = [{ url: formData.photoUrl }];
+            airtableFields['Photo'] = formData.photoUrl;
         }
 
         // For new records, set initial status and GDPR consent
