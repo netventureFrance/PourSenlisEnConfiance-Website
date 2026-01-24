@@ -21,7 +21,7 @@
 
         /* Stats Bar */
         .stats-bar {
-            background: white;
+            background: white !important;
             padding: 1.5rem 2rem;
             display: flex;
             gap: 2rem;
@@ -31,16 +31,19 @@
         .stat-item {
             text-align: center;
         }
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #0d3d5c;
+        .stat-item .stat-number {
+            font-size: 2rem !important;
+            font-weight: 700 !important;
+            color: #0d3d5c !important;
+            display: block !important;
+            line-height: 1.2 !important;
+            margin-bottom: 0.25rem;
         }
-        .stat-number.green { color: #6cb13e; }
-        .stat-number.orange { color: #e67e22; }
+        .stat-item .stat-number.green { color: #6cb13e !important; }
+        .stat-item .stat-number.orange { color: #e67e22 !important; }
         .stat-label {
             font-size: 0.85rem;
-            color: var(--text-light);
+            color: #6c757d;
         }
 
         /* Main Content */
