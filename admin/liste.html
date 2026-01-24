@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css?v=20260124d">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         .admin-liste-page {
@@ -449,16 +450,16 @@
 
                             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Facebook</label>
-                                    <input type="text" id="editFacebook" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;"><i class="fab fa-facebook" style="color: #1877f2;"></i> Facebook</label>
+                                    <input type="text" id="editFacebook" placeholder="URL du profil Facebook" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">LinkedIn</label>
-                                    <input type="text" id="editLinkedin" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;"><i class="fab fa-linkedin" style="color: #0a66c2;"></i> LinkedIn</label>
+                                    <input type="text" id="editLinkedin" placeholder="URL du profil LinkedIn" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Instagram</label>
-                                    <input type="text" id="editInstagram" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;"><i class="fab fa-instagram" style="color: #e4405f;"></i> Instagram</label>
+                                    <input type="text" id="editInstagram" placeholder="URL du profil Instagram" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                             </div>
                         </div>
@@ -584,10 +585,17 @@
                     statusText = 'Publié';
                 }
 
+                // Social media icons
+                const socialIcons = [];
+                if (record.facebook) socialIcons.push(`<a href="${record.facebook}" target="_blank" title="Facebook"><i class="fab fa-facebook" style="color: #1877f2;"></i></a>`);
+                if (record.linkedin) socialIcons.push(`<a href="${record.linkedin}" target="_blank" title="LinkedIn"><i class="fab fa-linkedin" style="color: #0a66c2;"></i></a>`);
+                if (record.instagram) socialIcons.push(`<a href="${record.instagram}" target="_blank" title="Instagram"><i class="fab fa-instagram" style="color: #e4405f;"></i></a>`);
+                const socialHtml = socialIcons.length > 0 ? `<div style="margin-top: 0.25rem; display: flex; gap: 0.5rem;">${socialIcons.join('')}</div>` : '';
+
                 return `
                     <tr data-id="${record.id}">
                         <td>${photo}</td>
-                        <td class="cell-name">${record.nom || '-'}</td>
+                        <td class="cell-name">${record.nom || '-'}${socialHtml}</td>
                         <td>${record.profession || '-'}</td>
                         <td>${record.quartier || '-'}</td>
                         <td>
