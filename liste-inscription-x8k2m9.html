@@ -721,6 +721,10 @@
                     reader.readAsDataURL(file);
                 });
 
+                // Show local preview immediately (before upload completes)
+                document.getElementById('photoPreview').innerHTML =
+                    `<img src="${base64}" style="max-width: 150px; max-height: 150px; border-radius: 8px;">`;
+
                 const response = await fetch('/.netlify/functions/upload-photo', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -734,8 +738,7 @@
 
                 if (result.success) {
                     document.getElementById('photoUrl').value = result.url;
-                    document.getElementById('photoPreview').innerHTML =
-                        `<img src="${result.url}" style="max-width: 150px; max-height: 150px; border-radius: 8px;">`;
+                    // Keep showing local base64 preview (more reliable than server URL during deploy)
                     progress.textContent = 'Photo uploadee !';
                     progress.style.color = '#6cb13e';
                 } else {

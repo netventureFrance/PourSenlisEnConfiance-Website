@@ -652,6 +652,10 @@
                     reader.readAsDataURL(file);
                 });
 
+                // Show local preview immediately (before upload completes)
+                document.getElementById('editPhotoContainer').innerHTML =
+                    `<img src="${base64}" class="detail-photo" alt="Photo">`;
+
                 // Upload to server
                 const response = await fetch('/.netlify/functions/upload-photo', {
                     method: 'POST',
@@ -666,8 +670,7 @@
 
                 if (result.success) {
                     document.getElementById('editPhotoUrl').value = result.url;
-                    document.getElementById('editPhotoContainer').innerHTML =
-                        `<img src="${result.url}" class="detail-photo" alt="Photo">`;
+                    // Keep showing local base64 preview (more reliable than server URL during deploy)
                     progress.textContent = 'Photo uploadée !';
                     progress.style.color = 'var(--accent-green)';
                 } else {
