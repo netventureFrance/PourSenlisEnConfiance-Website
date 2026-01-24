@@ -1,4 +1,4 @@
-// Netlify Function to upload photos via imgBB
+// Netlify Function to upload photos directly to GitHub
 
 const ALLOWED_ORIGINS = [
     'https://poursenlisenconfiance.fr',
@@ -32,13 +32,15 @@ exports.handler = async (event) => {
     }
 
     try {
-        const IMGBB_API_KEY = process.env.IMGBB_API_KEY;
+        const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+        const GITHUB_REPO = 'netventureFrance/PourSenlisEnConfiance-Website';
+        const GITHUB_BRANCH = 'main';
 
-        if (!IMGBB_API_KEY) {
+        if (!GITHUB_TOKEN) {
             return {
                 statusCode: 500,
                 headers: corsHeaders,
-                body: JSON.stringify({ error: 'Configuration serveur manquante (IMGBB_API_KEY)' })
+                body: JSON.stringify({ error: 'Configuration serveur manquante (GITHUB_TOKEN)' })
             };
         }
 
@@ -52,45 +54,77 @@ exports.handler = async (event) => {
             };
         }
 
-        // Extract base64 data (remove data:image/xxx;base64, prefix if present)
-        let base64Data = image;
-        if (image.includes('base64,')) {
-            base64Data = image.split('base64,')[1];
-        }
-
-        // Upload to imgBB
-        const formData = new URLSearchParams();
-        formData.append('key', IMGBB_API_KEY);
-        formData.append('image', base64Data);
-        if (name) {
-            formData.append('name', name);
-        }
-
-        const response = await fetch('https://api.imgbb.com/1/upload', {
-            method: 'POST',
-            body: formData
-        });
-
-        const result = await response.json();
-
-        if (!result.success) {
-            console.error('imgBB error:', result);
+        // Extract base64 data and file type
+        const matches = image.match(/^data:image\/(\w+);base64,(.+)$/);
+        if (!matches) {
             return {
                 statusCode: 400,
                 headers: corsHeaders,
-                body: JSON.stringify({ error: 'Erreur imgBB: ' + (result.error?.message || 'Erreur inconnue') })
+                body: JSON.stringify({ error: 'Format image invalide' })
             };
         }
+
+        const imageType = matches[1] === 'jpeg' ? 'jpg' : matches[1];
+        const base64Data = matches[2];
+
+        // Generate filename
+        const timestamp = Date.now();
+        const cleanName = name
+            ? name.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
+                .replace(/[^a-z0-9]/g, '-')
+                .replace(/-+/g, '-')
+                .substring(0, 30)
+            : 'photo';
+        const filename = `${cleanName}-${timestamp}.${imageType}`;
+        const filePath = `images/liste/${filename}`;
+
+        // Check if images/liste folder exists, if not it will be created with the file
+
+        // Upload to GitHub
+        const githubResponse = await fetch(
+            `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.github.v3+json',
+                    'User-Agent': 'PSEC-Website'
+                },
+                body: JSON.stringify({
+                    message: `Add photo: ${filename}`,
+                    content: base64Data,
+                    branch: GITHUB_BRANCH
+                })
+            }
+        );
+
+        if (!githubResponse.ok) {
+            const errorData = await githubResponse.text();
+            console.error('GitHub API error:', errorData);
+            return {
+                statusCode: githubResponse.status,
+                headers: corsHeaders,
+                body: JSON.stringify({ error: 'Erreur GitHub: ' + errorData })
+            };
+        }
+
+        const result = await githubResponse.json();
+
+        // The URL will be served by Netlify from the repo
+        const siteUrl = 'https://poursenlisenconfiance.fr';
+        const imageUrl = `${siteUrl}/${filePath}`;
 
         return {
             statusCode: 200,
             headers: corsHeaders,
             body: JSON.stringify({
                 success: true,
-                url: result.data.url,
-                display_url: result.data.display_url,
-                thumb_url: result.data.thumb.url,
-                delete_url: result.data.delete_url
+                url: imageUrl,
+                filename: filename,
+                path: filePath,
+                sha: result.content.sha
             })
         };
 
