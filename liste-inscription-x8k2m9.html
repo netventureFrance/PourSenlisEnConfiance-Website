@@ -337,7 +337,7 @@
                 </div>
                 <div class="progress-box">
                     <div class="progress-number"><span id="progressCount">0</span> / 35</div>
-                    <div class="progress-label">fiches complètes</div>
+                    <div class="progress-label">fiches créées</div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill" style="width: 0%"></div>
                     </div>
@@ -527,8 +527,8 @@
         }
 
         function updateProgress(stats) {
-            document.getElementById('progressCount').textContent = stats.complete;
-            const percentage = (stats.complete / stats.target) * 100;
+            document.getElementById('progressCount').textContent = stats.total;
+            const percentage = (stats.total / stats.target) * 100;
             document.getElementById('progressFill').style.width = percentage + '%';
         }
 
