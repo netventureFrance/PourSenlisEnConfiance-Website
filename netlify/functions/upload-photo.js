@@ -1,4 +1,4 @@
-// Netlify Function to upload photos directly to GitHub
+// Netlify Function to upload photos directly to GitHub (replaces existing)
 
 const ALLOWED_ORIGINS = [
     'https://poursenlisenconfiance.fr',
@@ -46,11 +46,11 @@ exports.handler = async (event) => {
 
         const { image, name } = JSON.parse(event.body);
 
-        if (!image) {
+        if (!image || !name) {
             return {
                 statusCode: 400,
                 headers: corsHeaders,
-                body: JSON.stringify({ error: 'Image requise' })
+                body: JSON.stringify({ error: 'Image et nom requis' })
             };
         }
 
@@ -67,21 +67,47 @@ exports.handler = async (event) => {
         const imageType = matches[1] === 'jpeg' ? 'jpg' : matches[1];
         const base64Data = matches[2];
 
-        // Generate filename
-        const timestamp = Date.now();
-        const cleanName = name
-            ? name.toLowerCase()
-                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
-                .replace(/[^a-z0-9]/g, '-')
-                .replace(/-+/g, '-')
-                .substring(0, 30)
-            : 'photo';
-        const filename = `${cleanName}-${timestamp}.${imageType}`;
+        // Generate consistent filename based on name (no timestamp = same file gets replaced)
+        const cleanName = name.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
+            .replace(/[^a-z0-9]/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-|-$/g, '') // Remove leading/trailing dashes
+            .substring(0, 30);
+
+        const filename = `${cleanName}.${imageType}`;
         const filePath = `images/liste/${filename}`;
 
-        // Check if images/liste folder exists, if not it will be created with the file
+        // Check if file already exists (to get SHA for update)
+        let existingSha = null;
+        const checkResponse = await fetch(
+            `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}?ref=${GITHUB_BRANCH}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'User-Agent': 'PSEC-Website'
+                }
+            }
+        );
 
-        // Upload to GitHub
+        if (checkResponse.ok) {
+            const existingFile = await checkResponse.json();
+            existingSha = existingFile.sha;
+        }
+
+        // Upload/Update on GitHub
+        const uploadBody = {
+            message: existingSha ? `Update photo: ${filename}` : `Add photo: ${filename}`,
+            content: base64Data,
+            branch: GITHUB_BRANCH
+        };
+
+        // Include SHA if updating existing file
+        if (existingSha) {
+            uploadBody.sha = existingSha;
+        }
+
         const githubResponse = await fetch(
             `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`,
             {
@@ -92,11 +118,7 @@ exports.handler = async (event) => {
                     'Accept': 'application/vnd.github.v3+json',
                     'User-Agent': 'PSEC-Website'
                 },
-                body: JSON.stringify({
-                    message: `Add photo: ${filename}`,
-                    content: base64Data,
-                    branch: GITHUB_BRANCH
-                })
+                body: JSON.stringify(uploadBody)
             }
         );
 
@@ -113,8 +135,10 @@ exports.handler = async (event) => {
         const result = await githubResponse.json();
 
         // The URL will be served by Netlify from the repo
+        // Add cache buster to force reload after update
         const siteUrl = 'https://poursenlisenconfiance.fr';
-        const imageUrl = `${siteUrl}/${filePath}`;
+        const cacheBuster = Date.now();
+        const imageUrl = `${siteUrl}/${filePath}?v=${cacheBuster}`;
 
         return {
             statusCode: 200,
@@ -124,7 +148,8 @@ exports.handler = async (event) => {
                 url: imageUrl,
                 filename: filename,
                 path: filePath,
-                sha: result.content.sha
+                sha: result.content.sha,
+                updated: !!existingSha
             })
         };
 
