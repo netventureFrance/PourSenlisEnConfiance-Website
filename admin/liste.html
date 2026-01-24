@@ -367,6 +367,14 @@
                     <div class="detail-grid">
                         <div class="detail-photo-section">
                             <div id="editPhotoContainer"></div>
+                            <input type="hidden" id="editPhotoUrl">
+                            <div class="form-group" style="margin-top: 1rem;">
+                                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Changer la photo</label>
+                                <input type="file" id="editPhotoFile" accept="image/*" style="font-size: 0.85rem;">
+                                <div id="uploadProgress" style="display: none; margin-top: 0.5rem; font-size: 0.85rem; color: var(--primary-light);">
+                                    Upload en cours...
+                                </div>
+                            </div>
                             <div class="form-group" style="margin-top: 1rem;">
                                 <label>Statut</label>
                                 <select id="editStatut" class="form-select" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
@@ -595,20 +603,87 @@
 
             // Photo
             const photoContainer = document.getElementById('editPhotoContainer');
+            const photoUrlInput = document.getElementById('editPhotoUrl');
+            const photoFileInput = document.getElementById('editPhotoFile');
+
+            photoFileInput.value = ''; // Reset file input
+
             if (currentRecord.photo && currentRecord.photo.url) {
                 photoContainer.innerHTML = `<img src="${currentRecord.photo.url}" class="detail-photo" alt="${currentRecord.nom}">`;
+                photoUrlInput.value = currentRecord.photo.url;
             } else {
                 photoContainer.innerHTML = `<div class="detail-photo-placeholder">${currentRecord.nom ? currentRecord.nom.charAt(0) : '?'}</div>`;
+                photoUrlInput.value = '';
             }
 
             document.getElementById('editModal').classList.add('visible');
         }
+
+        // Handle photo file selection and upload
+        document.getElementById('editPhotoFile').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('Veuillez sélectionner une image');
+                return;
+            }
+
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('L\'image ne doit pas dépasser 5 Mo');
+                return;
+            }
+
+            const progress = document.getElementById('uploadProgress');
+            progress.style.display = 'block';
+            progress.textContent = 'Upload en cours...';
+
+            try {
+                // Convert to base64
+                const base64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+
+                // Upload to server
+                const response = await fetch('/.netlify/functions/upload-photo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        image: base64,
+                        name: document.getElementById('editNom').value || 'photo'
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('editPhotoUrl').value = result.url;
+                    document.getElementById('editPhotoContainer').innerHTML =
+                        `<img src="${result.url}" class="detail-photo" alt="Photo">`;
+                    progress.textContent = 'Photo uploadée !';
+                    progress.style.color = 'var(--accent-green)';
+                } else {
+                    throw new Error(result.error || 'Erreur upload');
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                progress.textContent = 'Erreur: ' + error.message;
+                progress.style.color = '#dc3545';
+            }
+        });
 
         // Save edited record
         async function saveRecord() {
             const id = document.getElementById('editId').value;
             const newStatut = document.getElementById('editStatut').value;
             const oldStatut = currentRecord.statut;
+
+            const photoUrl = document.getElementById('editPhotoUrl').value;
 
             const formData = {
                 id: id,
@@ -622,7 +697,8 @@
                 message: document.getElementById('editMessage').value.trim(),
                 facebook: document.getElementById('editFacebook').value.trim(),
                 linkedin: document.getElementById('editLinkedin').value.trim(),
-                instagram: document.getElementById('editInstagram').value.trim()
+                instagram: document.getElementById('editInstagram').value.trim(),
+                photoUrl: photoUrl || null
             };
 
             try {

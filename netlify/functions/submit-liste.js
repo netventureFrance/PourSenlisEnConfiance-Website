@@ -183,16 +183,9 @@ exports.handler = async (event) => {
         if (formData.linkedin) airtableFields['LinkedIn'] = formData.linkedin;
         if (formData.instagram) airtableFields['Instagram'] = formData.instagram;
 
-        // Handle photo - if it's a new base64 image (starts with data:), we need to handle it
-        // If it's a URL (existing photo), we keep it as is
-        if (formData.photo && formData.photo.startsWith('data:')) {
-            // New photo uploaded - for now, we'll store the URL directly
-            // In a production setup, you'd upload to a storage service first
-            // Airtable accepts URLs, so we'd need to host the image somewhere
-
-            // For now, skip new photo uploads in edit mode
-            // Photos should be managed separately or through a proper upload service
-            console.log('New photo upload detected - would need image hosting service');
+        // Handle photo URL - Airtable accepts attachments as array of {url: "..."}
+        if (formData.photoUrl) {
+            airtableFields['Photo'] = [{ url: formData.photoUrl }];
         }
 
         // For new records, set initial status and GDPR consent
