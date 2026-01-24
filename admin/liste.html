@@ -54,18 +54,18 @@
         #statsBar > div {
             color: inherit !important;
         }
-        #statTotal, #statComplete, #statIncomplete, #statValidated, #statObjectif {
-            font-size: 2rem !important;
+        #statTotal, #statComplete, #statIncomplete, #statValidated, #statPublished {
             font-weight: 700 !important;
-            display: block !important;
+            display: inline-block !important;
             line-height: 1.2 !important;
             visibility: visible !important;
             opacity: 1 !important;
             -webkit-text-fill-color: initial !important;
             background: transparent !important;
         }
-        #statTotal, #statObjectif { color: #0d3d5c !important; }
-        #statComplete, #statValidated { color: #6cb13e !important; }
+        #statTotal { color: #0d3d5c !important; }
+        #statComplete, #statPublished { color: #6cb13e !important; }
+        #statValidated { color: #3d9dd9 !important; }
         #statIncomplete { color: #e67e22 !important; }
 
         /* Main Content */
@@ -321,26 +321,26 @@
     </header>
 
     <!-- Stats Bar -->
-    <div id="statsBar" style="background: white; padding: 1.5rem 2rem; display: flex; gap: 2rem; flex-wrap: wrap; border-bottom: 1px solid #eee; margin-top: 60px;">
-        <div style="text-align: center;">
-            <div id="statTotal" style="font-size: 2rem; font-weight: 700; color: #0d3d5c; display: block; line-height: 1.2;">0</div>
-            <div style="font-size: 0.85rem; color: #6c757d;">Total</div>
+    <div id="statsBar" style="background: white; padding: 1.5rem 2rem; display: flex; gap: 2rem; flex-wrap: wrap; border-bottom: 1px solid #eee; margin-top: 60px; align-items: center;">
+        <div style="text-align: center; padding-right: 2rem; border-right: 2px solid #eee;">
+            <div style="font-size: 2rem; font-weight: 700; color: #0d3d5c; line-height: 1.2;"><span id="statTotal">0</span> / 35</div>
+            <div style="font-size: 0.85rem; color: #6c757d;">Progression</div>
         </div>
         <div style="text-align: center;">
-            <div id="statComplete" style="font-size: 2rem; font-weight: 700; color: #6cb13e; display: block; line-height: 1.2;">0</div>
+            <div id="statComplete" style="font-size: 1.5rem; font-weight: 700; color: #6cb13e; line-height: 1.2;">0</div>
             <div style="font-size: 0.85rem; color: #6c757d;">Complètes</div>
         </div>
         <div style="text-align: center;">
-            <div id="statIncomplete" style="font-size: 2rem; font-weight: 700; color: #e67e22; display: block; line-height: 1.2;">0</div>
+            <div id="statIncomplete" style="font-size: 1.5rem; font-weight: 700; color: #e67e22; line-height: 1.2;">0</div>
             <div style="font-size: 0.85rem; color: #6c757d;">Incomplètes</div>
         </div>
         <div style="text-align: center;">
-            <div id="statValidated" style="font-size: 2rem; font-weight: 700; color: #6cb13e; display: block; line-height: 1.2;">0</div>
+            <div id="statValidated" style="font-size: 1.5rem; font-weight: 700; color: #3d9dd9; line-height: 1.2;">0</div>
             <div style="font-size: 0.85rem; color: #6c757d;">Validées</div>
         </div>
         <div style="text-align: center;">
-            <div id="statObjectif" style="font-size: 2rem; font-weight: 700; color: #0d3d5c; display: block; line-height: 1.2;">35</div>
-            <div style="font-size: 0.85rem; color: #6c757d;">Objectif</div>
+            <div id="statPublished" style="font-size: 1.5rem; font-weight: 700; color: #6cb13e; line-height: 1.2;">0</div>
+            <div style="font-size: 0.85rem; color: #6c757d;">Publiées</div>
         </div>
     </div>
 
@@ -469,9 +469,15 @@
                     </div>
                 </form>
             </div>
-            <div class="detail-actions">
-                <button type="button" class="btn btn-secondary" id="btnCloseEdit">Annuler</button>
-                <button type="button" class="btn btn-primary" id="btnSaveEdit">Enregistrer</button>
+            <div class="detail-actions" style="justify-content: space-between;">
+                <div>
+                    <button type="button" class="btn" id="btnValidate" style="background: #3d9dd9; color: white; display: none;">Valider</button>
+                    <button type="button" class="btn" id="btnPublish" style="background: #6cb13e; color: white; display: none;">Publier</button>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button type="button" class="btn btn-secondary" id="btnCloseEdit">Annuler</button>
+                    <button type="button" class="btn btn-primary" id="btnSaveEdit">Enregistrer</button>
+                </div>
             </div>
         </div>
     </div>
@@ -520,7 +526,11 @@
             document.getElementById('statTotal').textContent = stats.total;
             document.getElementById('statComplete').textContent = stats.complete;
             document.getElementById('statIncomplete').textContent = stats.total - stats.complete;
-            document.getElementById('statValidated').textContent = stats.validated;
+            // Count validated (not published) and published separately
+            const publishedCount = records.filter(r => r.statut === 'Publié').length;
+            const validatedCount = records.filter(r => r.statut === 'Validé').length;
+            document.getElementById('statValidated').textContent = validatedCount;
+            document.getElementById('statPublished').textContent = publishedCount;
         }
 
         function renderTable() {
@@ -640,6 +650,16 @@
                 photoContainer.innerHTML = `<div class="detail-photo-placeholder">${currentRecord.nom ? currentRecord.nom.charAt(0) : '?'}</div>`;
                 photoUrlInput.value = '';
             }
+
+            // Show/hide action buttons based on status
+            const btnValidate = document.getElementById('btnValidate');
+            const btnPublish = document.getElementById('btnPublish');
+            const statut = currentRecord.statut || 'À valider';
+
+            // Show Valider if status is "À valider"
+            btnValidate.style.display = (statut === 'À valider') ? 'inline-block' : 'none';
+            // Show Publier if status is "Validé"
+            btnPublish.style.display = (statut === 'Validé') ? 'inline-block' : 'none';
 
             document.getElementById('editModal').classList.add('visible');
         }
@@ -817,6 +837,18 @@
             }
         });
         document.getElementById('btnSaveEdit').addEventListener('click', saveRecord);
+
+        // Valider button - set status to Validé and save
+        document.getElementById('btnValidate').addEventListener('click', async () => {
+            document.getElementById('editStatut').value = 'Validé';
+            await saveRecord();
+        });
+
+        // Publier button - set status to Publié and save
+        document.getElementById('btnPublish').addEventListener('click', async () => {
+            document.getElementById('editStatut').value = 'Publié';
+            await saveRecord();
+        });
 
         // Load on start
         loadData();
