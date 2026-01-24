@@ -54,7 +54,7 @@
         #statsBar > div {
             color: inherit !important;
         }
-        #statTotal, #statComplete, #statIncomplete, #statValidated, #statPublished {
+        #statTotal, #statPending, #statValidated, #statPublished {
             font-weight: 700 !important;
             display: inline-block !important;
             line-height: 1.2 !important;
@@ -64,9 +64,9 @@
             background: transparent !important;
         }
         #statTotal { color: #0d3d5c !important; }
-        #statComplete, #statPublished { color: #6cb13e !important; }
+        #statPending { color: #e67e22 !important; }
         #statValidated { color: #3d9dd9 !important; }
-        #statIncomplete { color: #e67e22 !important; }
+        #statPublished { color: #6cb13e !important; }
 
         /* Main Content */
         .admin-liste-content {
@@ -327,12 +327,8 @@
             <div style="font-size: 0.85rem; color: #6c757d;">Progression</div>
         </div>
         <div style="text-align: center;">
-            <div id="statComplete" style="font-size: 1.5rem; font-weight: 700; color: #6cb13e; line-height: 1.2;">0</div>
-            <div style="font-size: 0.85rem; color: #6c757d;">Complètes</div>
-        </div>
-        <div style="text-align: center;">
-            <div id="statIncomplete" style="font-size: 1.5rem; font-weight: 700; color: #e67e22; line-height: 1.2;">0</div>
-            <div style="font-size: 0.85rem; color: #6c757d;">Incomplètes</div>
+            <div id="statPending" style="font-size: 1.5rem; font-weight: 700; color: #e67e22; line-height: 1.2;">0</div>
+            <div style="font-size: 0.85rem; color: #6c757d;">À valider</div>
         </div>
         <div style="text-align: center;">
             <div id="statValidated" style="font-size: 1.5rem; font-weight: 700; color: #3d9dd9; line-height: 1.2;">0</div>
@@ -524,11 +520,11 @@
 
         function updateStats(stats, records) {
             document.getElementById('statTotal').textContent = stats.total;
-            document.getElementById('statComplete').textContent = stats.complete;
-            document.getElementById('statIncomplete').textContent = stats.total - stats.complete;
-            // Count validated (not published) and published separately
-            const publishedCount = records.filter(r => r.statut === 'Publié').length;
+            // Count by status
+            const pendingCount = records.filter(r => r.statut === 'À valider').length;
             const validatedCount = records.filter(r => r.statut === 'Validé').length;
+            const publishedCount = records.filter(r => r.statut === 'Publié').length;
+            document.getElementById('statPending').textContent = pendingCount;
             document.getElementById('statValidated').textContent = validatedCount;
             document.getElementById('statPublished').textContent = publishedCount;
         }
