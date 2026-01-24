@@ -111,7 +111,7 @@ exports.handler = async (event) => {
             instagram: record.fields['Instagram'] || '',
             statut: record.fields['Statut'] || 'À valider',
             isComplete: isRecordComplete(record.fields),
-            isValidated: record.fields['Statut'] === 'Validé'
+            isValidated: record.fields['Statut'] === 'Validé' || record.fields['Statut'] === 'Publié'
         }));
 
         // Calculate stats

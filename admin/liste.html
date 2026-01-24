@@ -521,11 +521,22 @@
                     ? `<img src="${record.photo.url}" class="cell-photo" alt="${record.nom}">`
                     : `<div class="cell-photo-placeholder">${record.nom ? record.nom.charAt(0) : '?'}</div>`;
 
+                // Check what's missing
+                const missing = [];
+                if (!record.photo || !record.photo.url) missing.push('Photo');
+                if (!record.bio) missing.push('Bio');
+                if (!record.message) missing.push('Message');
+                if (!record.profession) missing.push('Profession');
+                if (!record.quartier) missing.push('Quartier');
+
                 let statusClass = 'status-a-valider';
                 let statusText = 'À valider';
-                if (!record.isComplete) {
+                let statusTitle = '';
+
+                if (missing.length > 0) {
                     statusClass = 'status-incomplet';
                     statusText = 'Incomplet';
+                    statusTitle = `Manque: ${missing.join(', ')}`;
                 } else if (record.statut === 'Validé') {
                     statusClass = 'status-valide';
                     statusText = 'Validé';
@@ -540,7 +551,10 @@
                         <td class="cell-name">${record.nom || '-'}</td>
                         <td>${record.profession || '-'}</td>
                         <td>${record.quartier || '-'}</td>
-                        <td><span class="cell-status ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <span class="cell-status ${statusClass}" title="${statusTitle}">${statusText}</span>
+                            ${missing.length > 0 ? `<div style="font-size: 0.7rem; color: #999; margin-top: 0.25rem;">${missing.join(', ')}</div>` : ''}
+                        </td>
                         <td class="cell-actions">
                             <button class="btn-action btn-view" onclick="editRecord('${record.id}')">Éditer</button>
                             <button class="btn-action btn-delete" onclick="deleteRecord('${record.id}')">Suppr.</button>
