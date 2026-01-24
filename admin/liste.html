@@ -46,6 +46,28 @@
             color: #6c757d;
         }
 
+        /* Force stats bar and numbers visibility - override any global styles */
+        #statsBar {
+            background: white !important;
+            color: #333 !important;
+        }
+        #statsBar > div {
+            color: inherit !important;
+        }
+        #statTotal, #statComplete, #statIncomplete, #statValidated, #statObjectif {
+            font-size: 2rem !important;
+            font-weight: 700 !important;
+            display: block !important;
+            line-height: 1.2 !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            -webkit-text-fill-color: initial !important;
+            background: transparent !important;
+        }
+        #statTotal, #statObjectif { color: #0d3d5c !important; }
+        #statComplete, #statValidated { color: #6cb13e !important; }
+        #statIncomplete { color: #e67e22 !important; }
+
         /* Main Content */
         .admin-liste-content {
             padding: 2rem;
@@ -299,7 +321,7 @@
     </header>
 
     <!-- Stats Bar -->
-    <div style="background: white; padding: 1.5rem 2rem; display: flex; gap: 2rem; flex-wrap: wrap; border-bottom: 1px solid #eee;">
+    <div id="statsBar" style="background: white; padding: 1.5rem 2rem; display: flex; gap: 2rem; flex-wrap: wrap; border-bottom: 1px solid #eee;">
         <div style="text-align: center;">
             <div id="statTotal" style="font-size: 2rem; font-weight: 700; color: #0d3d5c; display: block; line-height: 1.2;">0</div>
             <div style="font-size: 0.85rem; color: #6c757d;">Total</div>
@@ -317,7 +339,7 @@
             <div style="font-size: 0.85rem; color: #6c757d;">Validées</div>
         </div>
         <div style="text-align: center;">
-            <div style="font-size: 2rem; font-weight: 700; color: #0d3d5c; display: block; line-height: 1.2;">35</div>
+            <div id="statObjectif" style="font-size: 2rem; font-weight: 700; color: #0d3d5c; display: block; line-height: 1.2;">35</div>
             <div style="font-size: 0.85rem; color: #6c757d;">Objectif</div>
         </div>
     </div>
