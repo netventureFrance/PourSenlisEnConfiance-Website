@@ -378,9 +378,15 @@
 
                     <h3 class="form-section-title">Identité</h3>
 
-                    <div class="form-group">
-                        <label for="nomComplet">Nom complet *</label>
-                        <input type="text" id="nomComplet" name="nomComplet" required placeholder="Prénom NOM">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nomComplet">Nom *</label>
+                            <input type="text" id="nomComplet" name="nomComplet" required placeholder="NOM">
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom">Prénom *</label>
+                            <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
+                        </div>
                     </div>
 
                     <div class="form-row">
@@ -600,10 +606,11 @@
                 photo = `<div class="card-photo-placeholder">${initials}</div>`;
             }
 
+            const displayName = record.prenom ? `${record.prenom} ${record.nom}` : (record.nom || 'Sans nom');
             card.innerHTML = `
                 ${badge}
                 ${photo}
-                <div class="card-name">${record.nom || 'Sans nom'}</div>
+                <div class="card-name">${displayName}</div>
                 <div class="card-profession">${record.profession || 'Profession non renseignée'}</div>
                 <div class="card-quartier">${record.quartier || ''}</div>
             `;
@@ -656,6 +663,7 @@
         function populateForm(record) {
             document.getElementById('recordId').value = record.id;
             document.getElementById('nomComplet').value = record.nom || '';
+            document.getElementById('prenom').value = record.prenom || '';
             document.getElementById('age').value = record.age || '';
             document.getElementById('profession').value = record.profession || '';
             document.getElementById('quartier').value = record.quartier || '';
@@ -760,6 +768,7 @@
             const formData = {
                 id: document.getElementById('recordId').value || null,
                 nomComplet: document.getElementById('nomComplet').value.trim(),
+                prenom: document.getElementById('prenom').value.trim(),
                 age: document.getElementById('age').value ? parseInt(document.getElementById('age').value) : null,
                 profession: document.getElementById('profession').value.trim(),
                 quartier: document.getElementById('quartier').value,

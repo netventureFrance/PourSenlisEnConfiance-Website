@@ -359,8 +359,10 @@
             <table class="liste-table" id="listeTable" style="display: none;">
                 <thead>
                     <tr>
+                        <th>Rang</th>
                         <th>Photo</th>
                         <th>Nom</th>
+                        <th>Prénom</th>
                         <th>Profession</th>
                         <th>Quartier</th>
                         <th>Statut</th>
@@ -408,9 +410,19 @@
                             </div>
                         </div>
                         <div class="detail-info-section">
-                            <div class="form-group" style="margin-bottom: 1rem;">
-                                <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Nom *</label>
-                                <input type="text" id="editNom" required style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="form-group">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Nom *</label>
+                                    <input type="text" id="editNom" required style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                </div>
+                                <div class="form-group">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Prénom</label>
+                                    <input type="text" id="editPrenom" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                </div>
+                                <div class="form-group">
+                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Rang</label>
+                                    <input type="number" id="editRang" min="1" style="width: 80px; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
+                                </div>
                             </div>
 
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
@@ -595,8 +607,10 @@
 
                 return `
                     <tr data-id="${record.id}">
+                        <td>${record.rang || '-'}</td>
                         <td>${photo}</td>
                         <td class="cell-name">${record.nom || '-'}${socialHtml}</td>
+                        <td>${record.prenom || '-'}</td>
                         <td>${record.profession || '-'}</td>
                         <td>${record.quartier || '-'}</td>
                         <td>
@@ -629,6 +643,8 @@
 
             document.getElementById('editId').value = currentRecord.id;
             document.getElementById('editNom').value = currentRecord.nom || '';
+            document.getElementById('editPrenom').value = currentRecord.prenom || '';
+            document.getElementById('editRang').value = currentRecord.rang || '';
             document.getElementById('editProfession').value = currentRecord.profession || '';
             document.getElementById('editQuartier').value = currentRecord.quartier || '';
             document.getElementById('editAge').value = currentRecord.age || '';
@@ -741,6 +757,8 @@
             const formData = {
                 id: id,
                 nomComplet: document.getElementById('editNom').value.trim(),
+                prenom: document.getElementById('editPrenom').value.trim(),
+                rang: document.getElementById('editRang').value ? parseInt(document.getElementById('editRang').value) : null,
                 profession: document.getElementById('editProfession').value.trim(),
                 quartier: document.getElementById('editQuartier').value.trim(),
                 age: document.getElementById('editAge').value ? parseInt(document.getElementById('editAge').value) : null,

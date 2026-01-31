@@ -172,6 +172,8 @@ exports.handler = async (event) => {
         };
 
         // Add fields if provided (for both create and update)
+        if (formData.prenom) airtableFields['Prenom'] = formData.prenom;
+        if (formData.rang !== undefined && formData.rang !== null) airtableFields['Rang'] = formData.rang;
         if (formData.profession) airtableFields['Profession'] = formData.profession;
         if (formData.quartier) airtableFields['Quartier'] = formData.quartier;
         if (formData.bio) airtableFields['Bio'] = formData.bio;
