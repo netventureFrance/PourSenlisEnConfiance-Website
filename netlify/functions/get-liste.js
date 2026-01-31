@@ -66,10 +66,8 @@ exports.handler = async (event) => {
 
         do {
             const url = new URL(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_LISTE_TABLE)}`);
-            url.searchParams.append('sort[0][field]', 'Rang');
+            url.searchParams.append('sort[0][field]', 'Nom');
             url.searchParams.append('sort[0][direction]', 'asc');
-            url.searchParams.append('sort[1][field]', 'Nom');
-            url.searchParams.append('sort[1][direction]', 'asc');
             if (offset) {
                 url.searchParams.append('offset', offset);
             }
@@ -116,6 +114,14 @@ exports.handler = async (event) => {
             isComplete: isRecordComplete(record.fields),
             isValidated: record.fields['Statut'] === 'Validé' || record.fields['Statut'] === 'Publié'
         }));
+
+        // Sort by Rang (if set), then by Nom alphabetically
+        records.sort((a, b) => {
+            if (a.rang && b.rang) return a.rang - b.rang;
+            if (a.rang) return -1;
+            if (b.rang) return 1;
+            return a.nom.localeCompare(b.nom, 'fr');
+        });
 
         // Calculate stats
         const totalRecords = records.length;
