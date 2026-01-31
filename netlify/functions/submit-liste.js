@@ -168,7 +168,7 @@ exports.handler = async (event) => {
 
         // Prepare data for Airtable
         const airtableFields = {
-            'Nom': formData.nomComplet
+            'Nom': formData.nomComplet.toUpperCase()
         };
 
         // Add fields if provided (for both create and update)
