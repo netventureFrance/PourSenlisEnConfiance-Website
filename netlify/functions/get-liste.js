@@ -130,7 +130,7 @@ exports.handler = async (event) => {
                 records: records,
                 stats: {
                     total: totalRecords,
-                    target: 35,
+                    target: 34,
                     complete: completeRecords,
                     validated: validatedRecords
                 }
