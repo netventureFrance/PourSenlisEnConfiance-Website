@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css?v=20260124d">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 
     <style>
         .admin-liste-page {
@@ -396,14 +396,14 @@
                             <div id="editPhotoContainer"></div>
                             <input type="hidden" id="editPhotoUrl">
                             <div class="form-group" style="margin-top: 1rem;">
-                                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Changer la photo</label>
+                                <label for="editPhotoFile" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Changer la photo</label>
                                 <input type="file" id="editPhotoFile" accept="image/*" style="font-size: 0.85rem;">
                                 <div id="uploadProgress" style="display: none; margin-top: 0.5rem; font-size: 0.85rem; color: var(--primary-light);">
                                     Upload en cours...
                                 </div>
                             </div>
                             <div class="form-group" style="margin-top: 1rem;">
-                                <label>Statut</label>
+                                <label for="editStatut">Statut</label>
                                 <select id="editStatut" class="form-select" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                     <option value="À valider">À valider</option>
                                     <option value="Validé">Validé</option>
@@ -414,66 +414,66 @@
                         <div class="detail-info-section">
                             <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; margin-bottom: 1rem;">
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Nom *</label>
+                                    <label for="editNom" style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Nom *</label>
                                     <input type="text" id="editNom" required style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Prénom</label>
+                                    <label for="editPrenom" style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Prénom</label>
                                     <input type="text" id="editPrenom" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Rang</label>
+                                    <label for="editRang" style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Rang</label>
                                     <input type="number" id="editRang" min="1" style="width: 80px; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                             </div>
 
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Profession</label>
+                                    <label for="editProfession" style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Profession</label>
                                     <input type="text" id="editProfession" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Quartier</label>
+                                    <label for="editQuartier" style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Quartier</label>
                                     <input type="text" id="editQuartier" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                             </div>
 
                             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Âge</label>
+                                    <label for="editAge" style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Âge</label>
                                     <input type="number" id="editAge" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Email</label>
+                                    <label for="editEmail" style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Email</label>
                                     <input type="email" id="editEmail" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Téléphone</label>
+                                    <label for="editPhone" style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Téléphone</label>
                                     <input type="text" id="editPhone" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                             </div>
 
                             <div class="form-group" style="margin-bottom: 1rem;">
-                                <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Biographie</label>
+                                <label for="editBio" style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Biographie</label>
                                 <textarea id="editBio" rows="3" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd; resize: vertical;"></textarea>
                             </div>
 
                             <div class="form-group" style="margin-bottom: 1rem;">
-                                <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Message personnel</label>
+                                <label for="editMessage" style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Message personnel</label>
                                 <textarea id="editMessage" rows="3" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd; resize: vertical;"></textarea>
                             </div>
 
                             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" viewBox="0 0 24 24" fill="#1877f2"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>Facebook</label>
+                                    <label for="editFacebook" style="display: block; font-weight: 600; margin-bottom: 0.25rem;"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" viewBox="0 0 24 24" fill="#1877f2"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>Facebook</label>
                                     <input type="text" id="editFacebook" placeholder="URL du profil Facebook" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" viewBox="0 0 24 24" fill="#0a66c2"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>LinkedIn</label>
+                                    <label for="editLinkedin" style="display: block; font-weight: 600; margin-bottom: 0.25rem;"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" viewBox="0 0 24 24" fill="#0a66c2"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>LinkedIn</label>
                                     <input type="text" id="editLinkedin" placeholder="URL du profil LinkedIn" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                                 <div class="form-group">
-                                    <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" viewBox="0 0 24 24" fill="#e4405f"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>Instagram</label>
+                                    <label for="editInstagram" style="display: block; font-weight: 600; margin-bottom: 0.25rem;"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" viewBox="0 0 24 24" fill="#e4405f"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>Instagram</label>
                                     <input type="text" id="editInstagram" placeholder="URL du profil Instagram" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd;">
                                 </div>
                             </div>
@@ -602,9 +602,9 @@
 
                 // Social media icons
                 const socialIcons = [];
-                if (record.facebook) socialIcons.push(`<a href="${record.facebook}" target="_blank" title="Facebook"><i class="fab fa-facebook" style="color: #1877f2;"></i></a>`);
-                if (record.linkedin) socialIcons.push(`<a href="${record.linkedin}" target="_blank" title="LinkedIn"><i class="fab fa-linkedin" style="color: #0a66c2;"></i></a>`);
-                if (record.instagram) socialIcons.push(`<a href="${record.instagram}" target="_blank" title="Instagram"><i class="fab fa-instagram" style="color: #e4405f;"></i></a>`);
+                if (record.facebook) socialIcons.push(`<a href="${record.facebook}" target="_blank" title="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>`);
+                if (record.linkedin) socialIcons.push(`<a href="${record.linkedin}" target="_blank" title="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0a66c2"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>`);
+                if (record.instagram) socialIcons.push(`<a href="${record.instagram}" target="_blank" title="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="#e4405f"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>`);
                 const socialHtml = socialIcons.length > 0 ? `<div style="margin-top: 0.25rem; display: flex; gap: 0.5rem;">${socialIcons.join('')}</div>` : '';
 
                 return `
