@@ -149,7 +149,7 @@ exports.handler = async (event, context) => {
             }),
             // Cumulative (all-time) queries
             queryPlausible({
-                metrics: ['visitors', 'pageviews', 'visits'],
+                metrics: ['visitors', 'pageviews', 'visits', 'bounce_rate', 'visit_duration', 'views_per_visit'],
                 date_range: 'all'
             }),
             queryPlausible({
@@ -202,12 +202,18 @@ exports.handler = async (event, context) => {
         const totalDocDownloads = docDownloads.reduce((sum, d) => sum + (d.visitors || 0), 0);
 
         // Parse cumulative (all-time) stats
-        const cumulMetrics = cumulStatsData?.results?.[0]?.metrics || [0, 0, 0];
+        const cumulMetrics = cumulStatsData?.results?.[0]?.metrics || [0, 0, 0, 0, 0, 0];
         const cumul = {
             visitors: cumulMetrics[0] || 0,
             pageviews: cumulMetrics[1] || 0,
-            visits: cumulMetrics[2] || 0
+            visits: cumulMetrics[2] || 0,
+            bounce_rate: cumulMetrics[3] || 0,
+            visit_duration: cumulMetrics[4] || 0,
+            views_per_visit: cumulMetrics[5] || 0
         };
+        const cumulDurationMin = Math.floor(cumul.visit_duration / 60);
+        const cumulDurationSec = cumul.visit_duration % 60;
+        const cumulDurationStr = cumulDurationMin > 0 ? `${cumulDurationMin}m ${cumulDurationSec}s` : `${cumulDurationSec}s`;
         const cumulTotalConsultations = cumulConsultations?.results?.[0]?.metrics?.[0] || 0;
         const cumulTotalProcurations = cumulProcurations?.results?.[0]?.metrics?.[0] || 0;
         const cumulTotalDocViews = cumulDocViews?.results?.[0]?.metrics?.[0] || 0;
@@ -266,38 +272,57 @@ exports.handler = async (event, context) => {
                 </div>
                 <div class="content">
                     <!-- Cumulative (All-Time) Stats -->
-                    <div style="background: linear-gradient(135deg, #f0f7ed 0%, #e8f5e1 100%); border-radius: 10px; padding: 20px; margin-bottom: 25px; border: 1px solid #c8e6b8;">
-                        <h3 style="color: #0d3d5c; margin: 0 0 15px; font-size: 15px; text-align: center; text-transform: uppercase; letter-spacing: 1px;">Cumul depuis le lancement</h3>
-                        <table cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <div style="border-radius: 12px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                        <!-- Hero: Visitors -->
+                        <div style="background: linear-gradient(135deg, #0d3d5c 0%, #1a5276 50%, #3d9dd9 100%); padding: 25px 20px; text-align: center;">
+                            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.7); margin-bottom: 8px;">Cumul depuis le lancement</div>
+                            <div style="font-size: 48px; font-weight: bold; color: #ffffff; line-height: 1;">${cumul.visitors.toLocaleString('fr-FR')}</div>
+                            <div style="font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 4px;">visiteurs uniques</div>
+                        </div>
+                        <!-- Secondary metrics -->
+                        <table cellpadding="0" cellspacing="0" style="width: 100%; background: #f8f9fa; border-bottom: 1px solid #eee;">
                             <tr>
-                                <td style="text-align: center; padding: 8px;">
-                                    <div style="font-size: 24px; font-weight: bold; color: #0d3d5c;">${cumul.visitors.toLocaleString('fr-FR')}</div>
-                                    <div style="font-size: 11px; color: #6c757d;">Visiteurs</div>
+                                <td style="text-align: center; padding: 16px 8px; width: 25%; border-right: 1px solid #eee;">
+                                    <div style="font-size: 22px; font-weight: bold; color: #0d3d5c;">${cumul.visits.toLocaleString('fr-FR')}</div>
+                                    <div style="font-size: 10px; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px;">Visites</div>
                                 </td>
-                                <td style="text-align: center; padding: 8px;">
-                                    <div style="font-size: 24px; font-weight: bold; color: #0d3d5c;">${cumul.pageviews.toLocaleString('fr-FR')}</div>
-                                    <div style="font-size: 11px; color: #6c757d;">Pages vues</div>
+                                <td style="text-align: center; padding: 16px 8px; width: 25%; border-right: 1px solid #eee;">
+                                    <div style="font-size: 22px; font-weight: bold; color: #0d3d5c;">${cumul.pageviews.toLocaleString('fr-FR')}</div>
+                                    <div style="font-size: 10px; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px;">Pages vues</div>
                                 </td>
-                                <td style="text-align: center; padding: 8px;">
-                                    <div style="font-size: 24px; font-weight: bold; color: #6cb13e;">${cumulTotalConsultations}</div>
-                                    <div style="font-size: 11px; color: #6c757d;">Idées</div>
+                                <td style="text-align: center; padding: 16px 8px; width: 25%; border-right: 1px solid #eee;">
+                                    <div style="font-size: 22px; font-weight: bold; color: #0d3d5c;">${cumul.views_per_visit.toFixed(1)}</div>
+                                    <div style="font-size: 10px; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px;">Pages/visite</div>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding: 8px;">
-                                    <div style="font-size: 24px; font-weight: bold; color: #6cb13e;">${cumulTotalProcurations}</div>
-                                    <div style="font-size: 11px; color: #6c757d;">Procurations</div>
-                                </td>
-                                <td style="text-align: center; padding: 8px;">
-                                    <div style="font-size: 24px; font-weight: bold; color: #0d3d5c;">${cumulTotalDocViews}</div>
-                                    <div style="font-size: 11px; color: #6c757d;">Docs vus</div>
-                                </td>
-                                <td style="text-align: center; padding: 8px;">
-                                    <div style="font-size: 24px; font-weight: bold; color: #0d3d5c;">${cumulTotalDocDownloads}</div>
-                                    <div style="font-size: 11px; color: #6c757d;">Téléchargements</div>
+                                <td style="text-align: center; padding: 16px 8px; width: 25%;">
+                                    <div style="font-size: 22px; font-weight: bold; color: #0d3d5c;">${cumulDurationStr}</div>
+                                    <div style="font-size: 10px; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px;">Durée moy.</div>
                                 </td>
                             </tr>
                         </table>
+                        <!-- Engagement metrics -->
+                        ${(cumulTotalConsultations > 0 || cumulTotalProcurations > 0 || cumulTotalDocViews > 0 || cumulTotalDocDownloads > 0) ? `
+                        <table cellpadding="0" cellspacing="0" style="width: 100%; background: #ffffff;">
+                            <tr>
+                                <td style="text-align: center; padding: 14px 8px; width: 25%; border-right: 1px solid #eee;">
+                                    <div style="font-size: 20px; font-weight: bold; color: #6cb13e;">${cumulTotalConsultations}</div>
+                                    <div style="font-size: 10px; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px;">Idées</div>
+                                </td>
+                                <td style="text-align: center; padding: 14px 8px; width: 25%; border-right: 1px solid #eee;">
+                                    <div style="font-size: 20px; font-weight: bold; color: #6cb13e;">${cumulTotalProcurations}</div>
+                                    <div style="font-size: 10px; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px;">Procurations</div>
+                                </td>
+                                <td style="text-align: center; padding: 14px 8px; width: 25%; border-right: 1px solid #eee;">
+                                    <div style="font-size: 20px; font-weight: bold; color: #6cb13e;">${cumulTotalDocViews}</div>
+                                    <div style="font-size: 10px; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px;">Docs vus</div>
+                                </td>
+                                <td style="text-align: center; padding: 14px 8px; width: 25%;">
+                                    <div style="font-size: 20px; font-weight: bold; color: #6cb13e;">${cumulTotalDocDownloads}</div>
+                                    <div style="font-size: 10px; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px;">Télécharg.</div>
+                                </td>
+                            </tr>
+                        </table>
+                        ` : ''}
                     </div>
 
                     <h3 style="color: #6c757d; margin: 0 0 15px; font-size: 13px; text-align: center; text-transform: uppercase; letter-spacing: 1px;">Statistiques de la veille</h3>
