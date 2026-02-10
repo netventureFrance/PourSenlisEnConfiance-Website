@@ -240,7 +240,7 @@ exports.handler = async (event, context) => {
             <style>
                 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }
                 .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-                .header { background: linear-gradient(135deg, #0d3d5c 0%, #3d9dd9 100%); color: white; padding: 30px; text-align: center; }
+                .header { background-color: #0d3d5c; color: white; padding: 30px; text-align: center; }
                 .header h1 { margin: 0; font-size: 24px; }
                 .header p { margin: 10px 0 0; opacity: 0.9; }
                 .content { padding: 30px; }
@@ -274,7 +274,7 @@ exports.handler = async (event, context) => {
                     <!-- Cumulative (All-Time) Stats -->
                     <div style="border-radius: 12px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
                         <!-- Hero: Visitors -->
-                        <div style="background: linear-gradient(135deg, #0d3d5c 0%, #1a5276 50%, #3d9dd9 100%); padding: 25px 20px; text-align: center;">
+                        <div style="background-color: #0d3d5c; padding: 25px 20px; text-align: center;">
                             <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.7); margin-bottom: 8px;">Cumul depuis le lancement</div>
                             <div style="font-size: 48px; font-weight: bold; color: #ffffff; line-height: 1;">${cumul.visitors.toLocaleString('fr-FR')}</div>
                             <div style="font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 4px;">visiteurs uniques</div>
