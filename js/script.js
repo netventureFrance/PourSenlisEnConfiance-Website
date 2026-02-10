@@ -537,35 +537,6 @@ function initConsultationMap() {
 // Initialize consultation map
 initConsultationMap();
 
-// ===================================
-// Christmas Carousel for Programme Overlay
-// ===================================
-function initChristmasCarousel() {
-    const slides = document.querySelectorAll('.christmas-slide');
-    if (slides.length === 0) return;
-
-    let currentSlide = 0;
-    const slideInterval = 4000; // 4 seconds
-
-    function nextSlide() {
-        const prevSlide = currentSlide;
-        currentSlide = (currentSlide + 1) % slides.length;
-        // Add active to new slide first (crossfade)
-        slides[currentSlide].classList.add('active');
-        // Then remove from previous slide
-        slides[prevSlide].classList.remove('active');
-    }
-
-    // Start the carousel
-    setInterval(nextSlide, slideInterval);
-}
-
-// Initialize Christmas carousel when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initChristmasCarousel);
-} else {
-    initChristmasCarousel();
-}
 
 // ===================================
 // Chatbot Functionality

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 580 520" xmlns="http://www.w3.org/2000/svg" width="580" height="520">
+  <style>
+    .quartier {
+      stroke: #ffffff;
+      stroke-width: 2.5;
+      stroke-linejoin: round;
+    }
+    .quartier-label {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      fill: #0d3d5c;
+      text-anchor: middle;
+      pointer-events: none;
+    }
+    .quartier-label.label-small {
+      font-size: 14px;
+      font-weight: 700;
+    }
+  </style>
+
+  <!-- FOURS-À-CHAUX BIGÜE - VILLEMÉTRIE - Orange (Sud) -->
+  <path class="quartier"
+        d="M120,340 L200,300 L320,280 L420,300 L480,350 L500,450 L400,510 L200,510 L100,460 L80,380 Z"
+        fill="#FF9800"/>
+
+  <!-- BRICHEBAY - Rouge (Sud-Ouest) -->
+  <path class="quartier"
+        d="M30,280 L100,260 L150,320 L170,400 L140,480 L60,500 L20,440 L10,350 Z"
+        fill="#F44336"/>
+
+  <!-- GARE - ECOQUARTIER - Gris (Est) -->
+  <path class="quartier"
+        d="M400,180 L500,160 L560,230 L550,340 L480,370 L410,340 L390,260 Z"
+        fill="#BDBDBD"/>
+
+  <!-- VAL D'AUNETTE GÂTELIÈRE - Bleu clair (Ouest) -->
+  <path class="quartier"
+        d="M40,140 L120,100 L170,160 L190,230 L170,300 L100,330 L40,290 L20,210 Z"
+        fill="#03A9F4"/>
+
+  <!-- VILLEVERT - Vert (Nord) -->
+  <path class="quartier"
+        d="M130,20 L270,10 L320,50 L340,120 L300,190 L220,210 L150,180 L110,110 L100,60 Z"
+        fill="#4CAF50"/>
+
+  <!-- BON SECOURS - Rose/Magenta (Nord-Est) -->
+  <path class="quartier"
+        d="M310,60 L400,50 L470,100 L470,180 L420,220 L340,210 L290,170 L300,100 Z"
+        fill="#E91E63"/>
+
+  <!-- CENTRE OUEST - ARÈNES - Jaune (Centre) -->
+  <path class="quartier"
+        d="M170,220 L260,200 L310,240 L300,320 L230,350 L160,310 Z"
+        fill="#FFEB3B"/>
+
+  <!-- CENTRE-EST SAINT-VINCENT - Kaki/Olive (Centre-Est) -->
+  <path class="quartier"
+        d="M270,200 L360,180 L410,230 L400,320 L310,340 L280,280 Z"
+        fill="#9E9D24"/>
+
+  <!-- Labels des quartiers -->
+  <text x="210" y="110" class="quartier-label">Villevert</text>
+  <text x="390" y="140" class="quartier-label">Bon Secours</text>
+  <text x="95" y="210" class="quartier-label label-small">Val d'Aunette</text>
+  <text x="95" y="230" class="quartier-label label-small">Gâtelière</text>
+  <text x="220" y="280" class="quartier-label label-small">Centre Ouest</text>
+  <text x="230" y="300" class="quartier-label label-small">Arènes</text>
+  <text x="340" y="255" class="quartier-label label-small">Centre-Est</text>
+  <text x="340" y="275" class="quartier-label label-small">St-Vincent</text>
+  <text x="480" y="250" class="quartier-label label-small">Gare</text>
+  <text x="480" y="270" class="quartier-label label-small">EcoQuartier</text>
+  <text x="85" y="390" class="quartier-label">Brichebay</text>
+  <text x="320" y="420" class="quartier-label label-small">Fours-à-Chaux</text>
+  <text x="320" y="440" class="quartier-label label-small">Bigüe - Villemétrie</text>
+</svg>

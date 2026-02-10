@@ -1166,17 +1166,8 @@ a:hover {
     overflow: hidden;
 }
 
-/* Christmas image carousel */
-.christmas-carousel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-}
-
-.christmas-slide {
+/* Programme hero image */
+.programme-hero-image {
     position: absolute;
     top: 0;
     left: 0;
@@ -1185,23 +1176,18 @@ a:hover {
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out;
-}
-
-.christmas-slide.active {
-    opacity: 1;
+    z-index: 1;
 }
 
 /* Dark overlay for text readability */
-.christmas-carousel::after {
+.programme-hero-image::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(13, 61, 92, 0.55) 0%, rgba(26, 90, 138, 0.45) 50%, rgba(61, 157, 217, 0.5) 100%);
+    background: linear-gradient(to top, rgba(13, 61, 92, 0.75) 0%, rgba(13, 61, 92, 0.2) 50%, transparent 100%);
     z-index: 2;
 }
 
@@ -1252,10 +1238,6 @@ a:hover {
 
 /* Responsive for overlay */
 @media (max-width: 768px) {
-    .christmas-slide {
-        background-size: cover;
-        background-position: center center;
-    }
     .programme-overlay {
         align-items: center;
         padding-bottom: 2rem;
