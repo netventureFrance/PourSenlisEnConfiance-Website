@@ -1,34 +1,43 @@
 // Daily Stats Email - Runs at 3 AM CET via Netlify Scheduled Function
-// Fetches Plausible analytics and sends email summary
+// Fetches Plausible analytics (API v2) and sends email summary
 
 const PLAUSIBLE_API_KEY = process.env.PLAUSIBLE_API_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const SITE_ID = 'poursenlisenconfiance.fr';
 
-// Helper to fetch from Plausible API
-async function fetchPlausible(endpoint, params = {}) {
-    const url = new URL(`https://plausible.io/api/v1/stats/${endpoint}`);
-    url.searchParams.set('site_id', SITE_ID);
-    Object.entries(params).forEach(([key, value]) => {
-        if (value !== undefined) url.searchParams.set(key, value);
-    });
-
-    const response = await fetch(url.toString(), {
-        headers: { 'Authorization': `Bearer ${PLAUSIBLE_API_KEY}` }
+// Helper to query Plausible API v2
+async function queryPlausible(query) {
+    const response = await fetch('https://plausible.io/api/v2/query', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${PLAUSIBLE_API_KEY}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ site_id: SITE_ID, ...query })
     });
 
     if (!response.ok) {
-        console.error(`Plausible API error for ${endpoint}:`, response.status);
+        const errorText = await response.text();
+        console.error(`Plausible API v2 error (${response.status}):`, errorText);
         return null;
     }
     return response.json();
+}
+
+// Parse breakdown results from v2 format: { results: [{ dimensions: [...], metrics: [...] }] }
+function parseBreakdown(data) {
+    if (!data?.results) return [];
+    return data.results.map(row => ({
+        dimension: row.dimensions[0],
+        visitors: row.metrics[0]
+    }));
 }
 
 exports.handler = async (event, context) => {
     console.log('Daily stats function triggered');
 
     if (!PLAUSIBLE_API_KEY || !RESEND_API_KEY) {
-        console.error('Missing API keys');
+        console.error('Missing API keys — PLAUSIBLE_API_KEY:', !!PLAUSIBLE_API_KEY, 'RESEND_API_KEY:', !!RESEND_API_KEY);
         return { statusCode: 500, body: 'Missing API keys' };
     }
 
@@ -37,8 +46,9 @@ exports.handler = async (event, context) => {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
         const dateStr = yesterday.toISOString().split('T')[0];
+        const dateRange = [dateStr, dateStr];
 
-        // Fetch all data in parallel
+        // Fetch all data in parallel using Plausible API v2
         const [
             statsData,
             pagesData,
@@ -49,49 +59,166 @@ exports.handler = async (event, context) => {
             procurationByQuartier,
             procurationByBureau,
             documentViews,
-            documentDownloads
+            documentDownloads,
+            // Cumulative (all-time) stats
+            cumulStatsData,
+            cumulConsultations,
+            cumulProcurations,
+            cumulDocViews,
+            cumulDocDownloads
         ] = await Promise.all([
-            // General stats
-            fetchPlausible('aggregate', { period: 'day', date: dateStr, metrics: 'visitors,pageviews,bounce_rate,visit_duration' }),
-            fetchPlausible('breakdown', { period: 'day', date: dateStr, property: 'event:page', limit: 5 }),
-            fetchPlausible('breakdown', { period: 'day', date: dateStr, property: 'visit:source', limit: 5 }),
+            // General stats (aggregate — no dimensions)
+            queryPlausible({
+                metrics: ['visitors', 'pageviews', 'bounce_rate', 'visit_duration'],
+                date_range: dateRange
+            }),
+            // Top pages
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: dateRange,
+                dimensions: ['event:page'],
+                order_by: [['visitors', 'desc']],
+                pagination: { limit: 5 }
+            }),
+            // Top sources
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: dateRange,
+                dimensions: ['visit:source'],
+                order_by: [['visitors', 'desc']],
+                pagination: { limit: 5 }
+            }),
             // Consultation breakdowns
-            fetchPlausible('breakdown', { period: 'day', date: dateStr, property: 'event:props:quartier', filters: 'event:name==Consultation', limit: 10 }),
-            fetchPlausible('breakdown', { period: 'day', date: dateStr, property: 'event:props:statut', filters: 'event:name==Consultation', limit: 5 }),
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: dateRange,
+                dimensions: ['event:props:quartier'],
+                filters: [['is', 'event:goal', ['Consultation']]],
+                order_by: [['visitors', 'desc']],
+                pagination: { limit: 10 }
+            }),
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: dateRange,
+                dimensions: ['event:props:statut'],
+                filters: [['is', 'event:goal', ['Consultation']]],
+                order_by: [['visitors', 'desc']],
+                pagination: { limit: 5 }
+            }),
             // Procuration breakdowns
-            fetchPlausible('breakdown', { period: 'day', date: dateStr, property: 'event:props:type', filters: 'event:name==Procuration', limit: 5 }),
-            fetchPlausible('breakdown', { period: 'day', date: dateStr, property: 'event:props:quartier', filters: 'event:name==Procuration', limit: 10 }),
-            fetchPlausible('breakdown', { period: 'day', date: dateStr, property: 'event:props:bureau', filters: 'event:name==Procuration', limit: 10 }),
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: dateRange,
+                dimensions: ['event:props:type'],
+                filters: [['is', 'event:goal', ['Procuration']]],
+                order_by: [['visitors', 'desc']],
+                pagination: { limit: 5 }
+            }),
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: dateRange,
+                dimensions: ['event:props:quartier'],
+                filters: [['is', 'event:goal', ['Procuration']]],
+                order_by: [['visitors', 'desc']],
+                pagination: { limit: 10 }
+            }),
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: dateRange,
+                dimensions: ['event:props:bureau'],
+                filters: [['is', 'event:goal', ['Procuration']]],
+                order_by: [['visitors', 'desc']],
+                pagination: { limit: 10 }
+            }),
             // Document events
-            fetchPlausible('breakdown', { period: 'day', date: dateStr, property: 'event:props:document_name', filters: 'event:name==Document View', limit: 5 }),
-            fetchPlausible('breakdown', { period: 'day', date: dateStr, property: 'event:props:document_name', filters: 'event:name==Document Download', limit: 5 })
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: dateRange,
+                dimensions: ['event:props:document_name'],
+                filters: [['is', 'event:goal', ['Document View']]],
+                order_by: [['visitors', 'desc']],
+                pagination: { limit: 5 }
+            }),
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: dateRange,
+                dimensions: ['event:props:document_name'],
+                filters: [['is', 'event:goal', ['Document Download']]],
+                order_by: [['visitors', 'desc']],
+                pagination: { limit: 5 }
+            }),
+            // Cumulative (all-time) queries
+            queryPlausible({
+                metrics: ['visitors', 'pageviews', 'visits'],
+                date_range: 'all'
+            }),
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: 'all',
+                filters: [['is', 'event:goal', ['Consultation']]]
+            }),
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: 'all',
+                filters: [['is', 'event:goal', ['Procuration']]]
+            }),
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: 'all',
+                filters: [['is', 'event:goal', ['Document View']]]
+            }),
+            queryPlausible({
+                metrics: ['visitors'],
+                date_range: 'all',
+                filters: [['is', 'event:goal', ['Document Download']]]
+            })
         ]);
 
-        const stats = statsData?.results || {};
-        const topPages = pagesData?.results || [];
-        const topSources = sourcesData?.results || [];
+        // Parse aggregate stats
+        // v2 response: { results: [{ metrics: [visitors, pageviews, bounce_rate, visit_duration] }] }
+        const statsMetrics = statsData?.results?.[0]?.metrics || [0, 0, 0, 0];
+        const stats = {
+            visitors: statsMetrics[0] || 0,
+            pageviews: statsMetrics[1] || 0,
+            bounce_rate: statsMetrics[2] || 0,
+            visit_duration: statsMetrics[3] || 0
+        };
 
-        // Custom events data
-        const consultQuartiers = consultationByQuartier?.results || [];
-        const consultStatuts = consultationByStatut?.results || [];
-        const procTypes = procurationByType?.results || [];
-        const procQuartiers = procurationByQuartier?.results || [];
-        const procBureaux = procurationByBureau?.results || [];
-        const docViews = documentViews?.results || [];
-        const docDownloads = documentDownloads?.results || [];
+        // Parse all breakdowns
+        const topPages = parseBreakdown(pagesData);
+        const topSources = parseBreakdown(sourcesData);
+        const consultQuartiers = parseBreakdown(consultationByQuartier);
+        const consultStatuts = parseBreakdown(consultationByStatut);
+        const procTypes = parseBreakdown(procurationByType);
+        const procQuartiers = parseBreakdown(procurationByQuartier);
+        const procBureaux = parseBreakdown(procurationByBureau);
+        const docViews = parseBreakdown(documentViews);
+        const docDownloads = parseBreakdown(documentDownloads);
 
-        // Calculate totals
+        // Calculate daily totals
         const totalConsultations = consultQuartiers.reduce((sum, q) => sum + (q.visitors || 0), 0);
         const totalProcurations = procTypes.reduce((sum, t) => sum + (t.visitors || 0), 0);
         const totalDocViews = docViews.reduce((sum, d) => sum + (d.visitors || 0), 0);
         const totalDocDownloads = docDownloads.reduce((sum, d) => sum + (d.visitors || 0), 0);
+
+        // Parse cumulative (all-time) stats
+        const cumulMetrics = cumulStatsData?.results?.[0]?.metrics || [0, 0, 0];
+        const cumul = {
+            visitors: cumulMetrics[0] || 0,
+            pageviews: cumulMetrics[1] || 0,
+            visits: cumulMetrics[2] || 0
+        };
+        const cumulTotalConsultations = cumulConsultations?.results?.[0]?.metrics?.[0] || 0;
+        const cumulTotalProcurations = cumulProcurations?.results?.[0]?.metrics?.[0] || 0;
+        const cumulTotalDocViews = cumulDocViews?.results?.[0]?.metrics?.[0] || 0;
+        const cumulTotalDocDownloads = cumulDocDownloads?.results?.[0]?.metrics?.[0] || 0;
 
         // Format date in French
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         const formattedDate = yesterday.toLocaleDateString('fr-FR', options);
 
         // Format visit duration
-        const duration = stats.visit_duration?.value || 0;
+        const duration = stats.visit_duration;
         const minutes = Math.floor(duration / 60);
         const seconds = duration % 60;
         const durationStr = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
@@ -138,18 +265,55 @@ exports.handler = async (event, context) => {
                     <p>${formattedDate}</p>
                 </div>
                 <div class="content">
-                    <!-- Main Stats -->
+                    <!-- Cumulative (All-Time) Stats -->
+                    <div style="background: linear-gradient(135deg, #f0f7ed 0%, #e8f5e1 100%); border-radius: 10px; padding: 20px; margin-bottom: 25px; border: 1px solid #c8e6b8;">
+                        <h3 style="color: #0d3d5c; margin: 0 0 15px; font-size: 15px; text-align: center; text-transform: uppercase; letter-spacing: 1px;">Cumul depuis le lancement</h3>
+                        <table cellpadding="0" cellspacing="0" style="width: 100%;">
+                            <tr>
+                                <td style="text-align: center; padding: 8px;">
+                                    <div style="font-size: 24px; font-weight: bold; color: #0d3d5c;">${cumul.visitors.toLocaleString('fr-FR')}</div>
+                                    <div style="font-size: 11px; color: #6c757d;">Visiteurs</div>
+                                </td>
+                                <td style="text-align: center; padding: 8px;">
+                                    <div style="font-size: 24px; font-weight: bold; color: #0d3d5c;">${cumul.pageviews.toLocaleString('fr-FR')}</div>
+                                    <div style="font-size: 11px; color: #6c757d;">Pages vues</div>
+                                </td>
+                                <td style="text-align: center; padding: 8px;">
+                                    <div style="font-size: 24px; font-weight: bold; color: #6cb13e;">${cumulTotalConsultations}</div>
+                                    <div style="font-size: 11px; color: #6c757d;">Idées</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center; padding: 8px;">
+                                    <div style="font-size: 24px; font-weight: bold; color: #6cb13e;">${cumulTotalProcurations}</div>
+                                    <div style="font-size: 11px; color: #6c757d;">Procurations</div>
+                                </td>
+                                <td style="text-align: center; padding: 8px;">
+                                    <div style="font-size: 24px; font-weight: bold; color: #0d3d5c;">${cumulTotalDocViews}</div>
+                                    <div style="font-size: 11px; color: #6c757d;">Docs vus</div>
+                                </td>
+                                <td style="text-align: center; padding: 8px;">
+                                    <div style="font-size: 24px; font-weight: bold; color: #0d3d5c;">${cumulTotalDocDownloads}</div>
+                                    <div style="font-size: 11px; color: #6c757d;">Téléchargements</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <h3 style="color: #6c757d; margin: 0 0 15px; font-size: 13px; text-align: center; text-transform: uppercase; letter-spacing: 1px;">Statistiques de la veille</h3>
+
+                    <!-- Daily Stats -->
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <div class="stat-value">${stats.visitors?.value || 0}</div>
+                            <div class="stat-value">${stats.visitors}</div>
                             <div class="stat-label">Visiteurs uniques</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value">${stats.pageviews?.value || 0}</div>
+                            <div class="stat-value">${stats.pageviews}</div>
                             <div class="stat-label">Pages vues</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value">${stats.bounce_rate?.value || 0}%</div>
+                            <div class="stat-value">${stats.bounce_rate}%</div>
                             <div class="stat-label">Taux de rebond</div>
                         </div>
                         <div class="stat-card">
@@ -189,7 +353,7 @@ exports.handler = async (event, context) => {
                         <p class="section-desc">Idées soumises par quartier - permet de voir quels quartiers participent le plus</p>
                         ${consultQuartiers.map(q => `
                             <div class="list-item">
-                                <span class="list-name">${q.quartier || 'Non spécifié'}</span>
+                                <span class="list-name">${q.dimension || 'Non spécifié'}</span>
                                 <span class="list-value">${q.visitors} idée${q.visitors > 1 ? 's' : ''}</span>
                             </div>
                         `).join('')}
@@ -200,7 +364,7 @@ exports.handler = async (event, context) => {
                         <p class="section-desc">Profil des participants : Senlisiens, personnes travaillant à Senlis, etc.</p>
                         ${consultStatuts.map(s => `
                             <div class="list-item">
-                                <span class="list-name">${s.statut || 'Non spécifié'}</span>
+                                <span class="list-name">${s.dimension || 'Non spécifié'}</span>
                                 <span class="list-value">${s.visitors}</span>
                             </div>
                         `).join('')}
@@ -215,7 +379,7 @@ exports.handler = async (event, context) => {
                         <p class="section-desc">Répartition Mandant (cherche un mandataire) vs Mandataire (se porte volontaire)</p>
                         ${procTypes.map(t => `
                             <div class="list-item">
-                                <span class="list-name">${t.type}</span>
+                                <span class="list-name">${t.dimension}</span>
                                 <span class="list-value">${t.visitors}</span>
                             </div>
                         `).join('')}
@@ -226,7 +390,7 @@ exports.handler = async (event, context) => {
                         <p class="section-desc">Quartiers les plus actifs pour les demandes de procuration</p>
                         ${procQuartiers.map(q => `
                             <div class="list-item">
-                                <span class="list-name">${q.quartier || 'Non spécifié'}</span>
+                                <span class="list-name">${q.dimension || 'Non spécifié'}</span>
                                 <span class="list-value">${q.visitors}</span>
                             </div>
                         `).join('')}
@@ -238,7 +402,7 @@ exports.handler = async (event, context) => {
                         <p class="section-desc">Bureaux de vote concernés par les demandes de procuration</p>
                         ${procBureaux.slice(0, 5).map(b => `
                             <div class="list-item">
-                                <span class="list-name">${b.bureau || 'Non spécifié'}</span>
+                                <span class="list-name">${b.dimension || 'Non spécifié'}</span>
                                 <span class="list-value">${b.visitors}</span>
                             </div>
                         `).join('')}
@@ -253,7 +417,7 @@ exports.handler = async (event, context) => {
                         <p class="section-desc">Documents les plus consultés (tract, programme, lettre aux habitants)</p>
                         ${docViews.length > 0 ? docViews.map(d => `
                             <div class="list-item">
-                                <span class="list-name">${d.document_name || 'Document'}</span>
+                                <span class="list-name">${d.dimension || 'Document'}</span>
                                 <span class="list-value">${d.visitors} vue${d.visitors > 1 ? 's' : ''}</span>
                             </div>
                         `).join('') : '<p class="empty-state">Aucun document consulté</p>'}
@@ -264,7 +428,7 @@ exports.handler = async (event, context) => {
                         <p class="section-desc">Documents téléchargés pour lecture hors-ligne ou partage</p>
                         ${docDownloads.map(d => `
                             <div class="list-item">
-                                <span class="list-name">${d.document_name || 'Document'}</span>
+                                <span class="list-name">${d.dimension || 'Document'}</span>
                                 <span class="list-value">${d.visitors} téléchargement${d.visitors > 1 ? 's' : ''}</span>
                             </div>
                         `).join('')}
@@ -279,7 +443,7 @@ exports.handler = async (event, context) => {
                         <p class="section-desc">Pages du site les plus consultées</p>
                         ${topPages.map(page => `
                             <div class="list-item">
-                                <span class="list-name">${page.page === '/' ? 'Accueil' : page.page}</span>
+                                <span class="list-name">${page.dimension === '/' ? 'Accueil' : page.dimension}</span>
                                 <span class="list-value">${page.visitors} visiteurs</span>
                             </div>
                         `).join('')}
@@ -293,7 +457,7 @@ exports.handler = async (event, context) => {
                         <p class="section-desc">D'où viennent les visiteurs : recherche Google, Facebook, lien direct, etc.</p>
                         ${topSources.map(source => `
                             <div class="list-item">
-                                <span class="list-name">${source.source || 'Accès direct'}</span>
+                                <span class="list-name">${source.dimension || 'Accès direct'}</span>
                                 <span class="list-value">${source.visitors} visiteurs</span>
                             </div>
                         `).join('')}
@@ -321,7 +485,7 @@ exports.handler = async (event, context) => {
             body: JSON.stringify({
                 from: 'Pour Senlis en Confiance avec Pascale Loiseleur <contact@poursenlisenconfiance.fr>',
                 to: ['contact@poursenlisenconfiance.fr'],
-                subject: `Stats ${formattedDate} - ${stats.visitors?.value || 0} visiteurs, ${totalConsultations} idées, ${totalProcurations} procurations`,
+                subject: `Stats ${formattedDate} - ${stats.visitors} visiteurs, ${totalConsultations} idées, ${totalProcurations} procurations`,
                 html: emailHtml
             })
         });
