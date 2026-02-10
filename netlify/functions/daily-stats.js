@@ -42,11 +42,27 @@ exports.handler = async (event, context) => {
     }
 
     try {
-        // Get yesterday's date
+        // Get yesterday's and day-before-yesterday's dates
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
         const dateStr = yesterday.toISOString().split('T')[0];
         const dateRange = [dateStr, dateStr];
+
+        const dayBefore = new Date();
+        dayBefore.setDate(dayBefore.getDate() - 2);
+        const dayBeforeStr = dayBefore.toISOString().split('T')[0];
+        const prevDateRange = [dayBeforeStr, dayBeforeStr];
+
+        // Also get last 7 days and previous 7 days for weekly trend
+        const weekEnd = new Date(yesterday);
+        const weekStart = new Date(yesterday);
+        weekStart.setDate(weekStart.getDate() - 6);
+        const prevWeekEnd = new Date(weekStart);
+        prevWeekEnd.setDate(prevWeekEnd.getDate() - 1);
+        const prevWeekStart = new Date(prevWeekEnd);
+        prevWeekStart.setDate(prevWeekStart.getDate() - 6);
+        const weekRange = [weekStart.toISOString().split('T')[0], weekEnd.toISOString().split('T')[0]];
+        const prevWeekRange = [prevWeekStart.toISOString().split('T')[0], prevWeekEnd.toISOString().split('T')[0]];
 
         // Fetch all data in parallel using Plausible API v2
         const [
@@ -65,7 +81,11 @@ exports.handler = async (event, context) => {
             cumulConsultations,
             cumulProcurations,
             cumulDocViews,
-            cumulDocDownloads
+            cumulDocDownloads,
+            // Trend data
+            prevDayData,
+            thisWeekData,
+            prevWeekData
         ] = await Promise.all([
             // General stats (aggregate — no dimensions)
             queryPlausible({
@@ -171,6 +191,20 @@ exports.handler = async (event, context) => {
                 metrics: ['visitors'],
                 date_range: 'all',
                 filters: [['is', 'event:goal', ['Document Download']]]
+            }),
+            // Trend: previous day stats (day-over-day)
+            queryPlausible({
+                metrics: ['visitors', 'pageviews', 'bounce_rate', 'visit_duration'],
+                date_range: prevDateRange
+            }),
+            // Trend: this week vs previous week
+            queryPlausible({
+                metrics: ['visitors', 'pageviews', 'visits'],
+                date_range: weekRange
+            }),
+            queryPlausible({
+                metrics: ['visitors', 'pageviews', 'visits'],
+                date_range: prevWeekRange
             })
         ]);
 
@@ -194,6 +228,31 @@ exports.handler = async (event, context) => {
         const procBureaux = parseBreakdown(procurationByBureau);
         const docViews = parseBreakdown(documentViews);
         const docDownloads = parseBreakdown(documentDownloads);
+
+        // Parse previous day stats for day-over-day trend
+        const prevMetrics = prevDayData?.results?.[0]?.metrics || [0, 0, 0, 0];
+        const prevDay = {
+            visitors: prevMetrics[0] || 0,
+            pageviews: prevMetrics[1] || 0,
+            bounce_rate: prevMetrics[2] || 0,
+            visit_duration: prevMetrics[3] || 0
+        };
+
+        // Parse weekly stats for week-over-week trend
+        const thisWeekMetrics = thisWeekData?.results?.[0]?.metrics || [0, 0, 0];
+        const prevWeekMetrics = prevWeekData?.results?.[0]?.metrics || [0, 0, 0];
+        const thisWeek = { visitors: thisWeekMetrics[0] || 0, pageviews: thisWeekMetrics[1] || 0, visits: thisWeekMetrics[2] || 0 };
+        const prevWeek = { visitors: prevWeekMetrics[0] || 0, pageviews: prevWeekMetrics[1] || 0, visits: prevWeekMetrics[2] || 0 };
+
+        // Trend helper: returns HTML snippet with arrow and % change
+        function trend(current, previous) {
+            if (previous === 0 && current === 0) return '';
+            if (previous === 0) return '<span style="color: #27ae60; font-size: 12px; font-weight: 600;">&#9650; new</span>';
+            const pct = Math.round(((current - previous) / previous) * 100);
+            if (pct === 0) return '<span style="color: #6c757d; font-size: 12px;">&#9644; 0%</span>';
+            if (pct > 0) return `<span style="color: #27ae60; font-size: 12px; font-weight: 600;">&#9650; ${pct}%</span>`;
+            return `<span style="color: #e74c3c; font-size: 12px; font-weight: 600;">&#9660; ${Math.abs(pct)}%</span>`;
+        }
 
         // Calculate daily totals
         const totalConsultations = consultQuartiers.reduce((sum, q) => sum + (q.visitors || 0), 0);
@@ -273,11 +332,14 @@ exports.handler = async (event, context) => {
                 <div class="content">
                     <!-- Cumulative (All-Time) Stats -->
                     <div style="border-radius: 12px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-                        <!-- Hero: Visitors -->
+                        <!-- Hero: Visitors + Weekly Trend -->
                         <div style="background-color: #0d3d5c; padding: 25px 20px; text-align: center;">
                             <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.7); margin-bottom: 8px;">Cumul depuis le lancement</div>
                             <div style="font-size: 48px; font-weight: bold; color: #ffffff; line-height: 1;">${cumul.visitors.toLocaleString('fr-FR')}</div>
                             <div style="font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 4px;">visiteurs uniques</div>
+                            <div style="margin-top: 12px; display: inline-block; background-color: rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 14px;">
+                                <span style="font-size: 12px; color: rgba(255,255,255,0.9);">7 derniers jours : <strong style="color: #ffffff;">${thisWeek.visitors}</strong> visiteurs ${prevWeek.visitors > 0 ? (thisWeek.visitors >= prevWeek.visitors ? '<span style="color: #6cb13e;">&#9650; ' + Math.round(((thisWeek.visitors - prevWeek.visitors) / prevWeek.visitors) * 100) + '%</span>' : '<span style="color: #e74c3c;">&#9660; ' + Math.abs(Math.round(((thisWeek.visitors - prevWeek.visitors) / prevWeek.visitors) * 100)) + '%</span>') : ''}</span>
+                            </div>
                         </div>
                         <!-- Secondary metrics -->
                         <table cellpadding="0" cellspacing="0" style="width: 100%; background: #f8f9fa; border-bottom: 1px solid #eee;">
@@ -332,18 +394,22 @@ exports.handler = async (event, context) => {
                         <div class="stat-card">
                             <div class="stat-value">${stats.visitors}</div>
                             <div class="stat-label">Visiteurs uniques</div>
+                            <div style="margin-top: 4px;">${trend(stats.visitors, prevDay.visitors)}</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-value">${stats.pageviews}</div>
                             <div class="stat-label">Pages vues</div>
+                            <div style="margin-top: 4px;">${trend(stats.pageviews, prevDay.pageviews)}</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-value">${stats.bounce_rate}%</div>
                             <div class="stat-label">Taux de rebond</div>
+                            <div style="margin-top: 4px;">${trend(prevDay.bounce_rate, stats.bounce_rate)}</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-value">${durationStr}</div>
                             <div class="stat-label">Durée moyenne</div>
+                            <div style="margin-top: 4px;">${trend(stats.visit_duration, prevDay.visit_duration)}</div>
                         </div>
                     </div>
 
