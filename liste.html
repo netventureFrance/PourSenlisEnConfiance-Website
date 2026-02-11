@@ -129,8 +129,8 @@
             line-height: 1.4;
         }
 
-        /* Detail Modal */
-        .detail-overlay {
+        /* Detail Modal - prefixed to avoid styles.css conflicts */
+        .liste-modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -141,10 +141,10 @@
             justify-content: center;
             padding: 2rem;
         }
-        .detail-overlay.visible {
+        .liste-modal-overlay.visible {
             display: flex;
         }
-        .detail-panel {
+        .liste-modal-panel {
             background: white;
             border-radius: 20px;
             max-width: 750px;
@@ -152,14 +152,14 @@
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.3s ease;
+            animation: listeSlideUp 0.3s ease;
             position: relative;
         }
-        @keyframes slideUp {
+        @keyframes listeSlideUp {
             from { transform: translateY(30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-        .detail-panel-close {
+        .liste-modal-close {
             position: absolute;
             top: 1rem;
             right: 1rem;
@@ -178,10 +178,10 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             transition: background 0.2s;
         }
-        .detail-panel-close:hover {
+        .liste-modal-close:hover {
             background: white;
         }
-        .detail-panel-top {
+        .liste-modal-top {
             position: relative;
             display: flex;
             gap: 2rem;
@@ -189,7 +189,7 @@
             background: linear-gradient(135deg, #f0f7fa 0%, #e8f4fd 100%);
             border-radius: 20px 20px 0 0;
         }
-        .detail-panel-photo {
+        .liste-modal-photo {
             width: 200px;
             min-width: 200px;
             height: 260px;
@@ -197,7 +197,7 @@
             border-radius: 14px;
             box-shadow: 0 8px 30px rgba(13, 61, 92, 0.15);
         }
-        .detail-panel-photo-placeholder {
+        .liste-modal-photo-placeholder {
             width: 200px;
             min-width: 200px;
             height: 260px;
@@ -210,12 +210,12 @@
             font-size: 5rem;
             font-weight: 700;
         }
-        .detail-panel-header {
+        .liste-modal-header {
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-        .detail-panel-rank {
+        .liste-modal-rank {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
@@ -228,24 +228,24 @@
             margin-bottom: 0.75rem;
             width: fit-content;
         }
-        .detail-panel-name {
+        .liste-modal-name {
             font-size: 1.8rem;
             font-weight: 800;
             color: var(--primary-dark);
             line-height: 1.2;
             margin-bottom: 0.5rem;
         }
-        .detail-panel-profession {
+        .liste-modal-profession {
             font-size: 1.1rem;
             color: #64748b;
             margin-bottom: 1rem;
         }
-        .detail-panel-meta {
+        .liste-modal-meta {
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
         }
-        .detail-meta-tag {
+        .liste-meta-tag {
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
@@ -257,23 +257,23 @@
             font-weight: 500;
             box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
-        .detail-meta-tag svg {
+        .liste-meta-tag svg {
             width: 16px;
             height: 16px;
             opacity: 0.6;
         }
 
         /* Detail body */
-        .detail-panel-body {
+        .liste-modal-body {
             padding: 2rem;
         }
-        .detail-section {
+        .liste-modal-section {
             margin-bottom: 1.75rem;
         }
-        .detail-section:last-child {
+        .liste-modal-section:last-child {
             margin-bottom: 0;
         }
-        .detail-section-title {
+        .liste-modal-section-title {
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -281,19 +281,19 @@
             font-weight: 700;
             margin-bottom: 0.6rem;
         }
-        .detail-section-text {
+        .liste-modal-section-text {
             color: #334155;
             line-height: 1.7;
             font-size: 1rem;
         }
 
         /* Social links */
-        .detail-social {
+        .liste-modal-social {
             display: flex;
             gap: 0.75rem;
             margin-top: 0.5rem;
         }
-        .detail-social a {
+        .liste-modal-social a {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -304,12 +304,12 @@
             color: #64748b;
             transition: all 0.2s;
         }
-        .detail-social a:hover {
+        .liste-modal-social a:hover {
             transform: scale(1.1);
         }
-        .detail-social a.social-facebook:hover { background: #1877f2; color: white; }
-        .detail-social a.social-linkedin:hover { background: #0a66c2; color: white; }
-        .detail-social a.social-instagram:hover { background: #e4405f; color: white; }
+        .liste-modal-social a.social-facebook:hover { background: #1877f2; color: white; }
+        .liste-modal-social a.social-linkedin:hover { background: #0a66c2; color: white; }
+        .liste-modal-social a.social-instagram:hover { background: #e4405f; color: white; }
 
         /* Loading */
         .liste-loading {
@@ -352,32 +352,32 @@
             .liste-hero h1 { font-size: 2.2rem; }
             .liste-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             .liste-grid-section { padding: 2rem 1rem 3rem; }
-            .detail-overlay { padding: 0; align-items: flex-end; }
-            .detail-panel {
+            .liste-modal-overlay { padding: 0; align-items: flex-end; }
+            .liste-modal-panel {
                 border-radius: 20px 20px 0 0;
                 max-height: 95vh;
             }
-            .detail-panel-top {
+            .liste-modal-top {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
                 padding: 1.5rem;
                 border-radius: 20px 20px 0 0;
             }
-            .detail-panel-photo, .detail-panel-photo-placeholder {
+            .liste-modal-photo, .liste-modal-photo-placeholder {
                 width: 160px;
                 min-width: 160px;
                 height: 210px;
             }
-            .detail-panel-meta { justify-content: center; }
-            .detail-panel-name { font-size: 1.5rem; }
-            .detail-panel-body { padding: 1.5rem; }
+            .liste-modal-meta { justify-content: center; }
+            .liste-modal-name { font-size: 1.5rem; }
+            .liste-modal-body { padding: 1.5rem; }
         }
         @media (max-width: 480px) {
             .liste-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
             .liste-card-info { padding: 0.75rem; }
             .liste-card-name { font-size: 0.9rem; }
-            .liste-card-rank { width: 30px; height: 30px; font-size: 0.8rem; top: 8px; left: 8px; }
+            .liste-card-rank { width: 30px; height: 30px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -413,10 +413,10 @@
     </div>
 
     <!-- Detail Modal -->
-    <div class="detail-overlay" id="detailOverlay">
-        <div class="detail-panel" id="detailPanel">
-            <button class="detail-panel-close" id="detailClose">&times;</button>
-            <div id="detailContent"></div>
+    <div class="liste-modal-overlay" id="modalOverlay">
+        <div class="liste-modal-panel">
+            <button class="liste-modal-close" id="modalClose">&times;</button>
+            <div id="modalContent"></div>
         </div>
     </div>
 
@@ -430,23 +430,28 @@
     </footer>
 
     <script>
-        let allRecords = [];
+        var allRecords = [];
 
         function esc(str) {
-            const d = document.createElement('div');
+            var d = document.createElement('div');
             d.textContent = str || '';
             return d.innerHTML;
         }
 
         async function loadListe() {
             try {
-                const response = await fetch('/.netlify/functions/get-liste');
-                const data = await response.json();
+                var response = await fetch('/.netlify/functions/get-liste');
+                var data = await response.json();
 
                 if (data.success) {
                     allRecords = data.records
-                        .filter(r => r.statut === 'Validé' || r.statut === 'Publié')
-                        .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'));
+                        .filter(function(r) { return r.statut === 'Validé' || r.statut === 'Publié'; })
+                        .sort(function(a, b) {
+                            if (a.rang && b.rang) return a.rang - b.rang;
+                            if (a.rang) return -1;
+                            if (b.rang) return 1;
+                            return a.nom.localeCompare(b.nom, 'fr');
+                        });
                     renderGrid();
                 }
             } catch (error) {
@@ -457,20 +462,19 @@
         }
 
         function renderGrid() {
-            const grid = document.getElementById('listeGrid');
+            var grid = document.getElementById('listeGrid');
             grid.innerHTML = '';
 
-            allRecords.forEach((record, index) => {
-                const card = document.createElement('div');
+            allRecords.forEach(function(record, index) {
+                var card = document.createElement('div');
                 card.className = 'liste-card';
-                card.dataset.index = index;
 
-                const displayName = esc([record.prenom, record.nom].filter(Boolean).join(' '));
-                const initial = esc((record.prenom || record.nom || '?').charAt(0));
-                const photo = record.photo && record.photo.url
+                var displayName = esc([record.prenom, record.nom].filter(Boolean).join(' '));
+                var initial = esc((record.prenom || record.nom || '?').charAt(0));
+                var photo = record.photo && record.photo.url
                     ? '<img src="' + esc(record.photo.url) + '" class="liste-card-photo" alt="' + displayName + '" loading="lazy">'
                     : '<div class="liste-card-photo-placeholder">' + initial + '</div>';
-                const rank = record.rang ? '<div class="liste-card-rank">' + esc(String(record.rang)) + '</div>' : '';
+                var rank = record.rang ? '<div class="liste-card-rank">' + esc(String(record.rang)) + '</div>' : '';
 
                 card.innerHTML = photo
                     + '<div class="liste-card-info">'
@@ -490,73 +494,68 @@
             var record = allRecords[index];
             if (!record) return;
 
-            try {
-                var displayName = esc([record.prenom, record.nom].filter(Boolean).join(' '));
-                var initial = esc((record.prenom || record.nom || '?').charAt(0));
-                var photo = record.photo && record.photo.url
-                    ? '<img src="' + esc(record.photo.url) + '" class="detail-panel-photo" alt="' + displayName + '">'
-                    : '<div class="detail-panel-photo-placeholder">' + initial + '</div>';
-                var rank = record.rang ? '<div class="detail-panel-rank">N&deg;' + esc(String(record.rang)) + ' sur la liste</div>' : '';
+            var displayName = esc([record.prenom, record.nom].filter(Boolean).join(' '));
+            var initial = esc((record.prenom || record.nom || '?').charAt(0));
+            var photo = record.photo && record.photo.url
+                ? '<img src="' + esc(record.photo.url) + '" class="liste-modal-photo" alt="' + displayName + '">'
+                : '<div class="liste-modal-photo-placeholder">' + initial + '</div>';
+            var rank = record.rang ? '<div class="liste-modal-rank">N&deg;' + esc(String(record.rang)) + ' sur la liste</div>' : '';
 
-                var meta = '';
-                if (record.age) {
-                    meta += '<span class="detail-meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>' + esc(String(record.age)) + ' ans</span>';
-                }
-                if (record.quartier) {
-                    meta += '<span class="detail-meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' + esc(record.quartier) + '</span>';
-                }
-
-                var social = '';
-                if (record.facebook) social += '<a href="' + esc(record.facebook) + '" target="_blank" class="social-facebook" title="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>';
-                if (record.linkedin) social += '<a href="' + esc(record.linkedin) + '" target="_blank" class="social-linkedin" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>';
-                if (record.instagram) social += '<a href="' + esc(record.instagram) + '" target="_blank" class="social-instagram" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>';
-
-                var bioHtml = '';
-                if (record.bio) {
-                    bioHtml = '<div class="detail-section">'
-                        + '<div class="detail-section-title">Biographie</div>'
-                        + '<div class="detail-section-text">' + esc(record.bio).replace(/\n/g, '<br>') + '</div>'
-                        + '</div>';
-                }
-                var messageHtml = '';
-                if (record.message) {
-                    messageHtml = '<div class="detail-section">'
-                        + '<div class="detail-section-title">Message personnel</div>'
-                        + '<div class="detail-section-text">' + esc(record.message).replace(/\n/g, '<br>') + '</div>'
-                        + '</div>';
-                }
-
-                var html = '<div class="detail-panel-top">'
-                    + photo
-                    + '<div class="detail-panel-header">'
-                    + rank
-                    + '<div class="detail-panel-name">' + displayName + '</div>'
-                    + '<div class="detail-panel-profession">' + esc(record.profession) + '</div>'
-                    + '<div class="detail-panel-meta">' + meta + '</div>'
-                    + (social ? '<div class="detail-social">' + social + '</div>' : '')
-                    + '</div></div>'
-                    + '<div class="detail-panel-body">' + bioHtml + messageHtml + '</div>';
-
-                document.getElementById('detailContent').innerHTML = html;
-                document.getElementById('detailOverlay').classList.add('visible');
-                document.body.style.overflow = 'hidden';
-            } catch (err) {
-                console.error('Detail error:', err);
-                alert('Erreur: ' + err.message);
+            var meta = '';
+            if (record.age) {
+                meta += '<span class="liste-meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>' + esc(String(record.age)) + ' ans</span>';
             }
+            if (record.quartier) {
+                meta += '<span class="liste-meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' + esc(record.quartier) + '</span>';
+            }
+
+            var social = '';
+            if (record.facebook) social += '<a href="' + esc(record.facebook) + '" target="_blank" class="social-facebook" title="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>';
+            if (record.linkedin) social += '<a href="' + esc(record.linkedin) + '" target="_blank" class="social-linkedin" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>';
+            if (record.instagram) social += '<a href="' + esc(record.instagram) + '" target="_blank" class="social-instagram" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>';
+
+            var bioHtml = '';
+            if (record.bio) {
+                bioHtml = '<div class="liste-modal-section">'
+                    + '<div class="liste-modal-section-title">Biographie</div>'
+                    + '<div class="liste-modal-section-text">' + esc(record.bio).replace(/\n/g, '<br>') + '</div>'
+                    + '</div>';
+            }
+            var messageHtml = '';
+            if (record.message) {
+                messageHtml = '<div class="liste-modal-section">'
+                    + '<div class="liste-modal-section-title">Message personnel</div>'
+                    + '<div class="liste-modal-section-text">' + esc(record.message).replace(/\n/g, '<br>') + '</div>'
+                    + '</div>';
+            }
+
+            var html = '<div class="liste-modal-top">'
+                + photo
+                + '<div class="liste-modal-header">'
+                + rank
+                + '<div class="liste-modal-name">' + displayName + '</div>'
+                + '<div class="liste-modal-profession">' + esc(record.profession) + '</div>'
+                + '<div class="liste-modal-meta">' + meta + '</div>'
+                + (social ? '<div class="liste-modal-social">' + social + '</div>' : '')
+                + '</div></div>'
+                + '<div class="liste-modal-body">' + bioHtml + messageHtml + '</div>';
+
+            document.getElementById('modalContent').innerHTML = html;
+            document.getElementById('modalOverlay').classList.add('visible');
+            document.body.style.overflow = 'hidden';
         }
 
-        function closeDetail() {
-            document.getElementById('detailOverlay').classList.remove('visible');
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('visible');
             document.body.style.overflow = '';
         }
 
-        document.getElementById('detailClose').addEventListener('click', closeDetail);
-        document.getElementById('detailOverlay').addEventListener('click', function(e) {
-            if (e.target.id === 'detailOverlay') closeDetail();
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target.id === 'modalOverlay') closeModal();
         });
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeDetail();
+            if (e.key === 'Escape') closeModal();
         });
 
         loadListe();
