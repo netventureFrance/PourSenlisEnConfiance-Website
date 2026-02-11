@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=20260210">
+    <link rel="stylesheet" href="css/styles.css?v=20260211">
 
     <style>
         /* ========== Page layout ========== */
@@ -73,6 +73,30 @@
             margin-bottom: 1.5rem;
         }
         .prog-back:hover { opacity: 1; }
+        .prog-hero-more {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .prog-hero-more.open {
+            max-height: 2000px;
+        }
+        .prog-hero-toggle {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+        .prog-hero-toggle:hover {
+            background: rgba(255,255,255,0.25);
+        }
 
         /* ========== Container ========== */
         .prog-container {
@@ -101,40 +125,40 @@
         }
         .prog-phares-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1.25rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
         }
         .prog-phare-card {
-            background: linear-gradient(135deg, #f0f7fa 0%, #e8f4fd 100%);
-            border-radius: 14px;
-            padding: 1.25rem 1.5rem;
+            border-radius: 16px;
+            padding: 1.25rem;
             display: flex;
-            align-items: flex-start;
+            flex-direction: row;
+            align-items: center;
+            text-align: left;
             gap: 1rem;
+            background: #edf2f7;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .prog-phare-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(13, 61, 92, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
         .prog-phare-icon {
-            width: 44px;
-            height: 44px;
-            min-width: 44px;
-            background: var(--primary-dark);
-            color: white;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 52px;
+            height: 52px;
+            min-width: 52px;
+            flex-shrink: 0;
         }
-        .prog-phare-icon svg {
-            width: 22px;
-            height: 22px;
+        .prog-phare-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 10px;
         }
         .prog-phare-text {
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: var(--primary-dark);
             line-height: 1.4;
         }
@@ -144,72 +168,75 @@
             padding: 3rem 0 4rem;
         }
         .prog-theme {
-            margin-bottom: 2rem;
-            background: white;
-            border-radius: 20px;
+            margin-bottom: 1.25rem;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(13, 61, 92, 0.06);
+            box-shadow: 0 4px 20px rgba(13, 61, 92, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #ccc;
+        }
+        .prog-theme:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(13, 61, 92, 0.15);
         }
         .prog-theme-header {
             display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            padding: 1.5rem 2rem;
+            align-items: stretch;
             cursor: pointer;
             user-select: none;
-            transition: background 0.2s;
+            height: 110px;
         }
-        .prog-theme-header:hover {
-            background: rgba(13, 61, 92, 0.02);
+        .prog-theme-image {
+            width: 180px;
+            min-width: 180px;
+            height: 110px;
+            overflow: hidden;
+            flex-shrink: 0;
         }
-        .prog-theme-icon {
-            width: 52px;
-            height: 52px;
-            min-width: 52px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        .prog-theme-icon svg {
-            width: 26px;
-            height: 26px;
+        .prog-theme-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         .prog-theme-title {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1.25rem 1.5rem;
         }
         .prog-theme-title h3 {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--primary-dark);
             line-height: 1.3;
             margin: 0;
         }
         .prog-theme-title p {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #64748b;
-            margin: 0.25rem 0 0;
+            margin: 0.3rem 0 0;
         }
         .prog-theme-toggle {
-            width: 36px;
-            height: 36px;
-            min-width: 36px;
-            border-radius: 50%;
-            background: #f1f5f9;
+            width: 50px;
+            min-width: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.3s ease, background 0.2s;
+            transition: transform 0.3s ease;
         }
         .prog-theme-toggle svg {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+        .prog-theme:hover .prog-theme-toggle svg {
             color: var(--primary-dark);
         }
         .prog-theme.open .prog-theme-toggle {
             transform: rotate(180deg);
-            background: #e2e8f0;
         }
         .prog-theme-body {
             max-height: 0;
@@ -220,9 +247,21 @@
             max-height: 5000px;
         }
         .prog-theme-content {
-            padding: 0 2rem 2rem;
-            border-top: 1px solid #f1f5f9;
+            padding: 1.5rem 2rem 2rem;
+            background: white;
+            border-top: 2px solid rgba(255,255,255,0.2);
         }
+
+        /* Theme colors - left accent stripe */
+        #theme-securite { border-left-color: #dc2626; }
+        #theme-economie { border-left-color: #2563eb; }
+        #theme-cadre { border-left-color: #16a34a; }
+        #theme-culture { border-left-color: #7c3aed; }
+        #theme-cohesion { border-left-color: #ea580c; }
+        #theme-sport { border-left-color: #0891b2; }
+        #theme-ecologie { border-left-color: #15803d; }
+        #theme-finances { border-left-color: #4338ca; }
+        #theme-citoyennete { border-left-color: #b45309; }
 
         /* Content styling */
         .prog-theme-content h4 {
@@ -256,23 +295,23 @@
             border-radius: 12px;
             padding: 1.25rem 1.5rem;
             margin: 1rem 0;
-            border-left: 4px solid var(--primary-light);
+            border-left: 4px solid inherit;
         }
+        /* Match highlight box border to theme color */
+        #theme-securite .prog-highlight-box { border-left-color: #dc2626; }
+        #theme-economie .prog-highlight-box { border-left-color: #2563eb; }
+        #theme-cadre .prog-highlight-box { border-left-color: #16a34a; }
+        #theme-culture .prog-highlight-box { border-left-color: #7c3aed; }
+        #theme-cohesion .prog-highlight-box { border-left-color: #ea580c; }
+        #theme-sport .prog-highlight-box { border-left-color: #0891b2; }
+        #theme-ecologie .prog-highlight-box { border-left-color: #15803d; }
+        #theme-finances .prog-highlight-box { border-left-color: #4338ca; }
+        #theme-citoyennete .prog-highlight-box { border-left-color: #b45309; }
         .prog-highlight-box p {
             margin: 0;
             font-weight: 500;
         }
 
-        /* Theme colors */
-        .prog-color-securite { background: #dc2626; }
-        .prog-color-economie { background: #2563eb; }
-        .prog-color-cadre { background: #16a34a; }
-        .prog-color-culture { background: #9333ea; }
-        .prog-color-cohesion { background: #ea580c; }
-        .prog-color-sport { background: #0891b2; }
-        .prog-color-ecologie { background: #15803d; }
-        .prog-color-finances { background: #4f46e5; }
-        .prog-color-citoyennete { background: #b45309; }
 
         /* ========== Investissements ========== */
         .prog-invest {
@@ -407,20 +446,20 @@
             .prog-hero { padding: 7rem 1.5rem 3rem; }
             .prog-hero h1 { font-size: 2.2rem; }
             .prog-hero-intro { font-size: 0.95rem; }
-            .prog-phares-grid { grid-template-columns: 1fr; }
-            .prog-theme-header { padding: 1.25rem 1.25rem; gap: 1rem; }
-            .prog-theme-icon { width: 44px; height: 44px; min-width: 44px; }
-            .prog-theme-icon svg { width: 22px; height: 22px; }
-            .prog-theme-title h3 { font-size: 1.1rem; }
-            .prog-theme-content { padding: 0 1.25rem 1.5rem; }
+            .prog-phares-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .prog-theme-header { height: 90px; }
+            .prog-theme-image { width: 120px; min-width: 120px; height: 90px; }
+            .prog-theme-title { padding: 1rem; }
+            .prog-theme-title h3 { font-size: 1.05rem; }
+            .prog-theme-content { padding: 1rem 1.25rem 1.5rem; }
             .prog-invest-total { font-size: 2.5rem; }
             .prog-invest-grid { grid-template-columns: repeat(2, 1fr); }
             .prog-reunions-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
-            .prog-phare-card { padding: 1rem; gap: 0.75rem; }
-            .prog-phare-icon { width: 38px; height: 38px; min-width: 38px; border-radius: 10px; }
-            .prog-phare-icon svg { width: 18px; height: 18px; }
+            .prog-phare-card { padding: 0.75rem; gap: 0.75rem; }
+            .prog-phare-icon { width: 44px; height: 44px; min-width: 44px; }
+            .prog-phare-text { font-size: 0.75rem; }
             .prog-invest-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
             .prog-invest-card { padding: 1rem; }
             .prog-invest-amount { font-size: 1.3rem; }
@@ -448,8 +487,21 @@
         <h1>Notre Programme</h1>
         <p class="prog-hero-subtitle">Un projet solide pour Senlis &mdash; 2026-2032</p>
         <div class="prog-hero-intro">
-            <p>Forte de quinze ans d'exp&eacute;rience et de la confiance construite au fil des ann&eacute;es, Pascale Loiseleur pr&eacute;sente un projet municipal clair, avec une ambition simple et exigeante : <strong>prot&eacute;ger les Senlisiennes et les Senlisiens, pr&eacute;server leur qualit&eacute; de vie et pr&eacute;parer l'avenir</strong>, dans une ville &agrave; taille humaine, s&ucirc;re, solidaire et attractive.</p>
-            <p>Port&eacute; par une &eacute;quipe largement renouvel&eacute;e, sans &eacute;tiquette partisane et r&eacute;unissant des femmes et des hommes issus de tous les quartiers, notre programme est r&eacute;aliste et finan&ccedil;able, sans d&eacute;magogie ni fausse promesse.</p>
+            <p>Lorsque vous m'avez &eacute;lue maire en 2011, Senlis traversait une situation critique. La ville &eacute;tait endett&eacute;e, fragilis&eacute;e et marqu&eacute;e par une gestion d&eacute;faillante qui avait profond&eacute;ment ab&icirc;m&eacute; la confiance et conduit mon pr&eacute;d&eacute;cesseur &agrave; rendre des comptes devant la justice.</p>
+            <p>En quinze ans, avec mon &eacute;quipe, nous avons redress&eacute; les comptes, assur&eacute; un service public de qualit&eacute; et r&eacute;alis&eacute; de nombreux investissements, sans augmenter les imp&ocirc;ts des Senlisiens. Ce travail de fond a permis de stabiliser la ville, de la moderniser dans le respect de son identit&eacute; et de renforcer la s&eacute;curit&eacute;.</p>
+            <p>Aujourd'hui, <strong>Senlis est une ville bien g&eacute;r&eacute;e, respect&eacute;e et agr&eacute;able &agrave; vivre.</strong> Cette stabilit&eacute; est le r&eacute;sultat d'une m&eacute;thode, d'une &eacute;quipe et d'un engagement permanent au service de l'int&eacute;r&ecirc;t g&eacute;n&eacute;ral.</p>
+            <p>Forte de cette exp&eacute;rience et de la confiance construite au fil des ann&eacute;es, je pr&eacute;sente un projet municipal clair, avec une ambition simple et exigeante : <strong>prot&eacute;ger les Senlisiennes et les Senlisiens, pr&eacute;server leur qualit&eacute; de vie et pr&eacute;parer l'avenir,</strong> dans une ville &agrave; taille humaine, s&ucirc;re, solidaire et attractive.</p>
+            <div class="prog-hero-more" id="hero-more">
+                <p>La s&eacute;curit&eacute; restera ma premi&egrave;re responsabilit&eacute;. S&eacute;curit&eacute; du quotidien, tranquillit&eacute; publique, protection face aux risques environnementaux, climatiques et sanitaires guideront mon action, autour de quatre principes essentiels : prot&eacute;ger, pr&eacute;venir, rassurer et faire respecter la loi.</p>
+                <p>Je poursuivrai mon engagement pour prendre soin de toutes les g&eacute;n&eacute;rations : accompagner les familles, offrir des perspectives aux jeunes, entourer les a&icirc;n&eacute;s et renforcer les solidarit&eacute;s, afin que chacun puisse bien vivre &agrave; Senlis, &agrave; chaque &eacute;tape de la vie.</p>
+                <p>Pr&eacute;server notre patrimoine exceptionnel, restaurer nos b&acirc;timents, renouveler nos &eacute;quipements, prot&eacute;ger nos espaces naturels et faciliter les d&eacute;placements du quotidien resteront des priorit&eacute;s fortes. La qualit&eacute; du cadre de vie et la r&eacute;novation thermique des logements seront des marqueurs politiques majeurs du mandat.</p>
+                <p>Le programme que vous allez d&eacute;couvrir s'inscrit dans la continuit&eacute; et la stabilit&eacute;, tout en proposant de nouveaux projets ambitieux et en impliquant davantage les Senlisiens &agrave; travers des consultations r&eacute;guli&egrave;res, un budget participatif et des outils num&eacute;riques interactifs accessibles &agrave; tous.</p>
+                <p>Nous ferons de l'excellence une exigence constante en mettant un point d'honneur &agrave; ce que chaque demande d'habitant, sans exception, re&ccedil;oive une r&eacute;ponse et soit trait&eacute;e dans un d&eacute;lai raisonnable. Nous continuerons &agrave; rendre compte de notre gestion en toute transparence et informerons r&eacute;guli&egrave;rement les Senlisiens de l'avanc&eacute;e des projets.</p>
+                <p>Port&eacute; par une &eacute;quipe largement renouvel&eacute;e, sans &eacute;tiquette partisane et r&eacute;unissant des femmes et des hommes issus de tous les quartiers et aux comp&eacute;tences vari&eacute;es, notre programme est r&eacute;aliste et finan&ccedil;able, sans d&eacute;magogie ni fausse promesse.</p>
+                <p><strong>Un projet s&eacute;rieux et coh&eacute;rent pour continuer &agrave; faire avancer Senlis avec stabilit&eacute; et m&eacute;riter, &agrave; nouveau, votre confiance.</strong></p>
+                <p style="text-align: right; margin-top: 1rem;"><strong>Pascale LOISELEUR</strong></p>
+            </div>
+            <button class="prog-hero-toggle" id="hero-toggle" onclick="toggleHeroIntro()">Lire la suite</button>
         </div>
     </section>
 
@@ -457,116 +509,89 @@
     <section class="prog-phares">
         <div class="prog-container">
             <h2 class="prog-section-title">Nos mesures phares</h2>
-            <p class="prog-section-subtitle">18 engagements concrets pour Senlis</p>
+            <p class="prog-section-subtitle">19 engagements concrets pour Senlis</p>
 
             <div class="prog-phares-grid">
+                <!-- Row 1 -->
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    </div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/policiers.png" alt="" loading="lazy"></div>
                     <div class="prog-phare-text">Recrutement de policiers et approche z&eacute;ro tol&eacute;rance aux incivilit&eacute;s</div>
                 </div>
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                    </div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/ecoles.png" alt="" loading="lazy"></div>
                     <div class="prog-phare-text">R&eacute;novation des &eacute;coles en poursuivant le plan pluriannuel de travaux</div>
                 </div>
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                    </div>
-                    <div class="prog-phare-text">Aides &agrave; la r&eacute;novation des logements dans le centre-ville</div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/equipements.png" alt="" loading="lazy"></div>
+                    <div class="prog-phare-text">De nouveaux &eacute;quipements dans tous les quartiers</div>
                 </div>
+                <!-- Row 2 -->
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                    </div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/led.png" alt="" loading="lazy"></div>
                     <div class="prog-phare-text">G&eacute;n&eacute;ralisation de l'&eacute;clairage public LED en 4 ans</div>
                 </div>
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-                    </div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/logements.png" alt="" loading="lazy"></div>
+                    <div class="prog-phare-text">Aides &agrave; la r&eacute;novation des logements dans le centre-ville</div>
+                </div>
+                <div class="prog-phare-card">
+                    <div class="prog-phare-icon"><img src="images/programme/icons/travaux.png" alt="" loading="lazy"></div>
+                    <div class="prog-phare-text">Restauration de la cath&eacute;drale</div>
+                </div>
+                <div class="prog-phare-card">
+                    <div class="prog-phare-icon"><img src="images/programme/icons/senlis-lumiere.png" alt="" loading="lazy"></div>
+                    <div class="prog-phare-text">Cr&eacute;ation d'un guichet unique &agrave; la mairie</div>
+                </div>
+                <!-- Row 3 -->
+                <div class="prog-phare-card">
+                    <div class="prog-phare-icon"><img src="images/programme/icons/pole-culturel.png" alt="" loading="lazy"></div>
                     <div class="prog-phare-text">D&eacute;veloppement du p&ocirc;le culturel du quartier Ordener</div>
                 </div>
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                    </div>
-                    <div class="prog-phare-text">De nouveaux &eacute;quipements dans tous les quartiers</div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/hub-sportif.png" alt="" loading="lazy"></div>
+                    <div class="prog-phare-text">Cr&eacute;ation d'un &laquo; hub &raquo; sportif, moderne et accessible au complexe sportif Yves Carlier</div>
                 </div>
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    </div>
-                    <div class="prog-phare-text">Cr&eacute;ation d'un guichet unique &agrave; la mairie</div>
-                </div>
-                <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    </div>
-                    <div class="prog-phare-text">Restauration de la cath&eacute;drale (10 M&euro;)</div>
-                </div>
-                <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-                    </div>
-                    <div class="prog-phare-text">Hub sportif moderne et accessible au complexe Yves Carlier</div>
-                </div>
-                <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 12 3 12 0v-5"/></svg>
-                    </div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/universitaire.png" alt="" loading="lazy"></div>
                     <div class="prog-phare-text">Installation d'un p&ocirc;le universitaire &agrave; Senlis</div>
                 </div>
+                <!-- Row 4 -->
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-                    </div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/voie-verte.png" alt="" loading="lazy"></div>
                     <div class="prog-phare-text">Ouverture de la voie verte Senlis&ndash;Chantilly</div>
                 </div>
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                    </div>
-                    <div class="prog-phare-text">Un p&ocirc;le sant&eacute; &agrave; l'&Eacute;coquartier</div>
-                </div>
-                <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-                    </div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/guichet.png" alt="" loading="lazy"></div>
                     <div class="prog-phare-text">Mise en place d'un budget participatif</div>
                 </div>
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12l2 2 4-4"/></svg>
-                    </div>
-                    <div class="prog-phare-text">Le parc &eacute;cologique r&eacute;invent&eacute;</div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/cathedrale.png" alt="" loading="lazy"></div>
+                    <div class="prog-phare-text">Senlis en Lumi&egrave;re</div>
                 </div>
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                    </div>
-                    <div class="prog-phare-text">Senlis en Lumi&egrave;re : illumination artistique des monuments</div>
-                </div>
-                <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                    </div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/restauration-scolaire.png" alt="" loading="lazy"></div>
                     <div class="prog-phare-text">Restauration scolaire 100 % locale</div>
                 </div>
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    </div>
-                    <div class="prog-phare-text">Parcours &laquo; Voyage au temps des premiers rois de France &raquo;</div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/label-aines.png" alt="" loading="lazy"></div>
+                    <div class="prog-phare-text">Obtenir le label &laquo; Ville amie des a&icirc;n&eacute;s &raquo;</div>
+                </div>
+                <!-- Row 5 -->
+                <div class="prog-phare-card">
+                    <div class="prog-phare-icon"><img src="images/programme/icons/pole-sante.png" alt="" loading="lazy"></div>
+                    <div class="prog-phare-text">Un p&ocirc;le sant&eacute; &agrave; l'&Eacute;coquartier</div>
                 </div>
                 <div class="prog-phare-card">
-                    <div class="prog-phare-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                    </div>
-                    <div class="prog-phare-text">Obtenir le label &laquo; Ville amie des a&icirc;n&eacute;s &raquo;</div>
+                    <div class="prog-phare-icon"><img src="images/programme/icons/parc-ecologique.png" alt="" loading="lazy"></div>
+                    <div class="prog-phare-text">Le parc &eacute;cologique r&eacute;invent&eacute;</div>
+                </div>
+                <div class="prog-phare-card">
+                    <div class="prog-phare-icon"><img src="images/programme/icons/voyage-rois.png" alt="" loading="lazy"></div>
+                    <div class="prog-phare-text">D&eacute;ploiement du parcours &laquo; Voyage au temps des premiers rois de France &raquo;</div>
+                </div>
+                <div class="prog-phare-card">
+                    <div class="prog-phare-icon"><img src="images/programme/icons/budget-participatif.png" alt="" loading="lazy"></div>
+                    <div class="prog-phare-text">Cr&eacute;ation d'un &eacute;v&eacute;nement festif et f&eacute;d&eacute;rateur</div>
                 </div>
             </div>
         </div>
@@ -581,8 +606,8 @@
             <!-- 1. SÉCURITÉ -->
             <div class="prog-theme" id="theme-securite">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-securite')">
-                    <div class="prog-theme-icon prog-color-securite">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <div class="prog-theme-image">
+                        <img src="images/programme/securite.png" alt="S&eacute;curit&eacute;">
                     </div>
                     <div class="prog-theme-title">
                         <h3>S&eacute;curit&eacute;</h3>
@@ -594,9 +619,12 @@
                 </div>
                 <div class="prog-theme-body">
                     <div class="prog-theme-content">
-                        <p>Senlis est une ville paisible. Notre responsabilit&eacute; est de pr&eacute;server cette tranquillit&eacute;, sans c&eacute;der &agrave; la peur ni &agrave; l'inaction.</p>
+                        <p><strong>Senlis est une ville paisible.</strong> Notre responsabilit&eacute; est de pr&eacute;server cette tranquillit&eacute;, sans c&eacute;der &agrave; la peur ni &agrave; l'inaction. La s&eacute;curit&eacute; repose sur une pr&eacute;sence humaine, des r&egrave;gles claires et des r&eacute;ponses concr&egrave;tes.</p>
 
-                        <h4>Approche &laquo; Z&eacute;ro tol&eacute;rance aux incivilit&eacute;s &raquo;</h4>
+                        <h4>Approche &laquo; Z&eacute;ro tol&eacute;rance aux incivilit&eacute;s &raquo; : une s&eacute;curit&eacute; partag&eacute;e</h4>
+                        <p>Nous m&egrave;nerons une politique claire : tol&eacute;rance z&eacute;ro face aux incivilit&eacute;s, tol&eacute;rance z&eacute;ro face &agrave; l'inaction. Chaque incivilit&eacute; appelle une r&eacute;ponse, chaque r&egrave;gle doit &ecirc;tre respect&eacute;e, chaque habitant doit se sentir prot&eacute;g&eacute;.</p>
+                        <p>La tranquillit&eacute; publique repose aussi sur l'implication citoyenne. La politique &laquo; Z&eacute;ro incivilit&eacute; &raquo; doit &ecirc;tre participative, avec des <strong>campagnes de sensibilisation</strong> impliquant les habitants. Renforcement du dispositif <strong>&laquo; participation citoyenne &raquo;</strong> (anciennement &laquo; voisins vigilants &raquo;), en lien avec la gendarmerie, en augmentant le nombre de volontaires afin que les habitants soient pleinement acteurs de la s&eacute;curit&eacute;.</p>
+                        <p>Maintien et renforcement de l'op&eacute;ration <strong>&laquo; Tranquillit&eacute; vacances &raquo;</strong>. &Ecirc;tre constamment &agrave; l'&eacute;coute des habitants et des commer&ccedil;ants afin d'identifier les points &agrave; am&eacute;liorer en mati&egrave;re de s&eacute;curit&eacute;.</p>
                         <ul>
                             <li>Sanctions syst&eacute;matiques contre les comportements inciviques</li>
                             <li>Approche &laquo; tu casses, tu r&eacute;pares / tu salis, tu nettoies &raquo; avec le tribunal de Senlis</li>
@@ -608,10 +636,10 @@
 
                         <h4>Pr&eacute;sence renforc&eacute;e de la police municipale</h4>
                         <ul>
-                            <li>Recrutement d'agents suppl&eacute;mentaires (15 policiers actuellement)</li>
-                            <li>Patrouilles p&eacute;destres accrues, police municipale et gendarmerie</li>
-                            <li>R&eacute;flexion sur une patrouille &eacute;questre en p&eacute;riode estivale</li>
-                            <li>Renforcement des contr&ocirc;les dans les &eacute;tablissements scolaires</li>
+                            <li>Recrutement d'agents suppl&eacute;mentaires (15 policiers municipaux actuellement)</li>
+                            <li>Accro&icirc;tre les patrouilles p&eacute;destres de la police municipale et de la gendarmerie</li>
+                            <li>R&eacute;flexion sur la <strong>mise en place d'une patrouille &eacute;questre</strong>, en partenariat avec la gendarmerie, en p&eacute;riodes estivales</li>
+                            <li>Renforcer les <strong>contr&ocirc;les dans les &eacute;tablissements scolaires</strong>, notamment par des op&eacute;rations conjointes avec la gendarmerie</li>
                         </ul>
 
                         <h4>S&eacute;curit&eacute; routi&egrave;re</h4>
@@ -619,17 +647,19 @@
                             <li>Passages pi&eacute;tons sur-&eacute;clair&eacute;s la nuit</li>
                             <li>Renforcement des contr&ocirc;les de vitesse et am&eacute;nagements routiers</li>
                             <li>Lutte contre les d&eacute;p&ocirc;ts sauvages avec verbalisation syst&eacute;matique (syst&egrave;me Vizzia)</li>
+                            <li>Renforcement des contr&ocirc;les pour les <strong>stationnements g&ecirc;nants</strong> sur les trottoirs</li>
                             <li>&Eacute;clairage et cam&eacute;ras sur la voie verte</li>
                         </ul>
 
                         <h4>Vid&eacute;o-protection &eacute;tendue et modernis&eacute;e</h4>
                         <ul>
                             <li>Remplacement progressif par des cam&eacute;ras haute d&eacute;finition (d&eacute;j&agrave; + de 100 cam&eacute;ras)</li>
-                            <li>Renforcement du Centre de Supervision Urbain (CSU)</li>
-                            <li>Cam&eacute;ras-pi&eacute;tons de nouvelle g&eacute;n&eacute;ration pour la police municipale</li>
+                            <li>Renforcement du Centre de Supervision Urbain (CSU), en compl&eacute;ment du Centre de Supervision D&eacute;partemental</li>
+                            <li>Cam&eacute;ras-pi&eacute;tons de nouvelle g&eacute;n&eacute;ration synchronis&eacute;es avec pistolets &agrave; impulsion &eacute;lectrique pour la police municipale</li>
                         </ul>
 
-                        <h4>Anticiper les risques</h4>
+                        <h4>Anticiper les risques et prot&eacute;ger en cas d'urgence</h4>
+                        <p>La commune doit &ecirc;tre pr&ecirc;te face aux crises (inondation, effondrement, ph&eacute;nom&egrave;ne m&eacute;t&eacute;o, accident, etc.) :</p>
                         <ul>
                             <li>Mise &agrave; jour du Plan Communal de Sauvegarde</li>
                             <li>Diffusion de fiches r&eacute;flexes aux habitants</li>
@@ -637,7 +667,7 @@
                         </ul>
 
                         <div class="prog-highlight-box">
-                            <p><strong>Agir contre les violences conjugales et intrafamiliales :</strong> Senlis sera candidate pour cr&eacute;er un lieu d&eacute;di&eacute; &agrave; l'accueil des victimes, en lien avec le tribunal judiciaire.</p>
+                            <p><strong>Agir contre les violences conjugales et intrafamiliales :</strong> Le Tribunal judiciaire de Senlis a pour projet en 2026 de d&eacute;velopper l'aide aux victimes. Il encouragera notamment la cr&eacute;ation d'un lieu d&eacute;di&eacute; &agrave; l'accueil des victimes hors les murs du tribunal. <strong>Senlis sera candidate afin de mettre en &oelig;uvre un accueil adapt&eacute;</strong>, et en veillant &agrave; la formation sp&eacute;cifique des agents municipaux.</p>
                         </div>
                     </div>
                 </div>
@@ -646,8 +676,8 @@
             <!-- 2. DÉVELOPPEMENT ÉCONOMIQUE -->
             <div class="prog-theme" id="theme-economie">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-economie')">
-                    <div class="prog-theme-icon prog-color-economie">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <div class="prog-theme-image">
+                        <img src="images/programme/gare.png" alt="D&eacute;veloppement &eacute;conomique">
                     </div>
                     <div class="prog-theme-title">
                         <h3>D&eacute;veloppement &eacute;conomique</h3>
@@ -659,33 +689,35 @@
                 </div>
                 <div class="prog-theme-body">
                     <div class="prog-theme-content">
+                        <p>Senlis doit pleinement rester attentive aux besoins de ses acteurs &eacute;conomiques et &ecirc;tre engag&eacute;e &agrave; leurs c&ocirc;t&eacute;s pour accompagner leur d&eacute;veloppement. Cela se fera en lien avec la Communaut&eacute; de Communes Senlis Sud Oise (CCSSO), comp&eacute;tente en mati&egrave;re de d&eacute;veloppement &eacute;conomique.</p>
+
                         <h4>Attractivit&eacute; &eacute;conomique et emploi</h4>
                         <ul>
-                            <li>&Eacute;lu r&eacute;f&eacute;rent &laquo; relations entreprises, commerce, artisanat &raquo; issu du monde de l'entreprise</li>
-                            <li>Collaboration accentu&eacute;e avec France Travail et la Mission Locale pour l'Emploi des Jeunes</li>
-                            <li>Guide d'installation du chef d'entreprise &agrave; Senlis</li>
-                            <li>Am&eacute;lioration de la couverture 5G</li>
+                            <li><strong>Un &eacute;lu r&eacute;f&eacute;rent &laquo; relations entreprises, commerce, artisanat &raquo;</strong>, issu du monde de l'entreprise, charg&eacute; d'un dialogue r&eacute;gulier avec les acteurs &eacute;conomiques et d&eacute;di&eacute; au soutien du commerce de centre-ville et des quartiers</li>
+                            <li>Collaboration accentu&eacute;e avec <strong>France Travail et la Mission Locale pour l'Emploi des Jeunes</strong></li>
+                            <li><strong>Guide d'installation du chef d'entreprise &agrave; Senlis :</strong> un outil clair et pratique pour accompagner les cr&eacute;ateurs et repreneurs (d&eacute;marches, foncier, aides, contacts cl&eacute;s)</li>
+                            <li>Intervention aupr&egrave;s des op&eacute;rateurs t&eacute;l&eacute;phoniques pour <strong>am&eacute;liorer la couverture 5G</strong></li>
                         </ul>
 
                         <h4>Attractivit&eacute; commerciale</h4>
                         <ul>
-                            <li>March&eacute; dominical apr&egrave;s consultation des habitants et commer&ccedil;ants</li>
-                            <li>Soutien amplifi&eacute; aux associations de commer&ccedil;ants</li>
-                            <li>Grand march&eacute; des producteurs : &eacute;v&eacute;nement annuel avec 100 producteurs locaux</li>
-                            <li>Manager de centre-ville pour dynamiser le commerce</li>
-                            <li>Kiosque de presse en centre-ville</li>
+                            <li>Installer un <strong>march&eacute; dominical</strong>, apr&egrave;s consultation des habitants et des commer&ccedil;ants</li>
+                            <li>Organiser un <strong>&laquo; Grand march&eacute; des producteurs &raquo;</strong> : &eacute;v&eacute;nement annuel &agrave; l'automne r&eacute;unissant 100 producteurs locaux, localis&eacute; aussi dans les quartiers</li>
+                            <li>Amplifier le <strong>soutien aux associations de commer&ccedil;ants</strong></li>
+                            <li>Mise en place d'un <strong>manager de centre-ville</strong> pour dynamiser et coordonner les actions</li>
+                            <li>Un <strong>kiosque de presse</strong>, int&eacute;gr&eacute; au patrimoine senlisien, install&eacute; en centre-ville en lien avec la CCI de l'Oise pour le recrutement d'un kiosquier</li>
                         </ul>
 
                         <h4>Tourisme</h4>
                         <ul>
-                            <li>Renforcement du partenariat avec l'Office du Tourisme</li>
-                            <li>Retour de la cal&egrave;che pour d&eacute;couvrir la ville</li>
-                            <li>Accompagnement d'un projet d'h&ocirc;tellerie haut de gamme</li>
-                            <li>Senlis ville de cin&eacute;ma : parcours d&eacute;di&eacute;s, interviews d'&eacute;quipes de films</li>
+                            <li>Renforcement de notre solide partenariat avec <strong>l'Office du Tourisme</strong></li>
+                            <li><strong>Retour de la cal&egrave;che :</strong> promenade pittoresque pour d&eacute;couvrir la ville, dans le respect du bien-&ecirc;tre animal</li>
+                            <li><strong>Projet H&ocirc;tel haut gamme :</strong> accompagner un projet d'h&ocirc;tellerie pour renforcer la capacit&eacute; d'accueil touristique</li>
+                            <li><strong>Senlis ville de cin&eacute;ma :</strong> continuer &agrave; valoriser Senlis &agrave; travers les tournages, organiser des interviews avec les &eacute;quipes de films, cr&eacute;er des parcours d&eacute;di&eacute;s</li>
                         </ul>
 
                         <div class="prog-highlight-box">
-                            <p><strong>P&ocirc;le universitaire &agrave; Senlis :</strong> Installation d'une &eacute;cole sup&eacute;rieure en lien avec la R&eacute;gion. Options en discussion : m&eacute;tiers du droit, du cin&eacute;ma ou du luxe.</p>
+                            <p><strong>Cr&eacute;ation d'un p&ocirc;le universitaire &agrave; Senlis :</strong> Nous travaillerons avec la R&eacute;gion afin d'organiser l'installation d'une &eacute;cole sup&eacute;rieure &agrave; Senlis, <strong>pour offrir &agrave; nos jeunes une option &eacute;ducative dans notre ville</strong>, ce qui contribuera &agrave; son rayonnement. Plusieurs options sont en cours de discussion, dont celles des m&eacute;tiers du droit, du cin&eacute;ma ou du luxe.</p>
                         </div>
                     </div>
                 </div>
@@ -694,8 +726,8 @@
             <!-- 3. CADRE DE VIE -->
             <div class="prog-theme" id="theme-cadre">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-cadre')">
-                    <div class="prog-theme-icon prog-color-cadre">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <div class="prog-theme-image">
+                        <img src="images/programme/centre-ville-rue.png" alt="Cadre de vie">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Cadre de vie</h3>
@@ -707,36 +739,62 @@
                 </div>
                 <div class="prog-theme-body">
                     <div class="prog-theme-content">
-                        <h4>R&eacute;novation des voiries</h4>
-                        <p>Poursuite du plan pluriannuel : avenue de Chantilly, avenue du G&eacute;n&eacute;ral De Gaulle, partie ouest de l'avenue Cl&eacute;menceau, rues du Pont de Pierre, de l'Orme qui baie, du Moulin St Rieul, de la Contrescarpe, Vieille de Paris, de la Tonnellerie, du Petit Chaalis, place Saint-Frambourg, rue Saint-Lazare et chemin du Biat.</p>
+                        <p>Ann&eacute;e apr&egrave;s ann&eacute;e, de nombreux travaux sont men&eacute;s, de nouveaux &eacute;quipements install&eacute;s, pour que <strong>Senlis soit toujours une ville plus agr&eacute;able &agrave; vivre pour ses habitants.</strong> Nous y travaillons au quotidien et poursuivrons nos efforts.</p>
+
+                        <h4>Poursuite du plan pluriannuel de r&eacute;novation des voiries</h4>
+                        <p>Nous pr&eacute;voyons la <strong>r&eacute;novation des voiries suivantes :</strong> avenue de Chantilly, avenue du G&eacute;n&eacute;ral De Gaulle, la partie ouest de l'avenue Cl&eacute;menceau, les rues du Pont de Pierre, de l'Orme qui baie, du Moulin St Rieul (partie haute), de la Contrescarpe, Vieille de Paris, de la Tonnellerie, du Petit Chaalis, place Saint-Frambourg, rue Saint-Lazare et chemin du Biat.</p>
                         <ul>
-                            <li>Contr&ocirc;le syst&eacute;matique du sous-sol avant chaque intervention</li>
-                            <li>Travaux sur canalisations et enfouissement des r&eacute;seaux a&eacute;riens</li>
+                            <li><strong>Contr&ocirc;le syst&eacute;matique du sous-sol</strong> r&eacute;alis&eacute; par le service municipal nouvellement cr&eacute;&eacute;, d&eacute;di&eacute; &agrave; l'&eacute;tude et &agrave; la s&eacute;curisation des cavit&eacute;s senlisiennes</li>
+                            <li>Si n&eacute;cessaire, <strong>travaux sur les canalisations et sur l'enfouissement des r&eacute;seaux a&eacute;riens</strong> (&eacute;lectricit&eacute;, t&eacute;l&eacute;phone, fibre)</li>
+                            <li>L'entretien des voiries se poursuivra avec le <strong>d&eacute;veloppement de techniques innovantes</strong> de traitement</li>
                         </ul>
 
                         <div class="prog-highlight-box">
-                            <p><strong>&Eacute;clairage public :</strong> G&eacute;n&eacute;ralisation des LED en 4 ans dans toute la ville, avec pilotage de l'intensit&eacute; selon les lieux.</p>
+                            <p><strong>&Eacute;clairage public : une &eacute;volution profonde.</strong> G&eacute;n&eacute;ralisation des LED en 4 ans dans toute la ville, avec pilotage de l'intensit&eacute; selon les lieux, conciliant sobri&eacute;t&eacute; &eacute;nerg&eacute;tique et renforcement du sentiment de s&eacute;curit&eacute; des habitants.</p>
                         </div>
 
-                        <h4>Mobilit&eacute;s</h4>
+                        <h4>Saint-Frambourg : la planification des travaux</h4>
                         <ul>
-                            <li>Grande &eacute;tude de circulation d&egrave;s le d&eacute;but du mandat</li>
-                            <li><strong>Ouverture de la voie verte Senlis-Chantilly</strong></li>
-                            <li>Poursuite du sch&eacute;ma cyclable intra-muros</li>
-                            <li>Adaptation des horaires du TUS, nouveaux arr&ecirc;ts</li>
-                            <li>Bornes de recharge pour v&eacute;hicules &eacute;lectriques</li>
-                            <li>Navette &eacute;lectrique et taxi-v&eacute;lo pour le centre-ville</li>
-                            <li>Maison du v&eacute;lo &agrave; la gare (r&eacute;paration, location, information)</li>
-                            <li>Tous les parkings p&eacute;riph&eacute;riques resteront gratuits</li>
+                            <li><strong>Mars &agrave; avril 2026 :</strong> travaux de reprise d'&eacute;taiement de l'habitation pour permettre la d&eacute;pose du plancher</li>
+                            <li><strong>Mai &agrave; juillet 2026 :</strong> travaux de purge et comblement de la zone effondr&eacute;e</li>
+                            <li><strong>Septembre / octobre 2026 :</strong> travaux de d&eacute;voiement des canalisations d'assainissement et d'eau potable</li>
+                            <li><strong>Novembre 2026 &agrave; mars 2027 :</strong> travaux de requalification de la place</li>
                         </ul>
 
-                        <h4>Logement : politique ma&icirc;tris&eacute;e</h4>
+                        <h4>Amplifier nos efforts pour plus de mobilit&eacute;s</h4>
+                        <p>Les conditions de cohabitation entre usagers ont d&eacute;j&agrave; progress&eacute;. Avec 40 % des Senlisiens travaillant sur place, la Ville encourage les d&eacute;placements &agrave; pied, &agrave; v&eacute;lo, en transports en commun et en covoiturage.</p>
                         <ul>
-                            <li>Aucune terre agricole ou naturelle urbanis&eacute;e</li>
-                            <li>OPAH-RU : 5,2 M&euro; pour r&eacute;nover 420 logements dans 139 immeubles du centre historique</li>
-                            <li>Accompagnement gratuit des propri&eacute;taires via la Maison de l'habitat</li>
-                            <li>Fonds d'aide &agrave; la r&eacute;novation des devantures commerciales</li>
+                            <li>R&eacute;alisation d&egrave;s le d&eacute;but du mandat d'une <strong>grande &eacute;tude de circulation</strong> sur toute la ville</li>
+                            <li><strong>Ouverture de la voie verte Senlis-Chantilly</strong> pour des d&eacute;placements s&eacute;curis&eacute;s et le tourisme &agrave; v&eacute;lo</li>
+                            <li>Poursuite du <strong>sch&eacute;ma cyclable intra-muros</strong> reliant centre-ville, quartiers, &eacute;coquartier et parc &eacute;cologique</li>
+                            <li>Adaptation des horaires du TUS et cr&eacute;ation de nouveaux arr&ecirc;ts avenue du G&eacute;n&eacute;ral de Gaulle</li>
+                            <li>Maintien de la <strong>ligne de car 630</strong> (Creil&ndash;Senlis&ndash;Roissy)</li>
+                            <li>D&eacute;ploiement de <strong>bornes de recharge</strong> pour v&eacute;hicules &eacute;lectriques</li>
+                            <li>Am&eacute;lioration de l'accessibilit&eacute; du centre-ville pour tous (<strong>navette &eacute;lectrique, taxi-v&eacute;lo</strong>)</li>
+                            <li>Cr&eacute;ation d'une <strong>maison du v&eacute;lo &agrave; la gare</strong> (r&eacute;paration, location, information)</li>
+                            <li><strong>Tous les parkings p&eacute;riph&eacute;riques resteront gratuits</strong></li>
                         </ul>
+
+                        <h4>Logement : une politique ma&icirc;tris&eacute;e</h4>
+                        <p><strong>Nos principes fondateurs :</strong></p>
+                        <ul>
+                            <li>Pr&eacute;server la nature et les espaces agricoles : <strong>aucune terre agricole ou naturelle urbanis&eacute;e</strong></li>
+                            <li>Stabiliser la d&eacute;mographie et maintenir une population &eacute;quilibr&eacute;e</li>
+                            <li>Assurer le renouvellement urbain : r&eacute;novation, r&eacute;habilitation et densification douce &agrave; l'int&eacute;rieur de la ville existante</li>
+                            <li>Pr&eacute;parer l'avenir sans d&eacute;naturer la ville : architecture ma&icirc;tris&eacute;e, hauteur des constructions limit&eacute;e et int&eacute;gration paysag&egrave;re</li>
+                            <li>Renforcer l'&eacute;quilibre &eacute;conomique et social : permettre aux jeunes, familles et seniors de vivre et travailler &agrave; Senlis</li>
+                        </ul>
+                        <p><strong>Engagements :</strong></p>
+                        <ul>
+                            <li>Prioriser la <strong>r&eacute;novation de l'ancien</strong> et la lutte contre la vacance via l'Op&eacute;ration Programm&eacute;e d'Am&eacute;lioration de l'Habitat &ndash; Renouvellement Urbain</li>
+                            <li>Renforcer l'<strong>accompagnement des locataires</strong> du parc priv&eacute; et social confront&eacute;s &agrave; des logements d&eacute;grad&eacute;s, en lien &eacute;troit avec les bailleurs</li>
+                            <li><strong>OPAH-RU :</strong> dot&eacute;e de 5,2 M&euro; sur 2025-2030 (ANAH, &Eacute;tat, Ville, CCSSO), l'OPAH-RU permettra de <strong>r&eacute;nover 420 logements dans 139 immeubles du centre historique</strong>, majoritairement anciens et fragiles, afin d'am&eacute;liorer la qualit&eacute; de l'habitat, r&eacute;duire les charges &eacute;nerg&eacute;tiques et renforcer l'attractivit&eacute; du centre-ville</li>
+                            <li>Accompagnement gratuit des propri&eacute;taires, avec des permanences &agrave; la <strong>Maison de l'habitat</strong></li>
+                            <li>Mise en place d'un <strong>fonds d'aide &agrave; la r&eacute;novation des devantures commerciales</strong></li>
+                        </ul>
+
+                        <h4>Dernier kilom&egrave;tre et cyclologistique</h4>
+                        <p>La commune d&eacute;veloppera une logistique urbaine innovante pour r&eacute;duire l'impact des livraisons en centre-ville et dans les quartiers r&eacute;sidentiels. Une plateforme de mutualisation des flux favorisera des livraisons d&eacute;carbon&eacute;es, notamment par v&eacute;los-cargo, limitant nuisances, encombrements et d&eacute;gradation du sous-sol.</p>
 
                         <h4>Protection animale</h4>
                         <ul>
@@ -752,8 +810,8 @@
             <!-- 4. CULTURE & PATRIMOINE -->
             <div class="prog-theme" id="theme-culture">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-culture')">
-                    <div class="prog-theme-icon prog-color-culture">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    <div class="prog-theme-image">
+                        <img src="images/programme/cathedrale-aerienne.png" alt="Culture &amp; Patrimoine">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Culture &amp; Patrimoine</h3>
@@ -765,41 +823,46 @@
                 </div>
                 <div class="prog-theme-body">
                     <div class="prog-theme-content">
+                        <p>Senlis poss&egrave;de un patrimoine exceptionnel qui constitue &agrave; la fois son identit&eacute; et son principal atout d'attractivit&eacute;. La politique culturelle doit conjuguer pr&eacute;servation, valorisation et accessibilit&eacute; pour tous les publics.</p>
+                        <p><strong>Nos deux grands objectifs :</strong> renforcer l'attractivit&eacute; touristique de Senlis autour de l'histoire des premiers rois de France, et faire de la culture un levier &eacute;conomique local, en attirant de nouveaux publics au b&eacute;n&eacute;fice des commerces, de l'h&ocirc;tellerie et du centre-ville.</p>
+
+                        <h4>Restauration de la cath&eacute;drale</h4>
+                        <p>Le plan de restauration de la cath&eacute;drale repose sur un diagnostic r&eacute;alis&eacute; en 2024 par le cabinet d'architectes T'KINT. Il a conduit &agrave; l'&eacute;laboration d'un Plan Pluriannuel d'Investissement de <strong>10 millions d'euros</strong>, structur&eacute; en sept phases de travaux. La Ville recherchera des subventions publiques et du m&eacute;c&eacute;nat pour accompagner ce projet majeur qui s'&eacute;talera sur deux mandats.</p>
                         <div class="prog-highlight-box">
-                            <p><strong>Restauration de la cath&eacute;drale :</strong> Plan pluriannuel de 10 millions d'euros en sept phases &mdash; couverture, ma&ccedil;onneries, cl&eacute;s pendantes, vitraux, s&eacute;curit&eacute; incendie, &eacute;tanch&eacute;it&eacute;. Subventions publiques et m&eacute;c&eacute;nat.</p>
+                            <p><strong>Travaux pr&eacute;vus :</strong> travaux de couverture, restauration des ma&ccedil;onneries (fa&ccedil;ades, arc-boutants, piliers), restauration des cl&eacute;s pendantes, d&eacute;v&eacute;g&eacute;talisation et traitement des joints, restauration des vitraux, mise en s&eacute;curit&eacute; des tribunes (garde-corps), mise en conformit&eacute; de la s&eacute;curit&eacute; incendie, traitement de l'&eacute;tanch&eacute;it&eacute; des terrasses.</p>
                         </div>
 
                         <h4>Politique culturelle</h4>
                         <ul>
-                            <li>Cr&eacute;ation d'une manifestation bisannuelle de grande ampleur</li>
-                            <li>Acc&egrave;s &agrave; la culture pour tous : animations, spectacles et reconstitutions gratuites ou &agrave; faible co&ucirc;t</li>
-                            <li>Maintien du label &laquo; Pays d'Art et d'Histoire &raquo;</li>
-                            <li>Cr&eacute;ation d'une artoth&egrave;que (pr&ecirc;t d'&oelig;uvres d'art)</li>
+                            <li><strong>Cr&eacute;er une manifestation de grande ampleur &agrave; Senlis :</strong> inscrire durablement un &eacute;v&eacute;nement bisannuel dans le calendrier culturel de la ville, en d&eacute;veloppant par exemple la Foire m&eacute;di&eacute;vale organis&eacute;e par les associations Cit&eacute; d'Antan et les Figurants de l'histoire</li>
+                            <li><strong>Favoriser l'acc&egrave;s &agrave; la culture pour tous :</strong> proposer des animations, spectacles et reconstitutions gratuites ou &agrave; tr&egrave;s faible co&ucirc;t, ouvertes &agrave; tous les publics</li>
+                            <li><strong>Maintenir le label &laquo; Pays d'Art et d'Histoire &raquo;</strong>, obtenu en 2015, pour sensibiliser les habitants, les visiteurs et le jeune public &agrave; la qualit&eacute; du patrimoine</li>
+                            <li><strong>Cr&eacute;er une artoth&egrave;que :</strong> permettre &agrave; chaque Senlisien de s'approprier une &oelig;uvre pendant un moment d&eacute;termin&eacute;. Ce dispositif profitera &eacute;galement aux &eacute;tablissements scolaires</li>
                         </ul>
 
                         <h4>P&ocirc;le culturel du quartier Ordener</h4>
                         <ul>
-                            <li><strong>Conservatoire de musique et de danse :</strong> 600 &eacute;l&egrave;ves dans l'ancien mess des officiers r&eacute;habilit&eacute; (rentr&eacute;e 2026)</li>
-                            <li>Radio locale, studio d'enregistrement, espace sc&eacute;nique</li>
-                            <li>R&eacute;habilitation du b&acirc;timent 20 : artisans d'art</li>
-                            <li>Spectacles au man&egrave;ge Ordener avec nouveaux gradins</li>
+                            <li><strong>Conservatoire de musique et de danse :</strong> il pourra accueillir, &agrave; la rentr&eacute;e 2026, 600 &eacute;l&egrave;ves dans l'ancien mess des officiers r&eacute;habilit&eacute;. Il accueillera quatre p&ocirc;les fonctionnels (p&ocirc;le accueil, p&ocirc;le administratif, p&ocirc;le de danse, p&ocirc;le de musique) organis&eacute;s autour d'espaces ext&eacute;rieurs destin&eacute;s &agrave; accueillir les &eacute;l&egrave;ves, leurs familles et des repr&eacute;sentations. La Ville souhaite obtenir l'agr&eacute;ment de Conservatoire &agrave; Rayonnement Communal (CRC) attribu&eacute; par le Minist&egrave;re de la Culture</li>
+                            <li><strong>Am&eacute;nagement de trois espaces d&eacute;di&eacute;s &agrave; la cr&eacute;ation :</strong> une radio locale, un studio d'enregistrement, et un espace sc&eacute;nique pour les artistes locaux</li>
+                            <li><strong>R&eacute;habilitation b&acirc;timent 20 (Ordener) :</strong> en lien avec la CCSSO, installation d'artisans d'art</li>
+                            <li><strong>Spectacles au man&egrave;ge Ordener :</strong> programmation de concerts et &eacute;v&eacute;nements b&eacute;n&eacute;ficiant des nouveaux gradins mis en place dans le man&egrave;ge Ordener</li>
                         </ul>
 
                         <h4>Senlis en Lumi&egrave;re</h4>
-                        <p>Programme d'illumination artistique et patrimoniale des monuments emblématiques, avec technologies LED basse consommation.</p>
+                        <p>Cr&eacute;ation d'un programme d'illumination artistique et patrimoniale des monuments embl&eacute;matiques de la ville dans le respect de l'environnement (lutte contre la pollution lumineuse, technologies LED basse consommation).</p>
 
                         <h4>Voyage au temps des premiers rois de France</h4>
-                        <p>Parcours culturel et touristique : ch&acirc;teau royal, cath&eacute;drale, &eacute;glise Saint-Pierre, ouverture de lieux jusqu'alors peu accessibles.</p>
+                        <p>Nous poursuivrons le <strong>d&eacute;veloppement du parcours culturel et touristique</strong> &laquo; Voyage au temps des premiers rois de France &raquo;, initi&eacute; par le spectacle immersif de la cave gothique du mus&eacute;e de la V&eacute;nerie. Il permettra de d&eacute;couvrir entre autres le ch&acirc;teau royal, la cath&eacute;drale, l'&eacute;glise Saint-Pierre, gr&acirc;ce &agrave; l'ouverture au public de lieux jusqu'alors peu accessibles.</p>
 
-                        <h4>Patrimoine b&acirc;ti</h4>
+                        <h4>Les biens patrimoniaux de la ville doivent &ecirc;tre pr&eacute;serv&eacute;s et valoris&eacute;s</h4>
                         <ul>
-                            <li>Impasse Baum&eacute; et h&ocirc;tel du Vermandois : recherche de porteurs de projets</li>
-                            <li>Optimisation des b&acirc;timents municipaux (Saint-Pierre, man&egrave;ge Ordener, gare)</li>
-                            <li>R&eacute;novation de la maison des loisirs et de la salle Cl&eacute;menceau</li>
+                            <li><strong>Impasse Baum&eacute; et h&ocirc;tel du Vermandois :</strong> la Ville poursuivra la recherche de porteurs de projets pour valoriser ces b&acirc;timents, qui resteront propri&eacute;t&eacute; communale</li>
+                            <li><strong>Optimisation de l'utilisation des b&acirc;timents municipaux,</strong> par exemple l'ancienne &eacute;glise Saint-Pierre, le man&egrave;ge Ordener et la gare</li>
+                            <li><strong>R&eacute;nover la maison des loisirs et la salle Cl&eacute;menceau</strong></li>
                         </ul>
 
                         <h4>P&ocirc;le &laquo; F&ecirc;tes et &Eacute;v&eacute;nementiel &raquo;</h4>
-                        <p>Calendrier &eacute;v&eacute;nementiel structur&eacute; : bal du 14 juillet, concerts, f&ecirc;tes traditionnelles pour animer le centre-ville toute l'ann&eacute;e.</p>
+                        <p>Structuration d'un calendrier &eacute;v&eacute;nementiel autour des grandes f&ecirc;tes traditionnelles, culturelles et festives (bal du 14 juillet, concerts, &hellip;). Ces &eacute;v&eacute;nements renforceront l'identit&eacute; de la ville et l'animation du centre-ville tout au long de l'ann&eacute;e.</p>
                     </div>
                 </div>
             </div>
@@ -807,8 +870,8 @@
             <!-- 5. COHÉSION SOCIALE & SOLIDARITÉ -->
             <div class="prog-theme" id="theme-cohesion">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-cohesion')">
-                    <div class="prog-theme-icon prog-color-cohesion">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <div class="prog-theme-image">
+                        <img src="images/programme/aines-danse.png" alt="Coh&eacute;sion sociale">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Coh&eacute;sion sociale &amp; Solidarit&eacute;</h3>
@@ -820,54 +883,85 @@
                 </div>
                 <div class="prog-theme-body">
                     <div class="prog-theme-content">
+                        <p><strong>Une ville n'est v&eacute;ritablement humaine que si elle porte attention &agrave; tous :</strong> familles, seniors, jeunes, personnes isol&eacute;es. Notre &eacute;quipe a la pr&eacute;occupation constante de soutenir les Senlisiens et de les accompagner dans leurs d&eacute;marches.</p>
+
                         <h4>Construire l'avenir avec et pour les jeunes</h4>
-                        <p>Concertation men&eacute;e avec des coll&eacute;giens de Senlis qui ont formul&eacute; des propositions concr&egrave;tes :</p>
+                        <p>Ce projet municipal s'appuie sur une <strong>concertation approfondie men&eacute;e avec des coll&eacute;giens de Senlis,</strong> qui ont exprim&eacute; leurs attentes et formul&eacute; des propositions concr&egrave;tes pour am&eacute;liorer leur cadre de vie. <strong>En donnant une place r&eacute;elle et durable &agrave; la parole de la jeunesse, Senlis affirme sa volont&eacute; d'&ecirc;tre une ville inclusive, vivante et attentive aux g&eacute;n&eacute;rations futures.</strong></p>
                         <ul>
                             <li>Temps forts jeunesse : journ&eacute;e des ados, olympiades, concerts</li>
-                            <li>Lieux pour se retrouver, &eacute;tudier et cr&eacute;er (pr&eacute;au des ados, espaces de travail)</li>
+                            <li>Lieux pour se retrouver, &eacute;tudier et cr&eacute;er (pr&eacute;au des ados, espaces de travail et de cr&eacute;ation artistique, salle de concert)</li>
                             <li>Acc&egrave;s am&eacute;lior&eacute; aux &eacute;quipements sportifs et de loisirs</li>
                             <li>Salle d&eacute;di&eacute;e aux jeunes &agrave; Yves Carlier</li>
                             <li>Budget participatif sur projets pour les jeunes</li>
-                            <li>Bin&ocirc;mes jeunes-seniors pour missions d'int&eacute;r&ecirc;t g&eacute;n&eacute;ral</li>
-                            <li>Forum stages et emplois saisonniers</li>
-                            <li>Soutien scolaire en ligne, 100 % financ&eacute; par la commune</li>
-                            <li>S&eacute;jours de vacances pour les jeunes qui ne partent pas</li>
+                            <li>Cr&eacute;ation de bin&ocirc;mes jeunes-seniors pour missions d'int&eacute;r&ecirc;t g&eacute;n&eacute;ral : accompagnement, m&eacute;diation, entraide</li>
+                            <li>Organisation d'un <strong>forum stages et emplois saisonniers</strong> d&eacute;di&eacute; aux &eacute;l&egrave;ves de 3&egrave;me et Seconde, en partenariat avec la CCSSO et les employeurs locaux</li>
+                            <li><strong>Clubs de d&eacute;bats</strong> en partenariat avec un club service et/ou l'UNICEF : espaces d'expression et de r&eacute;flexion pour les jeunes</li>
+                            <li>Cr&eacute;ation d'une classe ouverte dans le parc &eacute;cologique</li>
+                            <li>Mise en place de <strong>s&eacute;jours de vacances</strong> pour les jeunes Senlisiens qui ne partent pas en vacances</li>
+                            <li>Cr&eacute;ation de la <strong>&laquo; Ville aux enfants &raquo;</strong> annuelle et de la <strong>&laquo; Nuit aux jeunes &raquo;</strong></li>
+                            <li><strong>Soutien scolaire en ligne</strong>, 100 % financ&eacute; par la commune, permettant &agrave; chaque &eacute;l&egrave;ve du CP &agrave; la Terminale d'&ecirc;tre accompagn&eacute; par des enseignants de l'&Eacute;ducation nationale</li>
                         </ul>
 
-                        <h4>&Eacute;coles : plan pluriannuel</h4>
+                        <h4>Garde d'enfants</h4>
+                        <p>Nous agirons concr&egrave;tement pour faciliter la garde d'enfants. Une nouvelle cr&egrave;che a &eacute;t&eacute; cr&eacute;&eacute;e, et nous accompagnerons activement la cr&eacute;ation de nouvelles structures, tout en soutenant les assistantes maternelles de la ville et de la CCSSO, afin d'offrir aux familles des solutions diversifi&eacute;es.</p>
+
+                        <h4>&Eacute;coles : continuer le plan pluriannuel de travaux</h4>
                         <ul>
-                            <li><strong>R&eacute;novation compl&egrave;te de l'&Eacute;cole Anne de Kiev</strong> avec restauration scolaire sur place</li>
-                            <li>Maternelle Orion : remplacement des huisseries</li>
-                            <li>&Eacute;l&eacute;mentaire Argili&egrave;re : remplacement des huisseries</li>
-                            <li>Groupe Scolaire S&eacute;raphine Louis : fin des menuiseries</li>
-                            <li>Groupe Scolaire Brichebay : toiture et r&eacute;novation des classes</li>
-                            <li>Classe ouverte dans le parc &eacute;cologique</li>
+                            <li><strong>R&eacute;novation compl&egrave;te de l'&Eacute;cole Anne de Kiev</strong> proposant une restauration scolaire sur place. Nous travaillerons avec les membres du conseil d'&eacute;cole</li>
+                            <li><strong>Maternelle Orion :</strong> remplacement des huisseries en plusieurs phases classe par classe</li>
+                            <li><strong>&Eacute;l&eacute;mentaire Argili&egrave;re :</strong> remplacement des huisseries en plusieurs phases</li>
+                            <li><strong>Groupe Scolaire S&eacute;raphine Louis :</strong> fin du remplacement des menuiseries en plusieurs phases : maternelle c&ocirc;t&eacute; rue en 2026</li>
+                            <li><strong>Groupe Scolaire Brichebay :</strong> travaux de toiture et de r&eacute;novation des classes</li>
+                            <li><strong>Beauval :</strong> bardage bois de la sente</li>
                         </ul>
 
                         <h4>Sant&eacute; et solidarit&eacute;</h4>
+                        <p>L'acc&egrave;s aux soins est une priorit&eacute; pour les Senlisiens. Notre &eacute;quipe agira afin de continuer &agrave; attirer et &agrave; installer durablement des m&eacute;decins sur notre territoire.</p>
                         <ul>
                             <li><strong>P&ocirc;le de sant&eacute; dans l'&Eacute;coQuartier</strong></li>
-                            <li>Retour des urgences &agrave; Senlis, 7j/7 &mdash; campagne de recrutement d'infirmier(e)s</li>
-                            <li>Soutien aux maisons de sant&eacute; et exercice m&eacute;dical coordonn&eacute;</li>
-                            <li>Maison de sant&eacute; pluri-professionnelle (contacts en cours)</li>
-                            <li>Mutuelle municipale pour les habitants sans couverture compl&eacute;mentaire</li>
+                            <li>Soutenir les maisons de sant&eacute; et l'exercice m&eacute;dical coordonn&eacute;</li>
+                            <li>Faciliter l'installation (locaux, d&eacute;marches, accompagnement)</li>
+                            <li>Travailler avec l'Agence R&eacute;gionale de Sant&eacute; et les professionnels de sant&eacute;</li>
+                            <li>Accompagner la cr&eacute;ation d'une <strong>Maison de sant&eacute; pluri-professionnelle</strong> (contacts d&eacute;j&agrave; en cours) afin de garantir des soins accessibles pour tous les Senlisiens</li>
                         </ul>
 
-                        <h4>Bien vieillir &agrave; Senlis</h4>
+                        <div class="prog-highlight-box">
+                            <p><strong>Continuer &agrave; d&eacute;fendre l'h&ocirc;pital de Senlis.</strong> Notre priorit&eacute; est claire : obtenir le <strong>retour des urgences &agrave; Senlis, 7j/7</strong>. La r&eacute;ouverture &eacute;tant tributaire de l'embauche de nombreux infirmier(e)s, nous m&egrave;nerons une campagne de recrutement sp&eacute;cifique, avec des mesures d'accompagnement pour leur installation dans notre ville. D&eacute;fendre l'h&ocirc;pital de Senlis, c'est d&eacute;fendre l'&eacute;galit&eacute; d'acc&egrave;s aux soins, la s&eacute;curit&eacute; sanitaire et l'attractivit&eacute; de notre ville.</p>
+                        </div>
+
+                        <h4>Lutter contre la pr&eacute;carit&eacute;</h4>
                         <ul>
-                            <li>Lutte contre l'isolement : d&eacute;marches &agrave; domicile du CCAS</li>
-                            <li>Pr&eacute;vention sant&eacute; : sport doux, ateliers m&eacute;moire, partenariats sant&eacute;</li>
-                            <li>R&eacute;novation de la r&eacute;sidence autonomie Thomas Couture</li>
-                            <li>Nouveau local pour les a&icirc;n&eacute;s</li>
+                            <li><strong>Mutuelle municipale :</strong> positionner la mairie en interface avec les organismes de mutuelle afin d'obtenir des tarifs plus avantageux pour les habitants qui n'ont pas de couverture compl&eacute;mentaire</li>
+                            <li>Continuer &agrave; soutenir les <strong>associations humanitaires</strong> et renforcer le partenariat avec Les Restos du C&oelig;ur</li>
+                            <li>Ajouter un <strong>onglet sp&eacute;cifique &laquo; aide sociale &raquo;</strong> sur l'application de la ville</li>
+                        </ul>
+
+                        <h4>Bien vieillir &agrave; Senlis : une ville attentive &agrave; ses seniors</h4>
+                        <p>La municipalit&eacute; fera du bien-vieillir &agrave; Senlis une priorit&eacute; forte du mandat. <strong>Nous agirons pour permettre &agrave; chacun de rester autonome le plus longtemps possible, de vivre en s&eacute;curit&eacute; et de maintenir un lien social actif.</strong></p>
+                        <ul>
+                            <li><strong>Lutter contre l'isolement :</strong> face au constat qu'un certain nombre d'habitants dans le besoin ne viennent pas au CCAS, nous nous engageons &agrave; d&eacute;velopper les d&eacute;marches &agrave; domicile</li>
+                            <li><strong>Am&eacute;liorer la mobilit&eacute; et l'accessibilit&eacute; :</strong> am&eacute;nagement de l'espace public, bancs, cheminements s&eacute;curis&eacute;s, transports adapt&eacute;s</li>
+                            <li><strong>Pr&eacute;vention sant&eacute; et bien-&ecirc;tre :</strong> actions de pr&eacute;vention, sport doux, ateliers m&eacute;moire, partenariats sant&eacute;</li>
+                            <li><strong>S&eacute;curit&eacute; et tranquillit&eacute; :</strong> information contre les arnaques, lien renforc&eacute; avec la police municipale</li>
+                            <li><strong>D&eacute;velopper le salon de l'autonomie,</strong> mis en place sous le dernier mandat et actualiser r&eacute;guli&egrave;rement le guide des seniors cr&eacute;&eacute; par l'&eacute;quipe municipale</li>
+                            <li>Proposer un <strong>nouveau local pour les a&icirc;n&eacute;s</strong></li>
                             <li><strong>Obtenir le label &laquo; Ville amie des a&icirc;n&eacute;s &raquo;</strong></li>
                         </ul>
 
-                        <h4>Associations</h4>
+                        <div class="prog-highlight-box">
+                            <p><strong>R&eacute;sidence Autonomie Thomas Couture :</strong> refaire compl&egrave;tement la chambre dite &laquo; de passage &raquo; et la rampe d'acc&egrave;s ext&eacute;rieur. Installer des stores ext&eacute;rieurs pour les logements sous toitures. Mettre en place un espace buanderie avec lave-linge et s&egrave;che-linge. Poursuivre la r&eacute;novation des logements, remplacer les portails &eacute;lectriques et le syst&egrave;me d'acc&egrave;s aux logements (par cartes).</p>
+                        </div>
+
+                        <h4>Associations : solidarit&eacute; et bien vivre &agrave; Senlis</h4>
+                        <p>Les associations culturelles, sportives et sociales sont le c&oelig;ur de la vie senlisienne. Elles cr&eacute;ent du lien, favorisent le bien-vivre ensemble et rendent notre ville plus solidaire et dynamique.</p>
                         <ul>
-                            <li>Soutien durable avec aides justes et transparentes</li>
-                            <li>Simplification des d&eacute;marches et acc&egrave;s aux &eacute;quipements municipaux</li>
-                            <li>&laquo; Semaine des Associations &raquo; : portes ouvertes associations non sportives</li>
-                            <li>Budget participatif sur appel &agrave; projets aupr&egrave;s des associations de quartiers</li>
+                            <li>Soutenir durablement les associations par des <strong>aides justes et transparentes</strong></li>
+                            <li>Simplifier les d&eacute;marches et faciliter l'acc&egrave;s aux &eacute;quipements municipaux</li>
+                            <li>Valoriser le b&eacute;n&eacute;volat et encourager les initiatives locales</li>
+                            <li>Accompagner les projets en faveur de la jeunesse, de la culture, du sport et de la solidarit&eacute;</li>
+                            <li>Perp&eacute;tuer les &Eacute;tats G&eacute;n&eacute;raux des associations et le Forum des associations</li>
+                            <li>Cr&eacute;er la <strong>&laquo; Semaine des Associations &raquo;</strong> : portes ouvertes associations non sportives</li>
+                            <li>Mettre en place un <strong>Budget participatif sur appel &agrave; projets</strong> aupr&egrave;s des associations de quartiers : une part du budget municipal consacr&eacute;e &agrave; des projets propos&eacute;s et vot&eacute;s par les citoyens</li>
                         </ul>
 
                         <h4>Nouveaux &eacute;quipements par quartier</h4>
@@ -889,8 +983,8 @@
             <!-- 6. SPORT & LOISIRS -->
             <div class="prog-theme" id="theme-sport">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-sport')">
-                    <div class="prog-theme-icon prog-color-sport">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                    <div class="prog-theme-image">
+                        <img src="images/programme/yves-carlier.png" alt="Sport &amp; Loisirs">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Sport &amp; Loisirs</h3>
@@ -902,32 +996,35 @@
                 </div>
                 <div class="prog-theme-body">
                     <div class="prog-theme-content">
-                        <h4>Hub sportif Yves Carlier</h4>
-                        <p>Cr&eacute;ation d'un p&ocirc;le sportif moderne et accessible, int&eacute;grant un espace de garde d'enfants :</p>
+                        <h4>Cr&eacute;ation d'un nouveau p&ocirc;le sportif modernis&eacute;</h4>
+                        <p>Au sein du complexe Yves Carlier, le Parc des Sports actuel fera l'objet d'une d&eacute;cision (d&eacute;molition ou r&eacute;habilitation) apr&egrave;s &eacute;tude approfondie. <strong>L'objectif est de cr&eacute;er un &laquo; hub &raquo; sportif, moderne et accessible, int&eacute;grant un espace de garde d'enfants</strong>, avec :</p>
                         <ul>
-                            <li>Agrandissement et isolation ext&eacute;rieure du gymnase</li>
-                            <li>R&eacute;novation des salles d'escrime, tennis de table et tir &agrave; l'arc</li>
-                            <li>R&eacute;novation de la piste d'athl&eacute;tisme</li>
-                            <li>Valorisation historique du v&eacute;lodrome (premier de France)</li>
-                            <li>Terrain de basket couvert</li>
+                            <li>L'agrandissement et une nouvelle isolation ext&eacute;rieure du gymnase Yves Carlier</li>
+                            <li>La r&eacute;novation des salles d'escrime, de tennis de table et de tir &agrave; l'arc</li>
+                            <li>La r&eacute;novation de la piste d'athl&eacute;tisme</li>
+                            <li>La valorisation historique du v&eacute;lodrome comme &eacute;tant le premier de France</li>
+                            <li>Un <strong>terrain de basket couvert</strong> afin de permettre la pratique par tout temps</li>
+                            <li>L'<strong>ouverture des &eacute;quipements publics hors cr&eacute;neaux r&eacute;serv&eacute;s</strong> aux clubs afin de les rendre plus accessibles aux Senlisiens</li>
+                            <li>Le <strong>transfert du tir &agrave; l'arc</strong> du Montauban vers l'ancien terrain de rugby de Brichebay</li>
+                            <li>Le <strong>d&eacute;placement du skate-park</strong> (durant les travaux du centre aquatique) au sein du parc des sports Yves Carlier</li>
                         </ul>
 
                         <div class="prog-highlight-box">
-                            <p><strong>Centre aquatique intercommunal :</strong> Bassins sportif, ludique et d'apprentissage, jeux d'eau, espaces bien-&ecirc;tre, bassin ext&eacute;rieur. Livraison pr&eacute;vue fin 2028, financ&eacute; par la CCSSO.</p>
+                            <p><strong>Centre aquatique intercommunal :</strong> un projet phare n&eacute; &agrave; Senlis, pour tout le territoire. Implant&eacute; &agrave; Senlis sur le site de la piscine Yves Carlier, il proposera des <strong>espaces modernes, accessibles et diversifi&eacute;s :</strong> bassins sportif, ludique et d'apprentissage de la natation, jeux d'eau pour les enfants, espaces de d&eacute;tente et de bien-&ecirc;tre, bassin ext&eacute;rieur et am&eacute;nagements ext&eacute;rieurs estivaux. Calendrier pr&eacute;visionnel : la phase op&eacute;rationnelle commencera en 2026, pour une livraison pr&eacute;vue fin 2028. Enti&egrave;rement financ&eacute; par la CCSSO (construction et gestion), ainsi que par des subventions publiques.</p>
                         </div>
 
-                        <h4>&Eacute;v&eacute;nements sportifs</h4>
+                        <h4>F&eacute;d&eacute;rer par l'organisation d'&eacute;v&eacute;nements sportifs</h4>
                         <ul>
-                            <li>Semaine du sport (annuel), portes ouvertes des clubs</li>
-                            <li>Soir&eacute;e des Troph&eacute;es du Sport</li>
+                            <li>Mettre en place <strong>la semaine du sport</strong> (&eacute;v&eacute;nement annuel f&eacute;d&eacute;rateur), organisation de portes ouvertes des clubs, initiatives crois&eacute;es entre disciplines, et soir&eacute;e des <strong>Troph&eacute;es du Sport</strong> pour valoriser les sportifs senlisiens</li>
                         </ul>
 
-                        <h4>Nouveaux services</h4>
+                        <h4>Nouveaux services autour du sport</h4>
                         <ul>
-                            <li>Pass Actif Senior</li>
-                            <li>Comit&eacute; Handicap &amp; Sport</li>
+                            <li>Cr&eacute;ation d'un <strong>&laquo; Pass Actif Senior &raquo;</strong></li>
+                            <li>Cr&eacute;ation d'un <strong>&laquo; Comit&eacute; Handicap &amp; Sport &raquo;</strong>, afin d'accompagner les personnes handicap&eacute;es ou les parents d'enfants handicap&eacute;s dans la pratique du sport. Il serait compos&eacute; de la Ville, de m&eacute;decins, d'entra&icirc;neurs et de pr&eacute;sidents d'associations</li>
                             <li>Soutien aux familles monoparentales</li>
-                            <li>Ouverture des &eacute;quipements publics hors cr&eacute;neaux clubs</li>
+                            <li>Accompagnement des associations pour obtenir le label &laquo; Accueil des handicap&eacute;s &raquo;</li>
+                            <li>Implication du Conseil municipal des jeunes avec la nomination d'un r&eacute;f&eacute;rent &laquo; sport jeunesse &raquo;</li>
                         </ul>
                     </div>
                 </div>
@@ -936,8 +1033,8 @@
             <!-- 7. TRANSITION ÉCOLOGIQUE -->
             <div class="prog-theme" id="theme-ecologie">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-ecologie')">
-                    <div class="prog-theme-icon prog-color-ecologie">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c-4.97 0-9-2.24-9-5v-4c0-2.76 4.03-5 9-5s9 2.24 9 5v4c0 2.76-4.03 5-9 5z"/><path d="M12 8V2"/><path d="M8 4l4-2 4 2"/></svg>
+                    <div class="prog-theme-image">
+                        <img src="images/programme/jardin-fleurs.png" alt="Transition &eacute;cologique">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Transition &eacute;cologique</h3>
@@ -949,44 +1046,58 @@
                 </div>
                 <div class="prog-theme-body">
                     <div class="prog-theme-content">
-                        <p>Une transition &eacute;cologique pragmatique, ambitieuse et adapt&eacute;e au territoire.</p>
+                        <p>&Agrave; Senlis, nous faisons le choix d'une transition &eacute;cologique pragmatique, ambitieuse et adapt&eacute;e &agrave; notre territoire, distincte d'une simple application des normes nationales ou europ&eacute;ennes. <strong>Notre objectif est clair : fa&ccedil;onner une ville attractive, o&ugrave; la transition &eacute;cologique devient &agrave; la fois le moteur du dynamisme local et un bouclier protecteur pour les habitants, &agrave; court, moyen et long terme.</strong></p>
 
                         <h4>Audit et plan d'action</h4>
+                        <p>Cette d&eacute;marche reposera d'abord sur :</p>
                         <ul>
-                            <li>Bilan carbone complet de la ville</li>
-                            <li>&Eacute;valuation de l'empreinte eau</li>
-                            <li>Moyens humains d&eacute;di&eacute;s au sein de la mairie</li>
+                            <li>Un audit pr&eacute;cis de l'existant, incluant un <strong>bilan carbone</strong> complet de la ville</li>
+                            <li>Une <strong>&eacute;valuation de l'empreinte eau</strong> de la ville, un comparatif avec des villes comparables</li>
+                            <li>L'identification de <strong>moyens humains d&eacute;di&eacute;s</strong> au sein de la mairie</li>
                         </ul>
 
                         <h4>&Eacute;nergie et climat</h4>
+                        <p><strong>Nous engagerons une action d&eacute;termin&eacute;e sur l'&eacute;nergie et le climat, en r&eacute;duisant l'empreinte carbone de la ville par des mesures concr&egrave;tes et mesurables :</strong></p>
                         <ul>
-                            <li>Panneaux solaires sur les b&acirc;timents municipaux</li>
-                            <li>Peinture claire des toitures pour limiter le stockage de chaleur</li>
-                            <li>D&eacute;simpermeabilisation des cours d'&eacute;coles et parkings</li>
-                            <li>Restauration scolaire 100 % locale et de saison, avec part croissante de bio</li>
-                            <li>Cr&eacute;ation d'un mara&icirc;cher local</li>
-                            <li>Fontaines &agrave; eau potable en centre-ville</li>
-                            <li>Micro-for&ecirc;ts urbaines</li>
+                            <li>Les b&acirc;timents municipaux (stades, gymnases, &hellip;) seront progressivement &eacute;quip&eacute;s de <strong>panneaux solaires</strong> et rendus plus performants face aux variations de temp&eacute;rature</li>
+                            <li><strong>Peinture claire des toitures</strong> pour limiter le stockage de chaleur et ma&icirc;triser les temp&eacute;ratures ext&eacute;rieures</li>
+                            <li><strong>D&eacute;simpermeabilisation</strong> des cours d'&eacute;coles et parkings afin de les rendre drainants</li>
+                            <li><strong>Restauration scolaire 100 % locale</strong> et de saison, avec une part croissante de produits biologiques, soutenue par la cr&eacute;ation d'un <strong>mara&icirc;cher</strong> garantissant un approvisionnement local et durable</li>
+                            <li>Des <strong>fontaines &agrave; eau potable</strong> seront install&eacute;es dans le centre-ville</li>
+                            <li><strong>Micro-for&ecirc;ts urbaines</strong> dans plusieurs lieux de la Ville, dont l'&Eacute;coQuartier</li>
                         </ul>
 
-                        <h4>Biodiversit&eacute; et v&eacute;g&eacute;talisation</h4>
+                        <h4>Environnement : pr&eacute;server et v&eacute;g&eacute;taliser la ville</h4>
                         <ul>
-                            <li>Plan de gestion du patrimoine arbor&eacute;</li>
-                            <li>Requalification des entr&eacute;es de ville, parcs et squares</li>
-                            <li>Valorisation des haies urbaines</li>
-                            <li>Renaturation de l'&eacute;tang du Moulin du Gu&eacute; de Pont</li>
-                            <li>R&eacute;novation du cheminement le long de l'Aunette</li>
+                            <li>Mise en place d'un plan de gestion du <strong>patrimoine arbor&eacute;</strong></li>
+                            <li><strong>Requalification des entr&eacute;es de ville,</strong> des parcs du Jardin du Roy et du Ch&acirc;teau royal, des squares de quartier, des axes paysagers (rue du Mar&eacute;chal Joffre, avenue du G&eacute;n&eacute;ral de Gaulle, avenue de Creil)</li>
+                            <li>Valorisation des <strong>haies urbaines</strong> &agrave; l'&eacute;chelle communale</li>
+                            <li><strong>Requalification du terrain de football de Villevert</strong></li>
+                            <li>Renaturation de l'<strong>&eacute;tang du Moulin du Gu&eacute; de Pont</strong></li>
+                            <li>R&eacute;novation du <strong>cheminement le long de l'Aunette</strong></li>
+                            <li><strong>Nouveau projet d'am&eacute;nagement pour le fond du parc du ch&acirc;teau royal,</strong> alliant patrimoine, nature et usages contemporains</li>
                         </ul>
 
                         <div class="prog-highlight-box">
-                            <p><strong>Parc &eacute;cologique r&eacute;invent&eacute; :</strong> acc&egrave;s adapt&eacute;s, parkings, parcours p&eacute;dagogiques, verger, signalétique &laquo; Parc &agrave; hauteur d'enfant &raquo;, espaces de convivialit&eacute;, garden party annuelle.</p>
+                            <p><strong>Un Parc &eacute;cologique r&eacute;invent&eacute; :</strong> un lieu de vie vert, moderne et attractif avec espaces de convivialit&eacute;, dans le respect de la protection de la biodiversit&eacute;. Le parc &eacute;cologique verra <strong>son potentiel pleinement valoris&eacute;</strong> par la cr&eacute;ation d'acc&egrave;s adapt&eacute;s, de parkings, et la pr&eacute;servation de zones d&eacute;di&eacute;es &agrave; la biodiversit&eacute;.</p>
                         </div>
-
-                        <h4>D&eacute;marche collective</h4>
                         <ul>
-                            <li>Actions &laquo; Next Generation &raquo; : alimentation durable, potagers &agrave; l'&eacute;cole</li>
-                            <li>Accompagnement des acteurs &eacute;conomiques et associatifs</li>
-                            <li>Ambassadeurs de la transition parmi les habitants</li>
+                            <li>Cr&eacute;ation d'un <strong>Verger</strong></li>
+                            <li><strong>Signal&eacute;tique compl&egrave;te :</strong> Ville &rarr; Parc, entr&eacute;es, dans le parc</li>
+                            <li><strong>Parcours p&eacute;dagogiques :</strong> observation de la faune et flore, protection de la biodiversit&eacute;</li>
+                            <li>Installation de la signal&eacute;tique <strong>&laquo; Parc &agrave; hauteur d'enfant &raquo;</strong> en partenariat avec le Parc Naturel R&eacute;gional dans le cadre du programme &laquo; Ville amie des enfants &raquo;</li>
+                            <li><strong>Espaces de convivialit&eacute; :</strong> zones pique-nique, bancs ; food-truck ou zone de restauration guinguette</li>
+                            <li><strong>Garden Party annuelle :</strong> &eacute;v&eacute;nement festif de valorisation</li>
+                            <li><strong>Parc &Eacute;co en F&ecirc;te / Th&eacute;&acirc;tre / Culture :</strong> programmation culturelle en plein air et expositions</li>
+                            <li>Cr&eacute;ation d'un <strong>parcours de sant&eacute;</strong></li>
+                            <li>Consultation pour le <strong>d&eacute;placement &eacute;ventuel de l'aire de jeux</strong> et son extension</li>
+                        </ul>
+
+                        <h4>D&eacute;marche collective et partag&eacute;e</h4>
+                        <ul>
+                            <li>Les jeunes seront au c&oelig;ur du projet &agrave; travers des actions <strong>&laquo; Next Generation &raquo;</strong> : alimentation durable, g&eacute;n&eacute;ralisation des potagers &agrave; l'&eacute;cole, sensibilisation &agrave; la plantation et &agrave; la nature</li>
+                            <li><strong>Les acteurs &eacute;conomiques et associatifs seront associ&eacute;s et accompagn&eacute;s</strong> dans l'&eacute;valuation et l'&eacute;volution de leurs propres plans de transition</li>
+                            <li>Nous identifierons des <strong>ambassadeurs de la transition</strong> au sein de la population et solliciterons plus activement le Conseil municipal des jeunes</li>
                         </ul>
                     </div>
                 </div>
@@ -995,8 +1106,8 @@
             <!-- 8. FINANCES -->
             <div class="prog-theme" id="theme-finances">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-finances')">
-                    <div class="prog-theme-icon prog-color-finances">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    <div class="prog-theme-image">
+                        <img src="images/programme/finances-charts.png" alt="Finances">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Finances</h3>
@@ -1008,26 +1119,40 @@
                 </div>
                 <div class="prog-theme-body">
                     <div class="prog-theme-content">
+                        <p><strong>Le mandat 2020-2026 a &eacute;t&eacute; marqu&eacute; par des chocs financiers majeurs :</strong></p>
+                        <ul>
+                            <li>Une crise sanitaire lourde avec des impacts directs sur les services publics</li>
+                            <li>Une inflation tr&egrave;s forte qui a impact&eacute; tous les postes budg&eacute;taires</li>
+                            <li>Une forte hausse des co&ucirc;ts &eacute;nerg&eacute;tiques, particuli&egrave;rement marqu&eacute;e pour les collectivit&eacute;s</li>
+                        </ul>
+                        <p><strong>Dans ce contexte, la Ville de Senlis a fait le choix d'une gestion rigoureuse, fond&eacute;e sur des priorit&eacute;s claires :</strong></p>
+
                         <div class="prog-highlight-box">
-                            <p><strong>0 % d'augmentation des taux d'imposition</strong> depuis 2011. La seule variation de la taxe fonci&egrave;re est due &agrave; la revalorisation nationale des bases.</p>
+                            <p><strong>0 % d'augmentation des taux d'imposition !</strong> Depuis 2011, les taux d'imposition locale n'ont pas &eacute;t&eacute; augment&eacute;s par la Ville. La seule variation de la taxe fonci&egrave;re est due &agrave; la revalorisation nationale des bases, index&eacute;e sur l'inflation.</p>
                         </div>
 
                         <h4>Bilan du mandat 2020-2026</h4>
                         <ul>
-                            <li>40 M&euro; d'investissements engag&eacute;s dont 12 M&euro; de subventions obtenues</li>
-                            <li>6,3 M&euro; pour les r&eacute;seaux eau et assainissement</li>
-                            <li>Dette communale ma&icirc;tris&eacute;e : de 1 253 &euro;/habitant en 2010 &agrave; moins de 630 &euro;/habitant</li>
-                            <li>R&eacute;alisation du programme &agrave; plus de 80 %</li>
+                            <li><strong>Une dette communale parfaitement ma&icirc;tris&eacute;e,</strong> passant de plus de 21 M&euro; en 2010 (1 253 &euro; par habitant) &agrave; un niveau durablement ma&icirc;tris&eacute; (moins de 630 &euro; par habitant, soit pr&egrave;s de 200 &euro; de moins que la moyenne des communes comparables)</li>
+                            <li><strong>Des d&eacute;penses de fonctionnement contenues</strong> gr&acirc;ce &agrave; des plans d'optimisation des services et &agrave; une politique de sobri&eacute;t&eacute; &eacute;nerg&eacute;tique</li>
+                            <li><strong>40 M&euro; d'investissements engag&eacute;s depuis 2020,</strong> pour moderniser les &eacute;quipements, les &eacute;coles, la voirie et assurer la transition &eacute;nerg&eacute;tique, dont plus de 12 M&euro; de subventions obtenues</li>
+                            <li><strong>6,3 M&euro; d'investissements pour les budgets eau et assainissement,</strong> pour renforcer le r&eacute;seau, s&eacute;curiser l'approvisionnement et offrir aux Senlisiens une eau de grande qualit&eacute;</li>
+                            <li>Les efforts d'investissement ont &eacute;t&eacute; possibles gr&acirc;ce &agrave; une <strong>capacit&eacute; d'autofinancement pr&eacute;serv&eacute;e</strong> et une recherche efficace de subventions aupr&egrave;s des partenaires : Europe, &Eacute;tat, R&eacute;gion, D&eacute;partement et Communaut&eacute; de communes</li>
+                            <li><strong>R&eacute;alisation de notre programme &agrave; plus de 80 %</strong></li>
                         </ul>
 
-                        <h4>Engagements 2026-2032</h4>
+                        <h4>Nos engagements financiers pour 2026-2032</h4>
                         <ul>
-                            <li>Investissements ambitieux et financ&eacute;s</li>
-                            <li>Optimisation des d&eacute;penses de fonctionnement</li>
-                            <li>Gestion rigoureuse et transparente des emprunts et subventions</li>
-                            <li>Publication annuelle d'indicateurs clairs (&eacute;pargne, dette, investissements, subventions)</li>
-                            <li>Plan de sobri&eacute;t&eacute; &eacute;nerg&eacute;tique poursuivi</li>
+                            <li>Programmer des <strong>investissements ambitieux et financ&eacute;s</strong></li>
+                            <li>Optimiser les <strong>d&eacute;penses de fonctionnement</strong></li>
+                            <li>Garantir une <strong>gestion rigoureuse et transparente</strong> des emprunts et des subventions</li>
+                            <li><strong>Chaque ann&eacute;e, nous publierons des indicateurs clairs</strong> (&eacute;pargne, dette, investissements r&eacute;alis&eacute;s, subventions obtenues) afin que chaque Senlisien puisse suivre concr&egrave;tement notre action</li>
                         </ul>
+                        <p><strong>Nous continuerons &agrave; conduire les finances de Senlis, selon une strat&eacute;gie claire :</strong> maintenir et am&eacute;liorer le cadre de vie tout en prot&eacute;geant les habitants (pas d'augmentation des taux d'imposition locale), investir dans l'avenir, ma&icirc;triser nos co&ucirc;ts, et pr&eacute;parer demain sans improvisation.</p>
+
+                        <div class="prog-highlight-box">
+                            <p><strong>Un plan de sobri&eacute;t&eacute; &eacute;nerg&eacute;tique utile et responsable.</strong> Face &agrave; la hausse des prix de l'&eacute;nergie, la Ville de Senlis a mis en place un plan de sobri&eacute;t&eacute; &eacute;nerg&eacute;tique ambitieux depuis l'hiver 2022. <strong>Pens&eacute; pour r&eacute;duire les consommations sans nuire aux services publics, nous poursuivrons ce plan</strong> qui combine bon sens, efficacit&eacute; budg&eacute;taire et d&eacute;marche &eacute;cologique.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1035,8 +1160,8 @@
             <!-- 9. CITOYENNETÉ & CONCERTATION -->
             <div class="prog-theme" id="theme-citoyennete">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-citoyennete')">
-                    <div class="prog-theme-icon prog-color-citoyennete">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <div class="prog-theme-image">
+                        <img src="images/programme/hotel-de-ville.png" alt="Citoyennet&eacute;">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Citoyennet&eacute; &amp; Concertation</h3>
@@ -1048,37 +1173,45 @@
                 </div>
                 <div class="prog-theme-body">
                     <div class="prog-theme-content">
-                        <h4>Guichet unique</h4>
-                        <p>Un guichet unique d'accueil des habitants &agrave; la mairie, avec l'ambition d'obtenir le label &laquo; Services publics + &raquo;.</p>
+                        <p>La qualit&eacute; de la communication municipale et l'efficacit&eacute; de l'administration sont des conditions de r&eacute;ussite de l'ensemble des politiques publiques. <strong>Notre ambition est de compl&eacute;ter la communication actuelle par une plus grande vari&eacute;t&eacute; de supports et une proximit&eacute; plus forte avec les habitants</strong>, pour leur donner plus d'&eacute;l&eacute;ments de compr&eacute;hension : informer plus, expliquer mieux, solliciter plus souvent les Senlisiens et surtout, r&eacute;pondre aux syst&eacute;matiquement &agrave; leurs demandes et en assurer le suivi.</p>
+
+                        <h4>Un guichet unique pour une mairie plus proche, plus humaine, plus efficace</h4>
+                        <p>Nous cr&eacute;erons un guichet unique d'accueil des habitants, <strong>v&eacute;ritable porte d'entr&eacute;e de la mairie.</strong> L'objectif est d'am&eacute;liorer la qualit&eacute; de l'accueil et de faciliter les d&eacute;marches des administr&eacute;s. Nous avons l'ambition d'obtenir le label &laquo; Services publics + &raquo;.</p>
+                        <p><strong>Organisation et accueil :</strong></p>
                         <ul>
-                            <li>Espace identifi&eacute; d&egrave;s l'entr&eacute;e de la mairie</li>
-                            <li>Mise en accessibilit&eacute; pour les personnes &agrave; mobilit&eacute; r&eacute;duite</li>
-                            <li>Agents r&eacute;f&eacute;rents, d&eacute;lais de r&eacute;ponse annonc&eacute;s et respect&eacute;s</li>
-                            <li>Suivi en ligne ou par t&eacute;l&eacute;phone, rappels automatiques</li>
+                            <li>Un espace clairement identifi&eacute; d&egrave;s l'entr&eacute;e de la mairie</li>
+                            <li>La mise en accessibilit&eacute; de l'entr&eacute;e de la mairie pour les personnes &agrave; mobilit&eacute; r&eacute;duite</li>
+                            <li>Des agents r&eacute;f&eacute;rents responsables du suivi des demandes</li>
+                            <li>Des d&eacute;lais de r&eacute;ponse annonc&eacute;s et respect&eacute;s</li>
+                            <li>Engagement sur une <strong>charte d'accueil des Senlisiens</strong></li>
+                        </ul>
+                        <p><strong>Suivi et transparence :</strong></p>
+                        <ul>
+                            <li>Num&eacute;ro ou r&eacute;f&eacute;rence de dossier remis &agrave; l'usager</li>
+                            <li>Possibilit&eacute; de suivi en ligne ou par t&eacute;l&eacute;phone</li>
+                            <li>Rappels automatiques et information sur l'avancement des demandes</li>
+                            <li><strong>Accompagnement num&eacute;rique</strong> pour les publics moins &agrave; l'aise</li>
                         </ul>
 
-                        <h4>Consultations citoyennes</h4>
-                        <p>D&egrave;s les trois premiers mois de mandat : consultations r&eacute;guli&egrave;res sur les sujets essentiels (devenir de la gare, am&eacute;nagements urbains, circulation, s&eacute;curit&eacute;, vie culturelle et sportive).</p>
+                        <h4>Des consultations citoyennes pour une ville qui d&eacute;cide avec vous</h4>
+                        <p>D&egrave;s les trois premiers mois de mandat, nous lancerons des consultations r&eacute;guli&egrave;res sur les sujets essentiels qui fa&ccedil;onnent la vie &agrave; Senlis : devenir du b&acirc;timent de la gare, am&eacute;nagements urbains, circulation, stationnement, s&eacute;curit&eacute;, vie culturelle et sportive&hellip;</p>
+                        <p><strong>Ces consultations iront au-del&agrave; du simple sondage :</strong> elles permettront aux habitants de proposer des id&eacute;es, de prioriser les projets et de suivre leur mise en &oelig;uvre. <strong>Ces consultations seront accessibles &agrave; tous, en pr&eacute;sentiel et en ligne, avec des bilans transparents publi&eacute;s r&eacute;guli&egrave;rement.</strong></p>
+
+                        <h4>Renforcer la proximit&eacute; entre les services et les habitants</h4>
                         <ul>
-                            <li>Propositions d'id&eacute;es, priorisation des projets</li>
-                            <li>Bilans transparents publi&eacute;s r&eacute;guli&egrave;rement</li>
-                            <li>Accessibles &agrave; tous, en pr&eacute;sentiel et en ligne</li>
+                            <li><strong>Agence postale dans le quartier du Val d'Aunette,</strong> qui offrira tous les services de la Poste et la possibilit&eacute; de retirer de l'argent. Nous y adosserons des services &agrave; la population : permanences de police, ateliers de loisirs municipaux et associatifs, m&eacute;decins et/ou param&eacute;dicaux</li>
+                            <li><strong>Permanences d&eacute;centralis&eacute;es :</strong> les &eacute;lus se d&eacute;placeront r&eacute;guli&egrave;rement dans les quartiers &agrave; la rencontre des habitants</li>
+                            <li>Organiser des <strong>visites comment&eacute;es de la ville,</strong> pour compl&eacute;ter les petits d&eacute;jeuners d'accueil des nouveaux arrivants d&eacute;j&agrave; instaur&eacute;s</li>
+                            <li><strong>Concertation avec les habitants et les riverains pour l'avenir de la gare</strong></li>
                         </ul>
 
-                        <h4>Proximit&eacute;</h4>
+                        <h4>Un d&eacute;ploiement de nouveaux outils pour plus de performance et d'&eacute;coute</h4>
                         <ul>
-                            <li>Agence postale dans le quartier du Val d'Aunette (services postaux + retrait d'argent)</li>
-                            <li>Permanences d&eacute;centralis&eacute;es : &eacute;lus dans les quartiers</li>
-                            <li>Visites comment&eacute;es de la ville</li>
-                        </ul>
-
-                        <h4>Outils num&eacute;riques</h4>
-                        <ul>
-                            <li>Plateforme participative en ligne</li>
-                            <li>Application am&eacute;lior&eacute;e : retransmission des r&eacute;unions, Live avec le Maire</li>
-                            <li>Refonte du site internet de la ville</li>
-                            <li>QR codes mini-consultations</li>
-                            <li>Tableau public de suivi des projets</li>
+                            <li>Mise en place d'une <strong>plateforme participative</strong> en ligne</li>
+                            <li><strong>Application de la ville am&eacute;lior&eacute;e :</strong> retransmission des r&eacute;unions publiques, Live avec le Maire</li>
+                            <li><strong>Refonte du site internet :</strong> modernisation compl&egrave;te du site web de la ville pour plus d'ergonomie, d'accessibilit&eacute;, de services en ligne et d'information actualis&eacute;e en temps r&eacute;el</li>
+                            <li><strong>QR codes</strong> mini-consultations</li>
+                            <li><strong>Tableau public de suivi et d'&eacute;valuation</strong> pour mesurer l'avancement des projets issus des consultations</li>
                         </ul>
                     </div>
                 </div>
@@ -1090,10 +1223,10 @@
     <section class="prog-invest">
         <div class="prog-container">
             <h2 class="prog-section-title">Nos principaux investissements</h2>
-            <p class="prog-section-subtitle">Un plan ambitieux et financ&eacute;</p>
+            <p class="prog-section-subtitle">Forts de notre exp&eacute;rience et des nouvelles comp&eacute;tences de notre &eacute;quipe, nous irons chercher de nouvelles sources de financement publics et priv&eacute;s pour augmenter notre capacit&eacute; d'investissement.</p>
 
             <div class="prog-invest-total">45 &agrave; 50 M&euro;</div>
-            <p class="prog-invest-total-label">sur le mandat 2026-2032</p>
+            <p class="prog-invest-total-label">sur le mandat 2026-2032 (40 millions d'euros sur le mandat pr&eacute;c&eacute;dent)</p>
 
             <div class="prog-invest-grid">
                 <div class="prog-invest-card">
@@ -1118,11 +1251,11 @@
                 </div>
                 <div class="prog-invest-card">
                     <div class="prog-invest-amount">5 M&euro;</div>
-                    <div class="prog-invest-label">Complexe sportif Yves Carlier</div>
+                    <div class="prog-invest-label">Cath&eacute;drale</div>
                 </div>
                 <div class="prog-invest-card">
                     <div class="prog-invest-amount">3,5 M&euro;</div>
-                    <div class="prog-invest-label">Cath&eacute;drale (7 M&euro; sur 2 mandats)</div>
+                    <div class="prog-invest-label">Complexe sportif Yves Carlier (7 M&euro; sur 2 mandats)</div>
                 </div>
                 <div class="prog-invest-card">
                     <div class="prog-invest-amount">2 M&euro;</div>
@@ -1231,6 +1364,18 @@
     </footer>
 
     <script>
+        function toggleHeroIntro() {
+            var more = document.getElementById('hero-more');
+            var btn = document.getElementById('hero-toggle');
+            if (more.classList.contains('open')) {
+                more.classList.remove('open');
+                btn.textContent = 'Lire la suite';
+            } else {
+                more.classList.add('open');
+                btn.textContent = 'R\u00e9duire';
+            }
+        }
+
         function toggleTheme(id) {
             var el = document.getElementById(id);
             if (!el) return;
