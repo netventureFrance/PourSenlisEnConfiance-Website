@@ -420,6 +420,8 @@
         </div>
     </div>
 
+    <script src="js/liste-data.js"></script>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -430,35 +432,12 @@
     </footer>
 
     <script>
-        var allRecords = [];
+        var allRecords = LISTE_DATA;
 
         function esc(str) {
             var d = document.createElement('div');
             d.textContent = str || '';
             return d.innerHTML;
-        }
-
-        async function loadListe() {
-            try {
-                var response = await fetch('/.netlify/functions/get-liste');
-                var data = await response.json();
-
-                if (data.success) {
-                    allRecords = data.records
-                        .filter(function(r) { return r.statut === 'Validé' || r.statut === 'Publié'; })
-                        .sort(function(a, b) {
-                            if (a.rang && b.rang) return a.rang - b.rang;
-                            if (a.rang) return -1;
-                            if (b.rang) return 1;
-                            return a.nom.localeCompare(b.nom, 'fr');
-                        });
-                    renderGrid();
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            } finally {
-                document.getElementById('listeLoading').style.display = 'none';
-            }
         }
 
         function renderGrid() {
@@ -552,7 +531,8 @@
             if (e.key === 'Escape') closeModal();
         });
 
-        loadListe();
+        document.getElementById('listeLoading').style.display = 'none';
+        renderGrid();
     </script>
 </body>
 </html>
