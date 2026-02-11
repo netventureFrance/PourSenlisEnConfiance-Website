@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>La Liste - Pour Senlis en Confiance</title>
+    <meta name="description" content="Découvrez les 34 colistiers de Pour Senlis en Confiance pour les élections municipales de Senlis 2026.">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="images/PSEC.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=20260210">
+
+    <style>
+        /* Page layout */
+        .liste-page {
+            background: linear-gradient(180deg, #f8f9fa 0%, #e8f4fd 100%);
+            min-height: 100vh;
+        }
+
+        /* Hero */
+        .liste-hero {
+            background: var(--primary-dark);
+            color: white;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .liste-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(61, 157, 217, 0.3) 0%, transparent 70%);
+        }
+        .liste-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+            z-index: 1;
+        }
+        .liste-hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Grid */
+        .liste-grid-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+        .liste-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Card */
+        .liste-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(13, 61, 92, 0.08);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .liste-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(13, 61, 92, 0.15);
+        }
+        .liste-card-rank {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--primary-dark);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .liste-card-photo {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            display: block;
+        }
+        .liste-card-photo-placeholder {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            background: linear-gradient(135deg, #e0e7ee 0%, #c8d6e0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+        .liste-card-info {
+            padding: 1rem 1.25rem 1.25rem;
+        }
+        .liste-card-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.25rem;
+            line-height: 1.3;
+        }
+        .liste-card-profession {
+            font-size: 0.85rem;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        /* Detail Modal */
+        .detail-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(13, 61, 92, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .detail-overlay.visible {
+            display: flex;
+        }
+        .detail-panel {
+            background: white;
+            border-radius: 20px;
+            max-width: 750px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .detail-panel-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: background 0.2s;
+        }
+        .detail-panel-close:hover {
+            background: white;
+        }
+        .detail-panel-top {
+            position: relative;
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f0f7fa 0%, #e8f4fd 100%);
+            border-radius: 20px 20px 0 0;
+        }
+        .detail-panel-photo {
+            width: 200px;
+            min-width: 200px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(13, 61, 92, 0.15);
+        }
+        .detail-panel-photo-placeholder {
+            width: 200px;
+            min-width: 200px;
+            height: 260px;
+            background: linear-gradient(135deg, #e0e7ee 0%, #c8d6e0 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 5rem;
+            font-weight: 700;
+        }
+        .detail-panel-header {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .detail-panel-rank {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-dark);
+            color: white;
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            width: fit-content;
+        }
+        .detail-panel-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        .detail-panel-profession {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .detail-panel-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .detail-meta-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: white;
+            padding: 0.35rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .detail-meta-tag svg {
+            width: 16px;
+            height: 16px;
+            opacity: 0.6;
+        }
+
+        /* Detail body */
+        .detail-panel-body {
+            padding: 2rem;
+        }
+        .detail-section {
+            margin-bottom: 1.75rem;
+        }
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+        .detail-section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary-light);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+        .detail-section-text {
+            color: #334155;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Social links */
+        .detail-social {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .detail-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+        .detail-social a:hover {
+            transform: scale(1.1);
+        }
+        .detail-social a.social-facebook:hover { background: #1877f2; color: white; }
+        .detail-social a.social-linkedin:hover { background: #0a66c2; color: white; }
+        .detail-social a.social-instagram:hover { background: #e4405f; color: white; }
+
+        /* Loading */
+        .liste-loading {
+            text-align: center;
+            padding: 5rem 2rem;
+            color: var(--primary-dark);
+        }
+        .liste-loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #e2e8f0;
+            border-top-color: var(--primary-light);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Back link */
+        .liste-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+        }
+        .liste-back:hover { opacity: 1; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .liste-hero { padding: 7rem 1.5rem 3rem; }
+            .liste-hero h1 { font-size: 2.2rem; }
+            .liste-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .liste-grid-section { padding: 2rem 1rem 3rem; }
+            .detail-overlay { padding: 0; align-items: flex-end; }
+            .detail-panel {
+                border-radius: 20px 20px 0 0;
+                max-height: 95vh;
+            }
+            .detail-panel-top {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 1.5rem;
+                border-radius: 20px 20px 0 0;
+            }
+            .detail-panel-photo, .detail-panel-photo-placeholder {
+                width: 160px;
+                min-width: 160px;
+                height: 210px;
+            }
+            .detail-panel-meta { justify-content: center; }
+            .detail-panel-name { font-size: 1.5rem; }
+            .detail-panel-body { padding: 1.5rem; }
+        }
+        @media (max-width: 480px) {
+            .liste-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .liste-card-info { padding: 0.75rem; }
+            .liste-card-name { font-size: 0.9rem; }
+            .liste-card-rank { width: 30px; height: 30px; font-size: 0.8rem; top: 8px; left: 8px; }
+        }
+    </style>
+</head>
+<body class="liste-page">
+    <!-- Minimal header -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="container">
+                <a href="/" class="logo">
+                    <img src="images/PSEC.png" alt="Pour Senlis en Confiance - Logo" loading="eager">
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="liste-hero">
+        <a href="/" class="liste-back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            Retour au site
+        </a>
+        <h1>La Liste</h1>
+        <p>34 colistiers engagés pour Senlis, unis autour d'un projet commun pour notre ville.</p>
+    </section>
+
+    <!-- Grid -->
+    <div class="liste-grid-section">
+        <div id="listeLoading" class="liste-loading">
+            <div class="liste-loading-spinner"></div>
+            <p>Chargement de la liste...</p>
+        </div>
+        <div class="liste-grid" id="listeGrid"></div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="detail-overlay" id="detailOverlay">
+        <div class="detail-panel" id="detailPanel">
+            <button class="detail-panel-close" id="detailClose">&times;</button>
+            <div id="detailContent"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 Pour Senlis en Confiance - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let allRecords = [];
+
+        async function loadListe() {
+            try {
+                const response = await fetch('/.netlify/functions/get-liste');
+                const data = await response.json();
+
+                if (data.success) {
+                    // Only show validated/published records, sorted by name
+                    allRecords = data.records
+                        .filter(r => r.statut === 'Validé' || r.statut === 'Publié')
+                        .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'));
+                    renderGrid();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            } finally {
+                document.getElementById('listeLoading').style.display = 'none';
+            }
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('listeGrid');
+
+            grid.innerHTML = allRecords.map(record => {
+                const photo = record.photo && record.photo.url
+                    ? `<img src="${record.photo.url}" class="liste-card-photo" alt="${record.prenom} ${record.nom}" loading="lazy">`
+                    : `<div class="liste-card-photo-placeholder">${(record.prenom || record.nom || '?').charAt(0)}</div>`;
+
+                const rank = record.rang ? `<div class="liste-card-rank">${record.rang}</div>` : '';
+                const displayName = [record.prenom, record.nom].filter(Boolean).join(' ');
+
+                return `
+                    <div class="liste-card" onclick="openDetail('${record.id}')">
+                        ${rank}
+                        ${photo}
+                        <div class="liste-card-info">
+                            <div class="liste-card-name">${displayName}</div>
+                            <div class="liste-card-profession">${record.profession || ''}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openDetail(id) {
+            const record = allRecords.find(r => r.id === id);
+            if (!record) return;
+
+            const displayName = [record.prenom, record.nom].filter(Boolean).join(' ');
+
+            const photo = record.photo && record.photo.url
+                ? `<img src="${record.photo.url}" class="detail-panel-photo" alt="${displayName}">`
+                : `<div class="detail-panel-photo-placeholder">${(record.prenom || record.nom || '?').charAt(0)}</div>`;
+
+            const rank = record.rang ? `<div class="detail-panel-rank">N&deg;${record.rang} sur la liste</div>` : '';
+
+            const metaTags = [];
+            if (record.age) {
+                metaTags.push(`<span class="detail-meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>${record.age} ans</span>`);
+            }
+            if (record.quartier) {
+                metaTags.push(`<span class="detail-meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${record.quartier}</span>`);
+            }
+
+            const socialLinks = [];
+            if (record.facebook) socialLinks.push(`<a href="${record.facebook}" target="_blank" class="social-facebook" title="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>`);
+            if (record.linkedin) socialLinks.push(`<a href="${record.linkedin}" target="_blank" class="social-linkedin" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>`);
+            if (record.instagram) socialLinks.push(`<a href="${record.instagram}" target="_blank" class="social-instagram" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>`);
+
+            const content = `
+                <div class="detail-panel-top">
+                    ${photo}
+                    <div class="detail-panel-header">
+                        ${rank}
+                        <div class="detail-panel-name">${displayName}</div>
+                        <div class="detail-panel-profession">${record.profession || ''}</div>
+                        <div class="detail-panel-meta">
+                            ${metaTags.join('')}
+                        </div>
+                        ${socialLinks.length > 0 ? `<div class="detail-social">${socialLinks.join('')}</div>` : ''}
+                    </div>
+                </div>
+                <div class="detail-panel-body">
+                    ${record.bio ? `
+                        <div class="detail-section">
+                            <div class="detail-section-title">Biographie</div>
+                            <div class="detail-section-text">${record.bio.replace(/\n/g, '<br>')}</div>
+                        </div>
+                    ` : ''}
+                    ${record.message ? `
+                        <div class="detail-section">
+                            <div class="detail-section-title">Message personnel</div>
+                            <div class="detail-section-text">${record.message.replace(/\n/g, '<br>')}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            document.getElementById('detailContent').innerHTML = content;
+            document.getElementById('detailOverlay').classList.add('visible');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDetail() {
+            document.getElementById('detailOverlay').classList.remove('visible');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('detailClose').addEventListener('click', closeDetail);
+        document.getElementById('detailOverlay').addEventListener('click', (e) => {
+            if (e.target.id === 'detailOverlay') closeDetail();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDetail();
+        });
+
+        loadListe();
+    </script>
+</body>
+</html>
