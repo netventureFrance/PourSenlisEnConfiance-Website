@@ -492,13 +492,12 @@
             .prog-theme-title h3 { font-size: 1.05rem; }
             .prog-theme-content { padding: 1rem 1.25rem 1.5rem; }
             .prog-invest-total { font-size: 2.5rem; }
-            .prog-invest-map-layout { grid-template-columns: 1fr; gap: 1rem; }
-            .prog-invest-map-col { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
-            .prog-invest-map-col-left .prog-invest-map-card::after,
-            .prog-invest-map-col-right .prog-invest-map-card::before { display: none; }
-            .prog-invest-map-card { min-width: 140px; flex: 1; }
-            .prog-invest-map-center { order: -1; }
-            .prog-invest-top-card { min-width: 140px; }
+            .prog-invest-map-layout { display: flex; flex-direction: column; gap: 0.75rem; }
+            .prog-invest-map-center { display: none; }
+            .prog-invest-map-col { flex-direction: column; gap: 0.75rem; }
+            .prog-invest-map-card { min-width: unset; }
+            .prog-invest-top { flex-direction: column; align-items: stretch; }
+            .prog-invest-top-card { max-width: none; min-width: unset; }
             .prog-reunions-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
