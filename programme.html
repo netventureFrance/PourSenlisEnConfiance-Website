@@ -173,7 +173,7 @@
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(13, 61, 92, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-left: 5px solid #ccc;
+            border-left: 5px solid #3d9dd9;
         }
         .prog-theme:hover {
             transform: translateY(-3px);
@@ -252,16 +252,8 @@
             border-top: 2px solid rgba(255,255,255,0.2);
         }
 
-        /* Theme colors - left accent stripe */
-        #theme-securite { border-left-color: #dc2626; }
-        #theme-economie { border-left-color: #2563eb; }
-        #theme-cadre { border-left-color: #16a34a; }
-        #theme-culture { border-left-color: #7c3aed; }
-        #theme-cohesion { border-left-color: #ea580c; }
-        #theme-sport { border-left-color: #0891b2; }
-        #theme-ecologie { border-left-color: #15803d; }
-        #theme-finances { border-left-color: #4338ca; }
-        #theme-citoyennete { border-left-color: #b45309; }
+        /* Theme colors - left accent stripe (logo light blue) */
+        .prog-theme { border-left-color: #3d9dd9; }
 
         /* Content styling */
         .prog-theme-content h4 {
@@ -298,15 +290,7 @@
             border-left: 4px solid inherit;
         }
         /* Match highlight box border to theme color */
-        #theme-securite .prog-highlight-box { border-left-color: #dc2626; }
-        #theme-economie .prog-highlight-box { border-left-color: #2563eb; }
-        #theme-cadre .prog-highlight-box { border-left-color: #16a34a; }
-        #theme-culture .prog-highlight-box { border-left-color: #7c3aed; }
-        #theme-cohesion .prog-highlight-box { border-left-color: #ea580c; }
-        #theme-sport .prog-highlight-box { border-left-color: #0891b2; }
-        #theme-ecologie .prog-highlight-box { border-left-color: #15803d; }
-        #theme-finances .prog-highlight-box { border-left-color: #4338ca; }
-        #theme-citoyennete .prog-highlight-box { border-left-color: #b45309; }
+        .prog-highlight-box { border-left-color: #3d9dd9; }
         .prog-highlight-box p {
             margin: 0;
             font-weight: 500;
@@ -464,6 +448,86 @@
             .prog-invest-card { padding: 1rem; }
             .prog-invest-amount { font-size: 1.3rem; }
         }
+        /* ========== Team Grid ========== */
+        .prog-team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .prog-team-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .prog-team-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(13, 61, 92, 0.1);
+        }
+        .prog-team-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 0.75rem;
+            display: block;
+            border: 3px solid #3d9dd9;
+        }
+        .prog-team-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            line-height: 1.3;
+        }
+        .prog-team-rank {
+            font-size: 0.75rem;
+            color: #3d9dd9;
+            font-weight: 600;
+            margin-top: 0.15rem;
+        }
+        .prog-team-profession {
+            font-size: 0.78rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+            line-height: 1.3;
+        }
+        .prog-team-quartier {
+            font-size: 0.72rem;
+            color: #94a3b8;
+            margin-top: 0.15rem;
+        }
+        .prog-team-leader {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .prog-team-leader img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #3d9dd9;
+            display: block;
+            margin: 0 auto 0.75rem;
+        }
+        .prog-team-leader .prog-team-name {
+            font-size: 1.1rem;
+        }
+        .prog-team-leader .prog-team-rank {
+            font-size: 0.85rem;
+        }
+        @media (max-width: 768px) {
+            .prog-team-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .prog-team-photo { width: 64px; height: 64px; }
+        }
+        @media (max-width: 480px) {
+            .prog-team-grid { grid-template-columns: repeat(2, 1fr); }
+            .prog-team-card { padding: 0.75rem; }
+            .prog-team-photo { width: 56px; height: 56px; }
+            .prog-team-name { font-size: 0.8rem; }
+        }
+
     </style>
 </head>
 <body class="prog-page">
@@ -1216,6 +1280,33 @@
                     </div>
                 </div>
             </div>
+
+            <!-- L'Équipe -->
+            <div class="prog-theme" id="theme-equipe">
+                <div class="prog-theme-header" onclick="toggleTheme('theme-equipe')">
+                    <div class="prog-theme-image">
+                        <img src="images/Axe5_Equipe.png" alt="L'&Eacute;quipe">
+                    </div>
+                    <div class="prog-theme-title">
+                        <h3>L'&Eacute;quipe</h3>
+                        <p>35 femmes et hommes engag&eacute;s pour Senlis</p>
+                    </div>
+                    <div class="prog-theme-toggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
+                </div>
+                <div class="prog-theme-body">
+                    <div class="prog-theme-content">
+                        <div class="prog-team-leader">
+                            <img src="images/Pascale_Loiseleur.png" alt="Pascale Loiseleur">
+                            <div class="prog-team-name">Pascale LOISELEUR</div>
+                            <div class="prog-team-rank">N&deg;1 &mdash; T&ecirc;te de liste</div>
+                        </div>
+                        <div class="prog-team-grid" id="team-grid"></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -1353,7 +1444,33 @@
         </div>
     </footer>
 
+    <script src="js/liste-data.js"></script>
     <script>
+        // Render team grid
+        (function() {
+            var grid = document.getElementById('team-grid');
+            if (!grid || typeof LISTE_DATA === 'undefined') return;
+            var html = '';
+            for (var i = 0; i < LISTE_DATA.length; i++) {
+                var m = LISTE_DATA[i];
+                var photoUrl = m.photo && m.photo.url ? m.photo.url : '';
+                // Use local path for photos
+                if (photoUrl.indexOf('https://poursenlisenconfiance.fr/') === 0) {
+                    photoUrl = photoUrl.replace('https://poursenlisenconfiance.fr/', '');
+                }
+                // Strip cache-busting query params for clean display
+                var cleanUrl = photoUrl.split('?')[0];
+                html += '<div class="prog-team-card">';
+                html += '<img class="prog-team-photo" src="' + cleanUrl + '" alt="' + m.prenom + ' ' + m.nom + '" loading="lazy">';
+                html += '<div class="prog-team-name">' + m.prenom + ' ' + m.nom.toUpperCase() + '</div>';
+                html += '<div class="prog-team-rank">N\u00b0' + m.rang + '</div>';
+                html += '<div class="prog-team-profession">' + m.profession + '</div>';
+                html += '<div class="prog-team-quartier">' + m.quartier + '</div>';
+                html += '</div>';
+            }
+            grid.innerHTML = html;
+        })();
+
         function toggleHeroIntro() {
             var more = document.getElementById('hero-more');
             var btn = document.getElementById('hero-toggle');
