@@ -300,14 +300,8 @@
         /* ========== Investissements ========== */
         .prog-invest {
             padding: 4rem 0;
-            background: var(--primary-dark);
-            color: white;
-        }
-        .prog-invest .prog-section-title {
-            color: white;
-        }
-        .prog-invest .prog-section-subtitle {
-            color: rgba(255,255,255,0.7);
+            background: white;
+            color: var(--primary-dark);
         }
         .prog-invest-total {
             text-align: center;
@@ -319,38 +313,115 @@
         .prog-invest-total-label {
             text-align: center;
             font-size: 1.1rem;
-            opacity: 0.8;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+        /* Top row: general investments */
+        .prog-invest-top {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
             margin-bottom: 2.5rem;
+            flex-wrap: wrap;
         }
-        .prog-invest-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1.25rem;
-        }
-        .prog-invest-card {
-            background: rgba(255,255,255,0.1);
-            border-radius: 14px;
-            padding: 1.5rem;
+        .prog-invest-top-card {
+            background: #3d9dd9;
+            color: white;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
             text-align: center;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.2s, background 0.2s;
+            min-width: 180px;
+            flex: 1;
+            max-width: 240px;
         }
-        .prog-invest-card:hover {
-            transform: translateY(-3px);
-            background: rgba(255,255,255,0.15);
-        }
-        .prog-invest-amount {
-            font-size: 1.8rem;
+        .prog-invest-top-card .prog-invest-card-title {
             font-weight: 800;
-            color: #6cb13e;
-            margin-bottom: 0.25rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.5rem;
         }
-        .prog-invest-label {
-            font-size: 0.9rem;
-            opacity: 0.85;
+        .prog-invest-top-card .prog-invest-card-amount {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        /* Map layout: left cards | map | right cards */
+        .prog-invest-map-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr 220px;
+            gap: 0;
+            align-items: stretch;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .prog-invest-map-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            gap: 1rem;
+            padding: 0.5rem 0;
+        }
+        .prog-invest-map-center {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .prog-invest-map-center img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+        /* Map cards (left & right) */
+        .prog-invest-map-card {
+            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .prog-invest-map-card .prog-invest-card-title {
+            font-weight: 800;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.4rem;
+            line-height: 1.3;
+        }
+        .prog-invest-map-card .prog-invest-card-amount {
+            font-size: 0.85rem;
+            font-weight: 600;
             line-height: 1.4;
         }
+        /* Card color variants */
+        .prog-invest-card-green { background: #6cb13e; }
+        .prog-invest-card-blue { background: #3d9dd9; }
+        .prog-invest-card-dark { background: #0d3d5c; }
+        .prog-invest-card-darkgreen { background: #2d7a3a; }
+        /* Connector lines from cards to map */
+        .prog-invest-map-col-left .prog-invest-map-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            width: 20px;
+            height: 3px;
+            transform: translateY(-50%);
+        }
+        .prog-invest-map-col-right .prog-invest-map-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            width: 20px;
+            height: 3px;
+            transform: translateY(-50%);
+        }
+        .prog-invest-card-green::after, .prog-invest-card-green::before { background: #6cb13e; }
+        .prog-invest-card-blue::after, .prog-invest-card-blue::before { background: #3d9dd9; }
+        .prog-invest-card-dark::after, .prog-invest-card-dark::before { background: #0d3d5c; }
+        .prog-invest-card-darkgreen::after, .prog-invest-card-darkgreen::before { background: #2d7a3a; }
 
         /* ========== Reunions ========== */
         .prog-reunions {
@@ -437,16 +508,24 @@
             .prog-theme-title h3 { font-size: 1.05rem; }
             .prog-theme-content { padding: 1rem 1.25rem 1.5rem; }
             .prog-invest-total { font-size: 2.5rem; }
-            .prog-invest-grid { grid-template-columns: repeat(2, 1fr); }
+            .prog-invest-map-layout { grid-template-columns: 1fr; gap: 1rem; }
+            .prog-invest-map-col { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+            .prog-invest-map-col-left .prog-invest-map-card::after,
+            .prog-invest-map-col-right .prog-invest-map-card::before { display: none; }
+            .prog-invest-map-card { min-width: 140px; flex: 1; }
+            .prog-invest-map-center { order: -1; }
+            .prog-invest-top-card { min-width: 140px; }
             .prog-reunions-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
             .prog-phare-card { padding: 0.75rem; gap: 0.75rem; }
             .prog-phare-icon { width: 44px; height: 44px; min-width: 44px; }
             .prog-phare-text { font-size: 0.75rem; }
-            .prog-invest-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-            .prog-invest-card { padding: 1rem; }
-            .prog-invest-amount { font-size: 1.3rem; }
+            .prog-invest-top { gap: 0.5rem; }
+            .prog-invest-top-card { min-width: 100px; padding: 0.75rem; }
+            .prog-invest-map-card { padding: 0.7rem; }
+            .prog-invest-map-card .prog-invest-card-title { font-size: 0.7rem; }
+            .prog-invest-map-card .prog-invest-card-amount { font-size: 0.75rem; }
         }
         /* ========== Team Grid (liste.html style) ========== */
         .prog-team-grid {
@@ -1456,42 +1535,59 @@
             <div class="prog-invest-total">45 &agrave; 50 M&euro;</div>
             <p class="prog-invest-total-label">sur le mandat 2026-2032 (40 millions d'euros sur le mandat pr&eacute;c&eacute;dent)</p>
 
-            <div class="prog-invest-grid">
-                <div class="prog-invest-card">
-                    <div class="prog-invest-amount">12 M&euro;</div>
-                    <div class="prog-invest-label">Investissements du quotidien</div>
+            <!-- Top row: general investments -->
+            <div class="prog-invest-top">
+                <div class="prog-invest-top-card">
+                    <div class="prog-invest-card-title">La Voirie</div>
+                    <div class="prog-invest-card-amount">6 millions d'euros<br>sur le mandat</div>
                 </div>
-                <div class="prog-invest-card">
-                    <div class="prog-invest-amount">6 M&euro;</div>
-                    <div class="prog-invest-label">Voirie</div>
+                <div class="prog-invest-top-card">
+                    <div class="prog-invest-card-title">L'&Eacute;clairage Public</div>
+                    <div class="prog-invest-card-amount">2 millions d'euros<br>sur le mandat</div>
                 </div>
-                <div class="prog-invest-card">
-                    <div class="prog-invest-amount">5,9 M&euro;</div>
-                    <div class="prog-invest-label">Conservatoire de musique et de danse</div>
+                <div class="prog-invest-top-card" style="background: #6cb13e;">
+                    <div class="prog-invest-card-title">Investissements du Quotidien</div>
+                    <div class="prog-invest-card-amount">12 millions d'euros<br>sur le mandat</div>
                 </div>
-                <div class="prog-invest-card">
-                    <div class="prog-invest-amount">5,5 M&euro;</div>
-                    <div class="prog-invest-label">Ch&acirc;teau royal</div>
+            </div>
+
+            <!-- Map with positioned cards -->
+            <div class="prog-invest-map-layout">
+                <!-- Left cards -->
+                <div class="prog-invest-map-col prog-invest-map-col-left">
+                    <div class="prog-invest-map-card prog-invest-card-green">
+                        <div class="prog-invest-card-title">Le Parc &Eacute;cologique</div>
+                        <div class="prog-invest-card-amount">1 million d'euros<br>sur le mandat</div>
+                    </div>
+                    <div class="prog-invest-map-card prog-invest-card-blue">
+                        <div class="prog-invest-card-title">Le Complexe Sportif<br>Yves Carlier</div>
+                        <div class="prog-invest-card-amount">3,5 millions d'euros<br>sur le mandat<br><strong>(7 millions au total</strong><br>&agrave; r&eacute;aliser sur 2 mandats)</div>
+                    </div>
+                    <div class="prog-invest-map-card prog-invest-card-blue">
+                        <div class="prog-invest-card-title">Le Conservatoire<br>de Musique et de Danse</div>
+                        <div class="prog-invest-card-amount">5,9 millions d'euros<br>sur le mandat</div>
+                    </div>
                 </div>
-                <div class="prog-invest-card">
-                    <div class="prog-invest-amount">5 &agrave; 10 M&euro;</div>
-                    <div class="prog-invest-label">&Eacute;cole Anne de Kiev</div>
+
+                <!-- Center: Map -->
+                <div class="prog-invest-map-center">
+                    <img src="images/programme/carte-investissements.png" alt="Carte des investissements &agrave; Senlis" loading="lazy">
                 </div>
-                <div class="prog-invest-card">
-                    <div class="prog-invest-amount">5 M&euro;</div>
-                    <div class="prog-invest-label">Cath&eacute;drale</div>
-                </div>
-                <div class="prog-invest-card">
-                    <div class="prog-invest-amount">3,5 M&euro;</div>
-                    <div class="prog-invest-label">Complexe sportif Yves Carlier (7 M&euro; sur 2 mandats)</div>
-                </div>
-                <div class="prog-invest-card">
-                    <div class="prog-invest-amount">2 M&euro;</div>
-                    <div class="prog-invest-label">&Eacute;clairage public LED</div>
-                </div>
-                <div class="prog-invest-card">
-                    <div class="prog-invest-amount">1 M&euro;</div>
-                    <div class="prog-invest-label">Parc &eacute;cologique</div>
+
+                <!-- Right cards -->
+                <div class="prog-invest-map-col prog-invest-map-col-right">
+                    <div class="prog-invest-map-card prog-invest-card-darkgreen">
+                        <div class="prog-invest-card-title">Le Ch&acirc;teau Royal</div>
+                        <div class="prog-invest-card-amount">5,5 millions d'euros<br>sur le mandat</div>
+                    </div>
+                    <div class="prog-invest-map-card prog-invest-card-dark">
+                        <div class="prog-invest-card-title">La Cath&eacute;drale</div>
+                        <div class="prog-invest-card-amount">5 millions d'euros<br>sur le mandat</div>
+                    </div>
+                    <div class="prog-invest-map-card prog-invest-card-dark">
+                        <div class="prog-invest-card-title">R&eacute;novation de<br>l'&Eacute;cole Anne de Kiev</div>
+                        <div class="prog-invest-card-amount">Budget &agrave; finaliser :<br><strong>entre 5 et 10 millions</strong><br>d'euros sur le mandat</div>
+                    </div>
                 </div>
             </div>
         </div>
