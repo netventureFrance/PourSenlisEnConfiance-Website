@@ -325,14 +325,16 @@
             flex-wrap: wrap;
         }
         .prog-invest-top-card {
-            background: #3d9dd9;
-            color: white;
+            background: #f0f7fa;
+            color: var(--primary-dark);
             border-radius: 12px;
             padding: 1rem 1.5rem;
             text-align: center;
             min-width: 180px;
             flex: 1;
             max-width: 240px;
+            border-left: 5px solid #3d9dd9;
+            border-right: 5px solid #3d9dd9;
         }
         .prog-invest-top-card .prog-invest-card-title {
             font-weight: 800;
@@ -340,11 +342,14 @@
             text-transform: uppercase;
             letter-spacing: 0.03em;
             margin-bottom: 0.5rem;
+            color: var(--primary-dark);
         }
         .prog-invest-top-card .prog-invest-card-amount {
             font-size: 1rem;
             font-weight: 600;
+            color: #334155;
         }
+        .prog-invest-top-green { border-left-color: #6cb13e; border-right-color: #6cb13e; }
         /* Map layout: left cards | map | right cards */
         .prog-invest-map-layout {
             display: grid;
@@ -381,6 +386,7 @@
             background: #f0f7fa;
             color: var(--primary-dark);
             border-left: 5px solid #3d9dd9;
+            border-right: 5px solid #3d9dd9;
         }
         .prog-invest-map-card .prog-invest-card-title {
             font-weight: 800;
@@ -397,11 +403,11 @@
             line-height: 1.4;
             color: #334155;
         }
-        /* Card left-border color variants */
-        .prog-invest-card-green { border-left-color: #6cb13e; }
-        .prog-invest-card-blue { border-left-color: #3d9dd9; }
-        .prog-invest-card-dark { border-left-color: #0d3d5c; }
-        .prog-invest-card-darkgreen { border-left-color: #2d7a3a; }
+        /* Card border color variants */
+        .prog-invest-card-green { border-left-color: #6cb13e; border-right-color: #6cb13e; }
+        .prog-invest-card-blue { border-left-color: #3d9dd9; border-right-color: #3d9dd9; }
+        .prog-invest-card-dark { border-left-color: #0d3d5c; border-right-color: #0d3d5c; }
+        .prog-invest-card-darkgreen { border-left-color: #2d7a3a; border-right-color: #2d7a3a; }
 
         /* ========== Reunions ========== */
         .prog-reunions {
@@ -1525,7 +1531,7 @@
                     <div class="prog-invest-card-title">L'&Eacute;clairage Public</div>
                     <div class="prog-invest-card-amount">2 millions d'euros<br>sur le mandat</div>
                 </div>
-                <div class="prog-invest-top-card" style="background: #6cb13e;">
+                <div class="prog-invest-top-card prog-invest-top-green">
                     <div class="prog-invest-card-title">Investissements du Quotidien</div>
                     <div class="prog-invest-card-amount">12 millions d'euros<br>sur le mandat</div>
                 </div>
