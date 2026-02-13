@@ -376,30 +376,11 @@
             display: block;
             border-radius: 8px;
         }
-        /* Investment groups (bracket card + surrounding bullets) */
+        /* Investment groups */
         .prog-invest-group {
             display: flex;
             flex-direction: column;
             gap: 0.3rem;
-        }
-        /* Bullet text lists */
-        .prog-invest-bullets {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-size: 0.75rem;
-            line-height: 1.35;
-            color: var(--primary-dark);
-        }
-        .prog-invest-bullets li {
-            padding: 0.15rem 0 0.15rem 0.9rem;
-            position: relative;
-        }
-        .prog-invest-bullets li::before {
-            content: '\2022';
-            position: absolute;
-            left: 0;
-            font-weight: 800;
         }
         /* Map cards (left & right) */
         .prog-invest-map-card {
@@ -429,6 +410,13 @@
         /* Card bracket color variants */
         .prog-invest-card-green { border-left-color: #6cb13e; border-right-color: #6cb13e; }
         .prog-invest-card-darkblue { border-left-color: #0d3d5c; border-right-color: #0d3d5c; }
+        /* Small text-only bracket card */
+        .prog-invest-card-sm {
+            padding: 0.5rem 0.7rem;
+            font-size: 0.75rem;
+            line-height: 1.35;
+            text-align: left;
+        }
 
         /* ========== Reunions ========== */
         .prog-reunions {
@@ -519,7 +507,6 @@
             .prog-invest-map-center { order: -1; }
             .prog-invest-map-col { flex-direction: column; gap: 0.5rem; }
             .prog-invest-map-card { min-width: unset; }
-            .prog-invest-bullets { font-size: 0.8rem; }
             .prog-invest-top { flex-direction: column; align-items: stretch; }
             .prog-invest-top-card { max-width: none; min-width: unset; }
             .prog-reunions-grid { grid-template-columns: 1fr; }
@@ -533,7 +520,7 @@
             .prog-invest-map-card { padding: 0.7rem; }
             .prog-invest-map-card .prog-invest-card-title { font-size: 0.7rem; }
             .prog-invest-map-card .prog-invest-card-amount { font-size: 0.75rem; }
-            .prog-invest-bullets { font-size: 0.75rem; }
+            .prog-invest-card-sm { font-size: 0.7rem; }
         }
         /* ========== Team Grid (liste.html style) ========== */
         .prog-team-grid {
@@ -1559,14 +1546,12 @@
                 </div>
             </div>
 
-            <!-- Map with positioned cards and text -->
+            <!-- Map with positioned cards -->
             <div class="prog-invest-map-layout">
                 <!-- Left column (Centre-Ville / Val d'Aunette / Brichebay) -->
                 <div class="prog-invest-map-col prog-invest-map-col-left">
                     <div class="prog-invest-group">
-                        <ul class="prog-invest-bullets">
-                            <li><strong>Aire de jeux</strong> pour les enfants</li>
-                        </ul>
+                        <div class="prog-invest-map-card prog-invest-card-sm"><strong>Aire de jeux</strong> pour les enfants</div>
                         <div class="prog-invest-map-card">
                             <div class="prog-invest-card-title">Le Ch&acirc;teau Royal</div>
                             <div class="prog-invest-card-amount">5,5 millions d'euros<br>sur le mandat</div>
@@ -1575,27 +1560,21 @@
                             <div class="prog-invest-card-title">La Cath&eacute;drale</div>
                             <div class="prog-invest-card-amount">5 millions d'euros<br>sur le mandat</div>
                         </div>
-                        <ul class="prog-invest-bullets">
-                            <li>Accentuer la <strong>pr&eacute;sence polici&egrave;re</strong></li>
-                        </ul>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Accentuer la <strong>pr&eacute;sence polici&egrave;re</strong></div>
                     </div>
                     <div class="prog-invest-group">
-                        <ul class="prog-invest-bullets">
-                            <li><strong>Salles</strong> pouvant accueillir des <strong>activit&eacute;s/ateliers</strong> dans les anciens locaux de l'OPAC</li>
-                            <li>Installation d'une <strong>agence postale</strong> qui offrira tous les services de la Poste et la possibilit&eacute; de retirer de l'argent</li>
-                        </ul>
+                        <div class="prog-invest-map-card prog-invest-card-sm"><strong>Salles</strong> pouvant accueillir des <strong>activit&eacute;s/ateliers</strong> dans les anciens locaux de l'OPAC</div>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Installation d'une <strong>agence postale</strong> qui offrira tous les services de la Poste et la possibilit&eacute; de retirer de l'argent</div>
                         <div class="prog-invest-map-card prog-invest-card-green">
                             <div class="prog-invest-card-title">R&eacute;novation de<br>l'&Eacute;cole Anne de Kiev</div>
                             <div class="prog-invest-card-amount">entre 5 et 10 millions<br>d'euros sur le mandat</div>
                         </div>
                     </div>
                     <div class="prog-invest-group">
-                        <ul class="prog-invest-bullets">
-                            <li>Un <strong>espace de jeux pour les jeunes</strong></li>
-                            <li>Le transfert du <strong>tir &agrave; l'arc</strong> du Montauban vers l'ancien terrain de rugby de Brichebay</li>
-                            <li>R&eacute;novation des sols et des <strong>salles de classes de l'&eacute;cole</strong></li>
-                            <li>R&eacute;novation de la <strong>rue</strong> de l'H&ocirc;tel-Dieu des Marais <strong>et de l'avenue</strong> des Closeaux</li>
-                        </ul>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Un <strong>espace de jeux pour les jeunes</strong></div>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Le transfert du <strong>tir &agrave; l'arc</strong> du Montauban vers l'ancien terrain de rugby de Brichebay</div>
+                        <div class="prog-invest-map-card prog-invest-card-sm">R&eacute;novation des sols et des <strong>salles de classes de l'&eacute;cole</strong></div>
+                        <div class="prog-invest-map-card prog-invest-card-sm">R&eacute;novation de la <strong>rue</strong> de l'H&ocirc;tel-Dieu des Marais <strong>et de l'avenue</strong> des Closeaux</div>
                     </div>
                 </div>
 
@@ -1607,43 +1586,33 @@
                 <!-- Right column (Bon Secours / EcoQuartier / Fours-&agrave;-chaux) -->
                 <div class="prog-invest-map-col prog-invest-map-col-right">
                     <div class="prog-invest-group">
-                        <ul class="prog-invest-bullets">
-                            <li><strong>Agr&egrave;s sportifs</strong> sur la promenade de l'Aunette</li>
-                        </ul>
+                        <div class="prog-invest-map-card prog-invest-card-sm"><strong>Agr&egrave;s sportifs</strong> sur la promenade de l'Aunette</div>
                         <div class="prog-invest-map-card">
                             <div class="prog-invest-card-title">Le Complexe Sportif<br>Yves Carlier</div>
                             <div class="prog-invest-card-amount">3,5 millions d'euros<br>sur le mandat</div>
                         </div>
-                        <ul class="prog-invest-bullets">
-                            <li>Am&eacute;nagement d'une <strong>voie verte</strong></li>
-                            <li>Un <strong>espace couvert</strong> pour les jeunes</li>
-                            <li>Extension de la <strong>vid&eacute;o-protection</strong></li>
-                            <li>Poursuite du programme de <strong>r&eacute;novation des voiries</strong></li>
-                        </ul>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Am&eacute;nagement d'une <strong>voie verte</strong></div>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Un <strong>espace couvert</strong> pour les jeunes</div>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Extension de la <strong>vid&eacute;o-protection</strong></div>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Poursuite du programme de <strong>r&eacute;novation des voiries</strong></div>
                         <div class="prog-invest-map-card prog-invest-card-green">
                             <div class="prog-invest-card-title">Le Parc &Eacute;cologique</div>
                             <div class="prog-invest-card-amount">1 million d'euros<br>sur le mandat</div>
                         </div>
                     </div>
                     <div class="prog-invest-group">
-                        <ul class="prog-invest-bullets">
-                            <li><strong>Plaine de jeux &agrave; l'est,</strong> pouvant accueillir les jeux de ballon</li>
-                            <li>Extension de la <strong>vid&eacute;o-protection</strong></li>
-                            <li>Renforcement de la <strong>pr&eacute;sence des forces de l'ordre</strong></li>
-                            <li>Installation d'une aire de <strong>pique-nique</strong> sur la voie verte</li>
-                            <li>Accompagner l'installation d'une <strong>Maison de Sant&eacute; Pluriprofessionnelle</strong></li>
-                        </ul>
+                        <div class="prog-invest-map-card prog-invest-card-sm"><strong>Plaine de jeux &agrave; l'est,</strong> pouvant accueillir les jeux de ballon</div>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Extension de la <strong>vid&eacute;o-protection</strong></div>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Renforcement de la <strong>pr&eacute;sence des forces de l'ordre</strong></div>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Installation d'une aire de <strong>pique-nique</strong> sur la voie verte</div>
+                        <div class="prog-invest-map-card prog-invest-card-sm">Accompagner l'installation d'une <strong>Maison de Sant&eacute; Pluriprofessionnelle</strong></div>
                     </div>
                     <div class="prog-invest-group">
-                        <ul class="prog-invest-bullets">
-                            <li><strong>Jeux pour enfants</strong> pr&egrave;s de l'ancien lavoir</li>
-                        </ul>
+                        <div class="prog-invest-map-card prog-invest-card-sm"><strong>Jeux pour enfants</strong> pr&egrave;s de l'ancien lavoir</div>
                     </div>
                     <div class="prog-invest-group">
-                        <ul class="prog-invest-bullets">
-                            <li><strong>Aire de jeux</strong> pour les enfants</li>
-                            <li><strong>Installation de deux buts</strong> sur la prairie</li>
-                        </ul>
+                        <div class="prog-invest-map-card prog-invest-card-sm"><strong>Aire de jeux</strong> pour les enfants</div>
+                        <div class="prog-invest-map-card prog-invest-card-sm"><strong>Installation de deux buts</strong> sur la prairie</div>
                         <div class="prog-invest-map-card prog-invest-card-darkblue">
                             <div class="prog-invest-card-title">Le Conservatoire<br>de Musique et de Danse</div>
                             <div class="prog-invest-card-amount">5,9 millions d'euros<br>sur le mandat</div>
