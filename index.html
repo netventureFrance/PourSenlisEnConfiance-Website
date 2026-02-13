@@ -884,6 +884,45 @@
             .prog-team-card-profession { font-size: 0.78rem; }
         }
 
+        /* ========== Mobile: Programme intro section ========== */
+        @media (max-width: 768px) {
+            #candidate .container > div:first-of-type {
+                border-radius: 12px !important;
+            }
+            #candidate .container > div:first-of-type > div:first-child {
+                flex-direction: column !important;
+                padding: 1.5rem 1.25rem 1rem !important;
+            }
+            #candidate .container > div:first-of-type > div:first-child > div:first-child {
+                align-self: center;
+            }
+            #candidate .container > div:first-of-type > div:first-child > div:first-child img {
+                width: 220px !important;
+            }
+            #candidate .container > div:first-of-type > div:last-child {
+                margin: 0 1.25rem !important;
+                padding: 0 0 1.25rem !important;
+            }
+            #candidate .container > div:first-of-type > div:last-child p,
+            #candidate .container > div:first-of-type > div:first-child > div:last-child p {
+                font-size: 0.9rem !important;
+                line-height: 1.7 !important;
+            }
+            .bg-circle {
+                opacity: 0.5;
+            }
+        }
+        @media (max-width: 480px) {
+            #candidate .container > div:first-of-type > div:first-child > div:first-child img {
+                width: 180px !important;
+            }
+            #candidate .section-title { font-size: 1.5rem; }
+            .bg-circle {
+                opacity: 0.3;
+                filter: blur(80px);
+            }
+        }
+
     </style>
 
 </head>
