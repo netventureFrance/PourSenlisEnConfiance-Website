@@ -353,7 +353,7 @@
         .prog-invest-map-layout {
             display: grid;
             grid-template-columns: 1fr 1.5fr 1fr;
-            gap: 0.3rem;
+            gap: 0;
             align-items: stretch;
             max-width: 1200px;
             margin: 0 auto;
@@ -361,20 +361,24 @@
         .prog-invest-map-col {
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
+            gap: 0.3rem;
             padding: 0;
-            justify-content: space-evenly;
         }
         .prog-invest-map-col-left {
             justify-content: flex-start;
             align-items: flex-end;
-            margin-right: -1rem;
-            z-index: 1;
         }
         .prog-invest-map-col-right {
             align-items: flex-start;
-            margin-left: -1rem;
-            z-index: 1;
+            justify-content: flex-start;
+        }
+        /* Fine-tune card spacing to match map lines */
+        .prog-invest-map-col-right .prog-invest-map-card:nth-child(3) {
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+        .prog-invest-map-col-right .prog-invest-map-card:nth-child(4) {
+            margin-bottom: 1.5rem;
         }
         .prog-invest-map-center {
             position: relative;
@@ -398,26 +402,18 @@
             border-left: 5px solid #3d9dd9;
             border-right: 5px solid #3d9dd9;
         }
-        .prog-invest-map-card .prog-invest-card-title {
-            font-weight: 800;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
-            margin-bottom: 0.2rem;
-            line-height: 1.3;
-            color: var(--primary-dark);
-        }
-        .prog-invest-map-card .prog-invest-card-amount {
-            font-size: 0.75rem;
-            font-weight: 600;
-            line-height: 1.3;
-            color: #334155;
-        }
         /* Card bracket color variants */
         .prog-invest-card-green { border-left-color: #6cb13e; border-right-color: #6cb13e; }
         .prog-invest-card-darkblue { border-left-color: #0d3d5c; border-right-color: #0d3d5c; }
         /* Bullet text inside cards */
         .prog-invest-card-bullet {
+            font-size: 0.7rem;
+            line-height: 1.3;
+            text-align: left;
+            margin: 0.15rem 0;
+        }
+        /* Budget bullet (same style as regular bullets, just bold) */
+        .prog-invest-card-budget {
             font-size: 0.7rem;
             line-height: 1.3;
             text-align: left;
@@ -1555,67 +1551,60 @@
                 </div>
             </div>
 
-            <!-- Map with positioned cards: 3 left, 5 right -->
+            <!-- Map with positioned cards: 4 left, 4 right -->
             <div class="prog-invest-map-layout">
-                <!-- Left column: 3 single bracket cards -->
+                <!-- Left column: 4 bracket cards -->
                 <div class="prog-invest-map-col prog-invest-map-col-left">
                     <div class="prog-invest-map-card">
-                        <p class="prog-invest-card-bullet">&bull; <strong>Aire de jeux</strong> pour les enfants</p>
-                        <div class="prog-invest-card-title">Le Ch&acirc;teau Royal</div>
-                        <div class="prog-invest-card-amount">5,5 millions d'euros sur le mandat</div>
-                        <div class="prog-invest-card-title">La Cath&eacute;drale</div>
-                        <div class="prog-invest-card-amount">5 millions d'euros sur le mandat</div>
-                        <p class="prog-invest-card-bullet">&bull; Accentuer la <strong>pr&eacute;sence polici&egrave;re</strong></p>
+                        <p class="prog-invest-card-bullet">&bull; <strong>Agr&egrave;s sportifs</strong> sur la promenade de l'Aunette</p>
+                        <p class="prog-invest-card-budget">&bull; <strong>Le Complexe Sportif Yves Carlier (3,5 millions d'euros sur le mandat)</strong></p>
+                        <p class="prog-invest-card-bullet">&bull; <strong>R&eacute;fection int&eacute;grale</strong> de la rue du Pont de Pierre et de la rue de l'Orme qui Baie</p>
+                        <p class="prog-invest-card-bullet">&bull; Am&eacute;nagement d'une <strong>voie verte</strong> avenue de Compi&egrave;gne</p>
                     </div>
                     <div class="prog-invest-map-card prog-invest-card-green">
-                        <p class="prog-invest-card-bullet">&bull; <strong>Salles</strong> pouvant accueillir des <strong>activit&eacute;s/ateliers</strong> dans les anciens locaux de l'OPAC</p>
                         <p class="prog-invest-card-bullet">&bull; Installation d'une <strong>agence postale</strong> qui offrira tous les services de la Poste et la possibilit&eacute; de retirer de l'argent</p>
-                        <div class="prog-invest-card-title">R&eacute;novation de l'&Eacute;cole Anne de Kiev</div>
-                        <div class="prog-invest-card-amount">entre 5 et 10 millions d'euros sur le mandat</div>
+                        <p class="prog-invest-card-budget">&bull; <strong>R&eacute;novation de l'&Eacute;cole Anne de Kiev (entre 5 et 10 millions d'euros sur le mandat)</strong></p>
+                        <p class="prog-invest-card-bullet">&bull; R&eacute;fection de l'<strong>avenue de Chantilly</strong></p>
+                    </div>
+                    <div class="prog-invest-map-card">
+                        <p class="prog-invest-card-bullet">&bull; <strong>Aire de jeux</strong> pour les enfants</p>
+                        <p class="prog-invest-card-budget">&bull; <strong>Le Ch&acirc;teau Royal (5,5 millions d'euros sur le mandat)</strong></p>
+                        <p class="prog-invest-card-budget">&bull; <strong>La Cath&eacute;drale (5 millions d'euros sur le mandat)</strong></p>
                     </div>
                     <div class="prog-invest-map-card prog-invest-card-darkblue">
                         <p class="prog-invest-card-bullet">&bull; Un <strong>espace de jeux pour les jeunes</strong></p>
-                        <p class="prog-invest-card-bullet">&bull; Le transfert du <strong>tir &agrave; l'arc</strong> du Montauban vers l'ancien terrain de rugby de Brichebay</p>
-                        <p class="prog-invest-card-bullet">&bull; R&eacute;novation des sols et des <strong>salles de classes de l'&eacute;cole</strong></p>
-                        <p class="prog-invest-card-bullet">&bull; R&eacute;novation de la <strong>rue</strong> de l'H&ocirc;tel-Dieu des Marais <strong>et de l'avenue</strong> des Closeaux</p>
+                        <p class="prog-invest-card-bullet">&bull; Le transfert du <strong>tir &agrave; l'arc</strong> du Montauban vers l'ancien terrain de rugby</p>
+                        <p class="prog-invest-card-bullet">&bull; R&eacute;novation des <strong>salles de classes de l'&eacute;cole</strong></p>
                     </div>
                 </div>
 
                 <!-- Center: Map -->
                 <div class="prog-invest-map-center">
-                    <img src="images/programme/carte-investissements-new.png" alt="Carte des investissements &agrave; Senlis" loading="lazy">
+                    <img src="images/programme/carte-investissements.png" alt="Carte des investissements &agrave; Senlis" loading="lazy">
                 </div>
 
-                <!-- Right column: 5 single bracket cards -->
+                <!-- Right column: 4 bracket cards -->
                 <div class="prog-invest-map-col prog-invest-map-col-right">
-                    <div class="prog-invest-map-card prog-invest-card-green">
-                        <p class="prog-invest-card-bullet">&bull; <strong>Agr&egrave;s sportifs</strong> sur la promenade de l'Aunette</p>
-                        <div class="prog-invest-card-title">Le Complexe Sportif Yves Carlier</div>
-                        <div class="prog-invest-card-amount">3,5 millions d'euros sur le mandat</div>
-                        <p class="prog-invest-card-bullet">&bull; Am&eacute;nagement d'une <strong>voie verte</strong></p>
-                    </div>
                     <div class="prog-invest-map-card prog-invest-card-darkblue">
                         <p class="prog-invest-card-bullet">&bull; Un <strong>espace couvert</strong> pour les jeunes</p>
-                        <p class="prog-invest-card-bullet">&bull; Extension de la <strong>vid&eacute;o-protection</strong></p>
                         <p class="prog-invest-card-bullet">&bull; Poursuite du programme de <strong>r&eacute;novation des voiries</strong></p>
-                        <div class="prog-invest-card-title">Le Parc &Eacute;cologique</div>
-                        <div class="prog-invest-card-amount">1 million d'euros sur le mandat</div>
+                        <p class="prog-invest-card-budget">&bull; <strong>Le Parc &Eacute;cologique (1 million d'euros sur le mandat)</strong></p>
+                        <p class="prog-invest-card-bullet">&bull; Cr&eacute;ation d'<strong>arr&ecirc;ts de TUS</strong> avenue du G&eacute;n&eacute;ral de Gaulle</p>
                     </div>
                     <div class="prog-invest-map-card prog-invest-card-green">
                         <p class="prog-invest-card-bullet">&bull; <strong>Plaine de jeux &agrave; l'est,</strong> pouvant accueillir les jeux de ballon</p>
-                        <p class="prog-invest-card-bullet">&bull; Extension de la <strong>vid&eacute;o-protection</strong></p>
-                        <p class="prog-invest-card-bullet">&bull; Renforcement de la <strong>pr&eacute;sence des forces de l'ordre</strong></p>
                         <p class="prog-invest-card-bullet">&bull; Installation d'une aire de <strong>pique-nique</strong> sur la voie verte</p>
                         <p class="prog-invest-card-bullet">&bull; Accompagner l'installation d'une <strong>Maison de Sant&eacute; Pluriprofessionnelle</strong></p>
                     </div>
                     <div class="prog-invest-map-card">
                         <p class="prog-invest-card-bullet">&bull; <strong>Jeux pour enfants</strong> pr&egrave;s de l'ancien lavoir</p>
+                        <p class="prog-invest-card-bullet">&bull; R&eacute;fection du <strong>chemin du Biat</strong></p>
                     </div>
                     <div class="prog-invest-map-card prog-invest-card-darkblue">
                         <p class="prog-invest-card-bullet">&bull; <strong>Aire de jeux</strong> pour les enfants</p>
                         <p class="prog-invest-card-bullet">&bull; <strong>Installation de deux buts</strong> sur la prairie</p>
-                        <div class="prog-invest-card-title">Le Conservatoire de Musique et de Danse</div>
-                        <div class="prog-invest-card-amount">5,9 millions d'euros sur le mandat</div>
+                        <p class="prog-invest-card-budget">&bull; <strong>Le Conservatoire de Musique et de Danse (5,9 millions d'euros sur le mandat)</strong></p>
+                        <p class="prog-invest-card-bullet">&bull; R&eacute;fection de la <strong>rue Saint-Lazare</strong></p>
                     </div>
                 </div>
             </div>
