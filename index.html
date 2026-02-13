@@ -133,6 +133,9 @@
 
     <!-- Programme Styles (embedded from programme.html) -->
     <style>
+        /* ========== Skip link (accessibility) ========== */
+        .skip-link:focus { top: 0; }
+
         /* ========== Page-wide dynamic background ========== */
         body {
             background: linear-gradient(180deg, #f0f4f8 0%, #ffffff 8%, #f0f7fa 20%, #ffffff 35%, #eef3f8 50%, #ffffff 65%, #f0f7fa 80%, #ffffff 100%);
@@ -927,6 +930,7 @@
 
 </head>
 <body>
+    <a href="#main-content" class="skip-link" style="position:absolute;top:-40px;left:0;background:var(--primary-dark);color:#fff;padding:8px 16px;z-index:100000;transition:top 0.2s;">Aller au contenu principal</a>
     <!-- Animated background circles -->
     <div class="bg-circle" style="width:400px;height:400px;background:rgba(61,157,217,0.12);top:5%;left:-2%;animation:floatCircles 20s ease-in-out infinite;"></div>
     <div class="bg-circle" style="width:300px;height:300px;background:rgba(108,177,62,0.10);top:3%;right:-1%;animation:floatCircles2 25s ease-in-out infinite;"></div>
@@ -965,6 +969,8 @@
             </div>
         </nav>
     </header>
+
+    <main id="main-content">
 
     <!-- News Ticker - Réunions Publiques -->
     <div class="news-ticker" id="newsTicker">
@@ -1029,19 +1035,19 @@
                         <img src="images/photo_campagne_1.jpg" alt="Photo de campagne 1">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/photo_campagne_2.jpg" alt="Photo de campagne 2">
+                        <img src="images/photo_campagne_2.jpg" alt="Photo de campagne 2" loading="lazy">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/photo_campagne_3.jpg" alt="Photo de campagne 3">
+                        <img src="images/photo_campagne_3.jpg" alt="Photo de campagne 3" loading="lazy">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/photo_campagne_4.jpg" alt="Photo de campagne 4">
+                        <img src="images/photo_campagne_4.jpg" alt="Photo de campagne 4" loading="lazy">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/photo_campagne_5.jpg" alt="Photo de campagne 5">
+                        <img src="images/photo_campagne_5.jpg" alt="Photo de campagne 5" loading="lazy">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/photo_campagne_6.jpg" alt="Photo de campagne 6">
+                        <img src="images/photo_campagne_6.jpg" alt="Photo de campagne 6" loading="lazy">
                     </div>
                     <!-- Carousel indicators -->
                     <div class="carousel-indicators">
@@ -1204,7 +1210,7 @@
             <div class="prog-theme" id="theme-securite">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-securite')">
                     <div class="prog-theme-image">
-                        <img src="images/programme/securite.png" alt="S&eacute;curit&eacute;">
+                        <img src="images/programme/securite.png" alt="S&eacute;curit&eacute;" loading="lazy">
                     </div>
                     <div class="prog-theme-title">
                         <h3>S&eacute;curit&eacute;</h3>
@@ -1274,7 +1280,7 @@
             <div class="prog-theme" id="theme-economie">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-economie')">
                     <div class="prog-theme-image">
-                        <img src="images/programme/gare.png" alt="D&eacute;veloppement &eacute;conomique">
+                        <img src="images/programme/gare.png" alt="D&eacute;veloppement &eacute;conomique" loading="lazy">
                     </div>
                     <div class="prog-theme-title">
                         <h3>D&eacute;veloppement &eacute;conomique</h3>
@@ -1324,7 +1330,7 @@
             <div class="prog-theme" id="theme-cadre">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-cadre')">
                     <div class="prog-theme-image">
-                        <img src="images/programme/centre-ville-rue.png" alt="Cadre de vie">
+                        <img src="images/programme/centre-ville-rue.png" alt="Cadre de vie" loading="lazy">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Cadre de vie</h3>
@@ -1408,7 +1414,7 @@
             <div class="prog-theme" id="theme-culture">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-culture')">
                     <div class="prog-theme-image">
-                        <img src="images/programme/cathedrale-aerienne.png" alt="Culture &amp; Patrimoine">
+                        <img src="images/programme/cathedrale-aerienne.png" alt="Culture &amp; Patrimoine" loading="lazy">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Culture &amp; Patrimoine</h3>
@@ -1472,7 +1478,7 @@
             <div class="prog-theme" id="theme-cohesion">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-cohesion')">
                     <div class="prog-theme-image">
-                        <img src="images/programme/aines-danse.png" alt="Coh&eacute;sion sociale">
+                        <img src="images/programme/aines-danse.png" alt="Coh&eacute;sion sociale" loading="lazy">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Coh&eacute;sion sociale &amp; Solidarit&eacute;</h3>
@@ -1585,7 +1591,7 @@
             <div class="prog-theme" id="theme-sport">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-sport')">
                     <div class="prog-theme-image">
-                        <img src="images/programme/yves-carlier.png" alt="Sport &amp; Loisirs">
+                        <img src="images/programme/yves-carlier.png" alt="Sport &amp; Loisirs" loading="lazy">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Sport &amp; Loisirs</h3>
@@ -1636,7 +1642,7 @@
             <div class="prog-theme" id="theme-ecologie">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-ecologie')">
                     <div class="prog-theme-image">
-                        <img src="images/programme/jardin-fleurs.png" alt="Transition &eacute;cologique">
+                        <img src="images/programme/jardin-fleurs.png" alt="Transition &eacute;cologique" loading="lazy">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Transition &eacute;cologique</h3>
@@ -1709,7 +1715,7 @@
             <div class="prog-theme" id="theme-finances">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-finances')">
                     <div class="prog-theme-image">
-                        <img src="images/programme/finances-charts.png" alt="Finances">
+                        <img src="images/programme/finances-charts.png" alt="Finances" loading="lazy">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Finances</h3>
@@ -1763,7 +1769,7 @@
             <div class="prog-theme" id="theme-citoyennete">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-citoyennete')">
                     <div class="prog-theme-image">
-                        <img src="images/programme/hotel-de-ville.png" alt="Citoyennet&eacute;">
+                        <img src="images/programme/hotel-de-ville.png" alt="Citoyennet&eacute;" loading="lazy">
                     </div>
                     <div class="prog-theme-title">
                         <h3>Citoyennet&eacute; &amp; Concertation</h3>
@@ -1826,7 +1832,7 @@
             <div class="prog-theme" id="theme-equipe">
                 <div class="prog-theme-header" onclick="toggleTheme('theme-equipe')">
                     <div class="prog-theme-image">
-                        <img src="images/Axe5_Equipe.png" alt="L'&Eacute;quipe">
+                        <img src="images/Axe5_Equipe.png" alt="L'&Eacute;quipe" loading="lazy">
                     </div>
                     <div class="prog-theme-title">
                         <h3>L'&Eacute;quipe</h3>
@@ -2589,6 +2595,8 @@
             <p class="consultation-note">Chaque proposition compte : ensemble, construisons l'avenir de Senlis</p>
         </div>
     </section>
+
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
