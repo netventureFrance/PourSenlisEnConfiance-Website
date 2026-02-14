@@ -157,8 +157,14 @@
             position: fixed;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 9999;
+            z-index: -1;
             filter: blur(60px);
+        }
+        @media (max-width: 768px) {
+            .bg-circle {
+                position: absolute;
+                animation: none !important;
+            }
         }
 
         /* ========== Page layout ========== */
@@ -921,8 +927,7 @@
             }
             #candidate .section-title { font-size: 1.5rem; }
             .bg-circle {
-                opacity: 0.3;
-                filter: blur(80px);
+                display: none;
             }
         }
 
