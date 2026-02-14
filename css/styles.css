@@ -269,6 +269,8 @@ a:hover {
     white-space: nowrap;
     animation: ticker-scroll 30s linear infinite;
     will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .ticker-track:hover {
