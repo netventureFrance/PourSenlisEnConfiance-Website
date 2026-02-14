@@ -2852,6 +2852,14 @@
             return d.innerHTML;
         }
 
+        function capitalizeFirstName(str) {
+            if (!str) return '';
+            return str.split(/(-|\s)/).map(function(part) {
+                if (part === '-' || part === ' ') return part;
+                return part.charAt(0).toUpperCase() + part.slice(1);
+            }).join('');
+        }
+
         function getPhotoUrl(record) {
             var url = record.photo && record.photo.url ? record.photo.url : '';
             if (url.indexOf('https://poursenlisenconfiance.fr/') === 0) {
@@ -2868,7 +2876,7 @@
                 var card = document.createElement('div');
                 card.className = 'prog-team-card';
                 var photoUrl = getPhotoUrl(m);
-                var displayName = escHtml(m.prenom + ' ' + m.nom);
+                var displayName = escHtml(capitalizeFirstName(m.prenom) + ' ' + m.nom);
                 card.innerHTML = '<img class="prog-team-card-photo" src="' + escHtml(photoUrl) + '" alt="' + displayName + '" loading="lazy">'
                     + '<div class="prog-team-card-info">'
                     + '<div class="prog-team-card-name-row">'
@@ -2886,7 +2894,7 @@
             var m = TEAM_ALL[index];
             if (!m) return;
             var photoUrl = getPhotoUrl(m);
-            var displayName = escHtml(m.prenom + ' ' + m.nom);
+            var displayName = escHtml(capitalizeFirstName(m.prenom) + ' ' + m.nom);
             var meta = '';
             if (m.age) {
                 meta += '<span class="prog-meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>' + m.age + ' ans</span>';
