@@ -267,10 +267,10 @@ a:hover {
     display: flex;
     align-items: center;
     white-space: nowrap;
+    -webkit-animation: ticker-scroll 30s linear infinite;
     animation: ticker-scroll 30s linear infinite;
-    will-change: transform;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
 }
 
 .ticker-track:hover {
@@ -307,13 +307,13 @@ a:hover {
     white-space: nowrap;
 }
 
+@-webkit-keyframes ticker-scroll {
+    0% { -webkit-transform: translateX(0); transform: translateX(0); }
+    100% { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+}
 @keyframes ticker-scroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 
