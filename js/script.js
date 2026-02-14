@@ -203,50 +203,38 @@ if (lightbox && lightboxClose && lightboxPrev && lightboxNext) {
 initGallery();
 
 // ===================================
-// Lazy Loading Images
-// ===================================
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src || img.src;
-                img.classList.add('loaded');
-                observer.unobserve(img);
-            }
-        });
-    });
-
-    document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-        imageObserver.observe(img);
-    });
-}
-
-// ===================================
 // Scroll Reveal Animation
 // ===================================
 const revealElements = document.querySelectorAll(
     '.program-card, .document-card, .gallery-item, .team-member'
 );
 
-const revealOnScroll = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '0';
-            entry.target.style.transform = 'translateY(20px)';
-            entry.target.style.transition = 'all 0.6s ease';
-
-            setTimeout(() => {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }, 100);
+if ('IntersectionObserver' in window) {
+    // Hide elements that are not yet in the viewport
+    revealElements.forEach(el => {
+        if (el.getBoundingClientRect().top >= window.innerHeight) {
+            el.classList.add('reveal-hidden');
         }
     });
-}, {
-    threshold: 0.1
-});
 
-revealElements.forEach(el => revealOnScroll.observe(el));
+    const revealOnScroll = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove('reveal-hidden');
+                entry.target.classList.add('reveal-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    revealElements.forEach(el => {
+        if (!el.classList.contains('reveal-visible')) {
+            revealOnScroll.observe(el);
+        }
+    });
+}
 
 
 // ===================================

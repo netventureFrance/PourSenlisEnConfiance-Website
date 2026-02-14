@@ -18,7 +18,9 @@
         /* Page layout */
         .liste-page {
             background: linear-gradient(180deg, #f8f9fa 0%, #e8f4fd 100%);
+            background-attachment: fixed;
             min-height: 100vh;
+            min-height: 100dvh;
         }
 
         /* Hero */
@@ -440,6 +442,14 @@
             return d.innerHTML;
         }
 
+        function capitalizeFirstName(str) {
+            if (!str) return '';
+            return str.split(/(-|\s)/).map(function(part) {
+                if (part === '-' || part === ' ') return part;
+                return part.charAt(0).toUpperCase() + part.slice(1);
+            }).join('');
+        }
+
         function renderGrid() {
             var grid = document.getElementById('listeGrid');
             grid.innerHTML = '';
@@ -448,7 +458,7 @@
                 var card = document.createElement('div');
                 card.className = 'liste-card';
 
-                var displayName = esc([record.prenom, record.nom].filter(Boolean).join(' '));
+                var displayName = esc([capitalizeFirstName(record.prenom), record.nom].filter(Boolean).join(' '));
                 var initial = esc((record.prenom || record.nom || '?').charAt(0));
                 var photo = record.photo && record.photo.url
                     ? '<img src="' + esc(record.photo.url) + '" class="liste-card-photo" alt="' + displayName + '" loading="lazy">'
@@ -473,7 +483,7 @@
             var record = allRecords[index];
             if (!record) return;
 
-            var displayName = esc([record.prenom, record.nom].filter(Boolean).join(' '));
+            var displayName = esc([capitalizeFirstName(record.prenom), record.nom].filter(Boolean).join(' '));
             var initial = esc((record.prenom || record.nom || '?').charAt(0));
             var photo = record.photo && record.photo.url
                 ? '<img src="' + esc(record.photo.url) + '" class="liste-modal-photo" alt="' + displayName + '">'
