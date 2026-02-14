@@ -211,7 +211,7 @@ a:hover {
    =================================== */
 .news-ticker {
     position: fixed;
-    top: 82px; /* Below header with gap */
+    top: 81px; /* Below header, overlaps 1px to avoid gap */
     left: 0;
     width: 100%;
     background: linear-gradient(135deg, var(--primary-dark) 0%, #1a5a80 100%);
@@ -320,7 +320,7 @@ a:hover {
 /* Mobile adjustments for ticker */
 @media (max-width: 768px) {
     .news-ticker {
-        top: 78px;
+        top: 77px;
         height: 46px;
     }
 
