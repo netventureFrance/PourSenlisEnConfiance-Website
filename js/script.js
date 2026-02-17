@@ -1067,6 +1067,180 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ===================================
+// Donation Section
+// ===================================
+function generateDonSecurityQuestion() {
+    const questionEl = document.getElementById('donSecurityQuestion');
+    const expectedEl = document.getElementById('donExpectedAnswer');
+
+    if (questionEl && expectedEl) {
+        const num1 = Math.floor(Math.random() * 10) + 1;
+        const num2 = Math.floor(Math.random() * 10) + 1;
+        const operations = [
+            { symbol: '+', calc: (a, b) => a + b },
+            { symbol: '-', calc: (a, b) => a - b },
+            { symbol: '×', calc: (a, b) => a * b }
+        ];
+
+        const adjustedNum1 = Math.max(num1, num2);
+        const adjustedNum2 = Math.min(num1, num2);
+
+        const op = operations[Math.floor(Math.random() * operations.length)];
+        const answer = op.symbol === '-'
+            ? op.calc(adjustedNum1, adjustedNum2)
+            : op.calc(num1, num2);
+
+        const displayNum1 = op.symbol === '-' ? adjustedNum1 : num1;
+        const displayNum2 = op.symbol === '-' ? adjustedNum2 : num2;
+
+        questionEl.textContent = `${displayNum1} ${op.symbol} ${displayNum2} = ?`;
+        expectedEl.value = answer;
+    }
+}
+
+function initDonationPage() {
+    // Generate security question on page load if donation form exists
+    if (document.getElementById('donationForm')) {
+        generateDonSecurityQuestion();
+    }
+}
+
+function initDonationAmountHint() {
+    const montantInput = document.getElementById('donMontant');
+    const hintEl = document.getElementById('donAmountHint');
+
+    if (!montantInput || !hintEl) return;
+
+    montantInput.addEventListener('input', function() {
+        const val = parseFloat(this.value);
+        if (val > 0 && val <= 4600) {
+            const realCost = Math.round(val * 0.34);
+            hintEl.textContent = `Coût réel après réduction d'impôt : ${realCost} €`;
+            hintEl.classList.add('visible');
+        } else {
+            hintEl.classList.remove('visible');
+        }
+    });
+}
+
+function initDonationForm() {
+    const form = document.getElementById('donationForm');
+    const messageEl = document.getElementById('donationMessage');
+
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Check honeypot
+        const honeypot = form.querySelector('[name="bot-field-don"]');
+        if (honeypot && honeypot.value) return false;
+
+        const formData = {
+            nom: document.getElementById('donNom').value.trim(),
+            email: document.getElementById('donEmail').value.trim(),
+            phone: document.getElementById('donPhone') ? document.getElementById('donPhone').value.trim() : '',
+            montant: document.getElementById('donMontant').value.trim(),
+            paiement: document.getElementById('donPaiement').value,
+            message: document.getElementById('donMessage') ? document.getElementById('donMessage').value.trim() : '',
+            gdpr: document.getElementById('donGdpr').checked,
+            securityAnswer: document.getElementById('donSecurityAnswer').value.trim(),
+            expectedAnswer: parseInt(document.getElementById('donExpectedAnswer').value)
+        };
+
+        // Validate required fields
+        if (!formData.nom || !formData.email || !formData.montant || !formData.paiement) {
+            showDonationMessage('Veuillez remplir tous les champs obligatoires.', 'error');
+            return;
+        }
+
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            showDonationMessage('Veuillez entrer une adresse email valide.', 'error');
+            return;
+        }
+
+        // Validate amount
+        const montant = parseFloat(formData.montant);
+        if (isNaN(montant) || montant < 1 || montant > 4600) {
+            showDonationMessage('Le montant doit être compris entre 1 € et 4 600 €.', 'error');
+            return;
+        }
+
+        // Check GDPR
+        if (!formData.gdpr) {
+            showDonationMessage('Vous devez accepter la politique de confidentialité.', 'error');
+            return;
+        }
+
+        // Check security answer
+        if (!formData.securityAnswer || parseInt(formData.securityAnswer) !== formData.expectedAnswer) {
+            showDonationMessage('La réponse à la vérification est incorrecte.', 'error');
+            generateDonSecurityQuestion();
+            document.getElementById('donSecurityAnswer').value = '';
+            return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Envoi en cours...';
+
+        try {
+            const response = await fetch('/.netlify/functions/submit-donation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                if (typeof plausible !== 'undefined') {
+                    plausible('Donation', {
+                        props: {
+                            montant: formData.montant,
+                            paiement: formData.paiement
+                        }
+                    });
+                }
+                showDonationMessage('Merci pour votre soutien ! Notre équipe vous contactera avec les instructions de paiement.', 'success');
+                form.reset();
+                generateDonSecurityQuestion();
+                document.getElementById('donAmountHint').classList.remove('visible');
+            } else {
+                showDonationMessage('Une erreur est survenue. Veuillez réessayer.', 'error');
+            }
+        } catch (error) {
+            console.error('Donation error:', error);
+            showDonationMessage('Erreur de connexion. Veuillez réessayer.', 'error');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    });
+
+    function showDonationMessage(message, type) {
+        if (messageEl) {
+            messageEl.textContent = message;
+            messageEl.className = `form-message ${type}`;
+
+            if (type === 'error') {
+                setTimeout(() => {
+                    messageEl.className = 'form-message';
+                }, 5000);
+            }
+        }
+    }
+}
+
+// Initialize donation (only runs if donation form elements exist on page)
+initDonationPage();
+initDonationAmountHint();
+initDonationForm();
+
+// ===================================
 // Console Easter Egg
 // ===================================
 console.log('%c🗳️ Pour Senlis en Confiance', 'font-size: 20px; font-weight: bold; color: #0d3d5c;');
