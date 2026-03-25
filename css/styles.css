@@ -630,6 +630,68 @@ a:hover {
     }
 }
 
+/* Hero Merci Section (post-election) */
+.hero-frame-merci {
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.hero-merci-image {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    margin-bottom: 2rem;
+}
+
+.hero-merci-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.hero-merci-text {
+    text-align: left;
+    color: var(--text-dark);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    max-width: 700px;
+}
+
+.hero-merci-text p {
+    margin-bottom: 0.8rem;
+}
+
+.hero-merci-text strong {
+    color: var(--primary-dark);
+}
+
+.hero-merci-signature {
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+    text-align: center;
+    color: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+    .hero-frame-merci {
+        padding: 1rem;
+    }
+
+    .hero-merci-text {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+
+    .hero-merci-signature {
+        font-size: 1.15rem;
+    }
+}
+
 @keyframes fadeInDown {
     from {
         opacity: 0;
