@@ -632,7 +632,7 @@ a:hover {
 
 /* Hero Merci Section (post-election) */
 .hero-frame-merci {
-    flex-direction: column;
+    flex-direction: column !important;
     align-items: center;
     max-width: 900px;
     margin: 0 auto;
@@ -641,7 +641,7 @@ a:hover {
 
 .hero-merci-image {
     width: 100%;
-    max-width: 700px;
+    max-width: 500px;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
@@ -655,8 +655,8 @@ a:hover {
 }
 
 .hero-merci-text {
-    text-align: left;
-    color: var(--text-dark);
+    text-align: center;
+    color: #1a1a1a !important;
     font-size: 1.05rem;
     line-height: 1.8;
     max-width: 700px;
@@ -664,17 +664,26 @@ a:hover {
 
 .hero-merci-text p {
     margin-bottom: 0.8rem;
+    color: #1a1a1a !important;
 }
 
 .hero-merci-text strong {
-    color: var(--primary-dark);
+    color: var(--primary-dark) !important;
 }
 
 .hero-merci-signature {
     margin-top: 1.5rem;
     font-size: 1.3rem;
     text-align: center;
-    color: var(--primary-dark);
+    color: var(--primary-dark) !important;
+}
+
+/* Reduce hero height for merci page */
+.hero:has(.hero-frame-merci) {
+    min-height: auto !important;
+    margin-top: 82px !important;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
 @media (max-width: 768px) {
