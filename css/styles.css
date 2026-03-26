@@ -684,12 +684,23 @@ a:hover {
 }
 
 /* Reduce hero height for merci page */
-.hero-merci-page {
+.hero.hero-merci-page {
     min-height: auto !important;
     margin-top: 82px !important;
     padding-top: 2rem;
     padding-bottom: 2rem;
-    color: #1a1a1a;
+    color: #1a1a1a !important;
+}
+
+.hero.hero-merci-page p,
+.hero.hero-merci-page strong,
+.hero.hero-merci-page div {
+    color: #1a1a1a !important;
+}
+
+.hero.hero-merci-page .hero-merci-text strong,
+.hero.hero-merci-page .hero-merci-signature strong {
+    color: #0d3d5c !important;
 }
 
 @media (max-width: 768px) {
