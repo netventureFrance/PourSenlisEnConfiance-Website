@@ -654,9 +654,15 @@ a:hover {
     display: block;
 }
 
+.hero-merci-text,
+.hero-merci-text p,
+.hero-merci-text strong,
+.hero-merci-text .hero-merci-signature {
+    color: #1a1a1a;
+}
+
 .hero-merci-text {
     text-align: center;
-    color: #1a1a1a !important;
     font-size: 1.05rem;
     line-height: 1.8;
     max-width: 700px;
@@ -664,26 +670,26 @@ a:hover {
 
 .hero-merci-text p {
     margin-bottom: 0.8rem;
-    color: #1a1a1a !important;
 }
 
 .hero-merci-text strong {
-    color: var(--primary-dark) !important;
+    color: #0d3d5c;
 }
 
 .hero-merci-signature {
     margin-top: 1.5rem;
     font-size: 1.3rem;
     text-align: center;
-    color: var(--primary-dark) !important;
+    color: #0d3d5c;
 }
 
 /* Reduce hero height for merci page */
-.hero:has(.hero-frame-merci) {
+.hero-merci-page {
     min-height: auto !important;
     margin-top: 82px !important;
     padding-top: 2rem;
     padding-bottom: 2rem;
+    color: #1a1a1a;
 }
 
 @media (max-width: 768px) {
