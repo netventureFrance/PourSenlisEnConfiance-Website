@@ -6,8 +6,10 @@
   directory = "netlify/functions"
 
 # Scheduled function - Daily stats email at 3 AM CET (2 AM UTC)
-[functions."daily-stats"]
-  schedule = "0 2 * * *"
+# Disabled 2026-05-15: site repurposed for opposition work, daily reporting paused.
+# To re-enable, uncomment the two lines below.
+# [functions."daily-stats"]
+#   schedule = "0 2 * * *"
 
 # Redirects
 [[redirects]]
